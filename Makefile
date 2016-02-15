@@ -2,7 +2,7 @@ CC=clang++
 #CC=g++
 CFLAGS+= -std=c++11 #-g -O0 -Wall -pedantic -I./ -I./include
 
-STRINGFIX = -lXext -lX11 -L/usr/lib/nvidia-340-updates
+STRINGFIX = -lXext -lX11
 GLUT2 = -lGL -lGLU -lglut -lpthread
 GLUI2 = -L./src/lib -lglui
 LIBS = $(STRINGFIX) $(GLUT2) $(GLUI2)
