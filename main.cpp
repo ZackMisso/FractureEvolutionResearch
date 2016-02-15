@@ -9,7 +9,12 @@ void display();
 void mouseClick(int button,int state,int x,int y);
 void mouseMotion(int x,int y);
 void keyboard(unsigned char key,int x,int y);
-void reshape(int w.int h);
+void reshape(int w,int h);
+void mainLoop(void);
+
+// Arguements
+GLUI* subwindow;
+int window;
 
 int main(int argc,char** argv) {
   cout << "Beginning Initialization" << endl;
@@ -58,6 +63,10 @@ void keyboard(unsigned char key,int x,int y) {
   // to be implemented
 }
 
-void reshape(int w.int h) {
+void reshape(int w,int h) {
   // to be implemented
+}
+
+void mainLoop(void) {
+  // probably not going to use
 }

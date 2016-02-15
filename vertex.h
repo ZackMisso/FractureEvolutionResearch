@@ -3,7 +3,7 @@
 
 #include "array.h"
 #include "edge.h"
-#include "point.h"
+#include "point2.h"
 
 class Vertex {
 private:

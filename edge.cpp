@@ -24,5 +24,5 @@ void Edge::setFirst(Point2 point) {
 
 void Edge::setSecond(Point2 point) {
   second.xpos = point.xpos;
-  second.ypos = point.ypos
+  second.ypos = point.ypos;
 }

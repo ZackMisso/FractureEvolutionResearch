@@ -7,7 +7,7 @@ GLUT2 = -lGL -lGLU -lglut -lpthread
 GLUI2 = -L./src/lib -lglui
 LIBS = $(STRINGFIX) $(GLUT2) $(GLUI2)
 
-PROD= FractureGA
+PROD= Demo
 
 HDRS= $(shell ls *.h)
 SRCS= $(shell ls *.cpp)

@@ -2,6 +2,8 @@
 #define __FRACTURE_H__
 
 #include "array.h"
+#include "vertex.h"
+#include "edge.h"
 
 class Fracture {
 private:

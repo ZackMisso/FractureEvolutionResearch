@@ -7,6 +7,6 @@ public:
   float ypos;
   Point2();
   Point2(float x,float y);
-}
+};
 
 #endif
