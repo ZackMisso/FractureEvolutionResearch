@@ -4,11 +4,13 @@ Vertex::Vertex(float x,float y) {
   edges = new Array<Edge*>();
   location.xpos = x;
   location.ypos = y;
+  selested = false;
 }
 
 Vertex::Vertex(Point2 point) {
   location.xpos = point.xpos;
   location.ypos = point.ypos;
+  selected = false;
 }
 
 Vertex::~Vertex() {

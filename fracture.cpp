@@ -28,7 +28,25 @@ void Fracture::clearAndReloadFaces() {
 
 void Fracture::createNewVertex(float x,float y) {
 	// need to figure out how to connect it with all verts near it...
-	verts->add(new Vertex(x,y));
+	Vertex* newVert = new Vertex(x,y);
+	Point2 p;
+	p.xpos = x;
+	p.ypos = y;
+	Face* face = 0x0;
+	for(int i=0;i<faces->getSize();i++)
+		if(faces->get(i)->contains(p))
+			face = faces->get(i);
+	if(!face) {
+		// the point already exists... or it is on an edge (need to add functionality)
+	} else {
+		verts->add(newVert);
+		Array<Face*>* newFaces = face->separate(newVert);
+
+		while(newFaces->getSize())
+			faces->add(newFaces->removeLast());
+		delete newFaces;
+		delete face;
+	}
 	// do face detection stuffs
 }
 

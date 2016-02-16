@@ -5,6 +5,7 @@ Edge::Edge(Point2 one,Point2 two) {
   first.ypos = one.ypos;
   second.xpos = two.xpos;
   second.ypos = two.ypos;
+  selected = false;
 }
 
 Edge::Edge(float x,float y,float xx,float yy) {
@@ -12,6 +13,7 @@ Edge::Edge(float x,float y,float xx,float yy) {
   first.ypos = y;
   second.xpos = xx;
   second.ypos = yy;
+  selected = false;
 }
 
 void Edge::draw() {
@@ -42,6 +44,12 @@ bool Edge::intersects(Edge* other) {
     return true;
 
   return false;
+}
+
+Point2 Edge::getOtherPoint(Point2 point) {
+  if(point.xpos == first.xpos && point.ypos == first.ypos)
+    return second;
+  return first;
 }
 
 Point2 Edge::getFirst() { return first; }

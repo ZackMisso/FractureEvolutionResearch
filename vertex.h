@@ -9,6 +9,7 @@ class Vertex {
 private:
   Array<Edge*> *edges;
   Point2 location; // [0.0-1.0 , 0.0-1.0]
+  bool selected;
 public:
   Vertex(float x,float y);
   Vertex(Point2 point);
