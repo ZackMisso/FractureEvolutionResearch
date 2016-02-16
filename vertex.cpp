@@ -4,7 +4,7 @@ Vertex::Vertex(float x,float y) {
   edges = new Array<Edge*>();
   location.xpos = x;
   location.ypos = y;
-  selested = false;
+  selected = false;
 }
 
 Vertex::Vertex(Point2 point) {
@@ -29,8 +29,8 @@ bool Vertex::isMatch(Point2 point) {
 
 bool Vertex::isConnected(Vertex* other) {
   for(int i=0;i<edges->getSize();i++) {
-    Point p;
-    if(isMatch(edges->get(i)->getFirst()));
+    Point2 p;
+    if(isMatch(edges->get(i)->getFirst()))
       p = edges->get(i)->getSecond();
     else
       p = edges->get(i)->getFirst();

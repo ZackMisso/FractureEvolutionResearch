@@ -1,5 +1,7 @@
 #include "face.h"
 
+#include <cstdlib>
+
 Face::Face() {
   verts = new Array<Vertex*>();
   edges = new Array<Edge*>();
@@ -79,10 +81,10 @@ Array<Face*>* Face::separate(Vertex* newVert) {
   twoEdges->add(edgeOne);
   twoEdges->add(edgeTwo);
 
-  findSeparatePaths(oneLoc,twoLoc,oneEdges,twoEdges);
+  findSeparatePaths(oneEdges,twoEdges,oneLoc,twoLoc);
 
-  Array<Vertex*>* oneVerts = face->findVertsOnPath(oneEdges);
-  Array<Vertex*>* twoVerts = face->findVertsOnPath(twoEdges);
+  Array<Vertex*>* oneVerts = findVertsOnPath(oneEdges);
+  Array<Vertex*>* twoVerts = findVertsOnPath(twoEdges);
 
   Face* oneFace = new Face();
   oneFace->setVerts(oneVerts);
@@ -113,19 +115,19 @@ void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,P
   Edge* startOne = 0x0;
   Edge* startTwo = 0x0;
   for(int i=0;i<edges->getSize();i++) {
-    if(edge->get(i)->getFirst().xpos == oneLoc.xpos && edge->get(i)->getFirst().ypos == oneLoc.ypos) {
+    if(edges->get(i)->getFirst().xpos == oneLoc.xpos && edges->get(i)->getFirst().ypos == oneLoc.ypos) {
       if(!startOne) {
         startOne = edges->get(i);
-      } else if(startOne != edge->get(i)) {
+      } else if(startOne != edges->get(i)) {
         startTwo = edges->get(i);
         i = edges->getSize();
       }
     }
 
-    if(edge->get(i)->getSecond().xpos == oneLoc.xpos && edge->get(i)->getSecond().ypos == oneLoc.ypos) {
+    if(edges->get(i)->getSecond().xpos == oneLoc.xpos && edges->get(i)->getSecond().ypos == oneLoc.ypos) {
       if(!startOne) {
         startOne = edges->get(i);
-      } else if(startOne != edge->get(i)) {
+      } else if(startOne != edges->get(i)) {
         startTwo = edges->get(i);
         i = edges->getSize();
       }
@@ -145,14 +147,14 @@ void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,P
         if(edges->get(i) != startOne) {
           startOne = edges->get(i);
           one->add(startOne);
-          tmp = startOne->getOtherPoint(startOne);
+          tmp = startOne->getOtherPoint(tmp);
           i = edges->getSize();
         }
       if(edges->get(i)->getSecond().xpos == tmp.xpos && edges->get(i)->getSecond().ypos == tmp.ypos)
         if(edges->get(i) != startOne) {
           startOne = edges->get(i);
           one->add(startOne);
-          tmp = startOne->getOtherPoint(startOne);
+          tmp = startOne->getOtherPoint(tmp);
           i = edges->getSize();
         }
     }
@@ -164,19 +166,19 @@ void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,P
         if(edges->get(i) != startTwo) {
           startTwo = edges->get(i);
           two->add(startTwo);
-          tmp2 = startTwo->getOtherPoint(startTwo);
+          tmp2 = startTwo->getOtherPoint(tmp2);
           i = edges->getSize();
         }
       if(edges->get(i)->getSecond().xpos == tmp2.xpos && edges->get(i)->getSecond().ypos == tmp2.ypos)
         if(edges->get(i) != startTwo) {
           startTwo = edges->get(i);
           two->add(startTwo);
-          tmp = startTwo->getOtherPoint(startTwo);
+          tmp = startTwo->getOtherPoint(tmp2);
           i = edges->getSize();
         }
     }
   }
-  
+
 }
 
 Array<Vertex*>* Face::findVertsOnPath(Array<Edge*>* edgs) {

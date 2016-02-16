@@ -21,7 +21,7 @@ public:
 	Array<Edge*>* getEdges();
 	Point2	getLocation();
 	// setters
-	void setEdges(Array<Edge*> param);
+	void setEdges(Array<Edge*>* param);
 	void setLocation(Point2 param);
 };
 

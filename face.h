@@ -21,6 +21,7 @@ public:
   bool contains(Edge* edge);
   Array<Face*>* separate(Vertex* newVert);
   Array<Face*>* separate(Point2 newPoint);
+  Array<Face*>* separate(Point2 start,Point2 end);
   void findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,Point2 twoLoc);
   Array<Vertex*>* findVertsOnPath(Array<Edge*>* edges);
   // getter methods
