@@ -16,6 +16,8 @@ public:
   Face(Array<Vertex*>* verts);
   ~Face();
   bool contains(Point2 point);
+  bool contains(Vertex* vert);
+  bool contains(Edge* edge);
   Array<Face*>* separate(Point2 newPoint);
   // getter methods
   Array<Vertex*>* getVerts();

@@ -15,6 +15,7 @@ public:
   ~Vertex();
 	void draw();
   bool isMatch(Point2 point);
+  bool isConnected(Vertex* other);
 	// getters
 	Array<Edge*>* getEdges();
 	Point2	getLocation();

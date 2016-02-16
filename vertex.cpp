@@ -25,6 +25,19 @@ bool Vertex::isMatch(Point2 point) {
   return point.xpos == location.xpos && point.ypos == location.ypos;
 }
 
+bool Vertex::isConnected(Vertex* other) {
+  for(int i=0;i<edges->getSize();i++) {
+    Point p;
+    if(isMatch(edges->get(i)->getFirst()));
+      p = edges->get(i)->getSecond();
+    else
+      p = edges->get(i)->getFirst();
+    if(other->isMatch(p))
+      return true;
+  }
+  return false;
+}
+
 Array<Edge*>* Vertex::getEdges() { return edges; }
 Point2 Vertex::getLocation() { return location; }
 

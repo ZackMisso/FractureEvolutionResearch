@@ -15,6 +15,11 @@ Fracture::~Fracture() {
 		delete faces->removeLast();
 	delete verts;
 	delete edges;
+	delete faces;
+}
+
+void Fracture::clearAndReloadFaces() {
+	// to be implemented
 }
 
 void Fracture::createNewVertex(float x,float y) {
@@ -27,7 +32,23 @@ void Fracture::createNewEdge(Vertex* one,Vertex* two) {
 	Edge *edge = new Edge(one->getLocation(),two->getLocation());
 	one->getEdges()->add(edge);
 	two->getEdges()->add(edge);
-	// do face detections stuffs
+	// do face detections stuffs probably
+}
+
+Array<Face*>* Fracture::getFacesWithVertex(Vertex* vertex) {
+	Array<Face*>* tmp = new Array<Face*>();
+	for(int i=0;i<faces->getSize();i++)
+		if(faces->get(i)->contains(vertex))
+			tmp->add(faces->get(i));
+	return tmp;
+}
+
+Array<Face*>* Fracture::getFacesWithEdge(Edge* edge) {
+	Array<Face*>* tmp = new Array<Face*>();
+	for(int i=0;i<faces->getSize();i++)
+		if(faces->get(i)->contains(edge))
+			tmp->add(faces->get(i));
+	return tmp;
 }
 
 void Fracture::draw() {
@@ -38,6 +59,6 @@ void Fracture::draw() {
 	// maybe draw the faces
 }
 
-Array<Vertex*>* getVerts() { return verts; }
-Array<Edge*>* getEdges() { return edges; }
-Array<Face*>* getFaces() { return faces; }
+Array<Vertex*>* Fracture::getVerts() { return verts; }
+Array<Edge*>* Fracture::getEdges() { return edges; }
+Array<Face*>* Fracture::getFaces() { return faces; }

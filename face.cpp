@@ -2,7 +2,7 @@
 
 Face::Face() {
   verts = new Array<Vertex*>();
-  edges = new Array<Vertex*>();
+  edges = new Array<Edge*>();
 }
 
 Face::Face(Array<Vertex*>* verts) {
@@ -32,6 +32,20 @@ bool Face::contains(Point2 point) {
   // if odd this face contains the point
   delete ray;
   return intersections % 2;
+}
+
+bool Face::contains(Vertex* vert) {
+  for(int i=0;i<verts->getSize();i++)
+    if(vert==verts->get(i))
+      return true;
+  return false;
+}
+
+bool Face::contains(Edge* edge) {
+  for(int i=0;i<edges->getSize();i++)
+    if(edge==edges->get(i))
+      return true;
+  return false;
 }
 
 // this may also need different forms of implementations

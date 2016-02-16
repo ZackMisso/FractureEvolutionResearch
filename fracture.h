@@ -4,6 +4,7 @@
 #include "array.h"
 #include "vertex.h"
 #include "edge.h"
+#include "face.h"
 
 class Fracture {
 private:
@@ -13,8 +14,11 @@ private:
 public:
   Fracture();
   ~Fracture();
+  void clearAndReloadFaces();
 	void createNewVertex(float x,float y);
 	void createNewEdge(Vertex* one,Vertex* two);
+  Array<Face*>* getFacesWithVertex(Vertex* vert);
+  Array<Face*>* getFacesWithEdge(Edge* edge);
 	void draw();
   // getter methods
   Array<Face*>* getFaces();
