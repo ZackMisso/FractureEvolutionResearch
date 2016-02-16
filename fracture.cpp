@@ -1,5 +1,9 @@
 #include "fracture.h"
 
+#include <iostream>
+
+using namespace std;
+
 Fracture::Fracture() {
 	verts = new Array<Vertex*>();
 	edges = new Array<Edge*>();
@@ -19,7 +23,7 @@ Fracture::~Fracture() {
 }
 
 void Fracture::clearAndReloadFaces() {
-	// to be implemented
+	// we may not want to do this
 }
 
 void Fracture::createNewVertex(float x,float y) {
@@ -32,6 +36,15 @@ void Fracture::createNewEdge(Vertex* one,Vertex* two) {
 	Edge *edge = new Edge(one->getLocation(),two->getLocation());
 	one->getEdges()->add(edge);
 	two->getEdges()->add(edge);
+	Face* oldFace = 0x0;
+	for(int i=0;i<faces->getSize();i++)
+		if(faces->get(i)->contains(one) && faces->get(i)->contains(two))
+			oldFace = faces->get(i);
+	if(!oldFace) {
+		// THIS IS A MAJOR ERROR.... FIX TO BE MADE LATER
+		cout << "MAJOR ERROR :: Cant Split Edge" << endl;
+	}
+	// keep implementing
 	// do face detections stuffs probably
 }
 

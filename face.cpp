@@ -54,6 +54,11 @@ Array<Face*>* Face::separate(Point2 newPoint) {
   return 0x0;
 }
 
+Array<Face*>* Face::separate(Point2 start,Point2 end) {
+  // to be implemented
+  return 0x0;
+}
+
 Array<Vertex*>* Face::getVerts() { return verts; }
 Array<Edge*>* Face::getEdges() { return edges; }
 
