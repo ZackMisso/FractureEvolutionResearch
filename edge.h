@@ -11,6 +11,7 @@ public:
   Edge(Point2 one,Point2 two);
   Edge(float x,float y,float xx,float yy);
   void draw();
+  bool intersects(Edge* other);
 	// getters
   Point2 getFirst();
   Point2 getSecond();

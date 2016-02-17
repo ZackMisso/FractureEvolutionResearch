@@ -21,6 +21,10 @@ void Vertex::draw() {
 	// to be implemented
 }
 
+bool Vertex::isMatch(Point2 point) {
+  return point.xpos == location.xpos && point.ypos == location.ypos;
+}
+
 Array<Edge*>* Vertex::getEdges() { return edges; }
 Point2 Vertex::getLocation() { return location; }
 

@@ -7,14 +7,19 @@
 
 class Fracture {
 private:
-  Array<Vertex*> *verts;
-  Array<Edge*> *edges; // will have multiple references
+  Array<Vertex*>* verts;
+  Array<Edge*>* edges; // will have multiple references
+  Array<Face*>* faces;
 public:
   Fracture();
   ~Fracture();
 	void createNewVertex(float x,float y);
 	void createNewEdge(Vertex* one,Vertex* two);
 	void draw();
+  // getter methods
+  Array<Face*>* getFaces();
+  Array<Edge*>* getEdges();
+  Array<Vertex*>* getVerts();
 };
 
 #endif
