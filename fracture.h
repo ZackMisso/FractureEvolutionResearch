@@ -12,6 +12,9 @@ private:
 public:
   Fracture();
   ~Fracture();
+	void createNewVertex(float x,float y);
+	void createNewEdge(Vertex* one,Vertex* two);
+	void draw();
 };
 
 #endif

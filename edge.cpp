@@ -14,6 +14,10 @@ Edge::Edge(float x,float y,float xx,float yy) {
   second.ypos = yy;
 }
 
+void Edge::draw() {
+	// to be implemented
+}
+
 Point2 Edge::getFirst() { return first; }
 Point2 Edge::getSecond() { return second; }
 

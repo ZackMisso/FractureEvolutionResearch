@@ -1,6 +1,9 @@
 #include <GL/glut.h>
 #include <iostream>
 #include "src/include/GL/glui.h"
+#include "fracture.h"
+#include "array.h"
+
 
 using namespace std;
 
@@ -14,11 +17,18 @@ void mainLoop(void);
 
 // Arguements
 GLUI* subwindow;
+Array<Fracture*>* fractures;
+int activeFracture;
 int window;
+
 
 int main(int argc,char** argv) {
   cout << "Beginning Initialization" << endl;
-  glutInit(&argc,argv);
+  fractures = new Array<Fracture*>();
+	fractures->add(new Fracture());
+	activeFracture = 0;
+
+	glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
   glutInitWindowSize(1200,1000);
   window = glutCreateWindow("Zackary Misso - Scene Graph Editor");

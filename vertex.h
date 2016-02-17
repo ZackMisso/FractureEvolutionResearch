@@ -13,6 +13,13 @@ public:
   Vertex(float x,float y);
   Vertex(Point2 point);
   ~Vertex();
+	void draw();
+	// getters
+	Array<Edge*>* getEdges();
+	Point2	getLocation();
+	// setters
+	void setEdges(Array<Edge*> param);
+	void setLocation(Point2 param);
 };
 
 #endif

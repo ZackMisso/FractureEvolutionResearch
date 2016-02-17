@@ -10,7 +10,8 @@ private:
 public:
   Edge(Point2 one,Point2 two);
   Edge(float x,float y,float xx,float yy);
-  // getters
+  void draw();
+	// getters
   Point2 getFirst();
   Point2 getSecond();
   // setters

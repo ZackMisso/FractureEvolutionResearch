@@ -16,3 +16,13 @@ Vertex::~Vertex() {
     edges->removeLast();
   delete edges;
 }
+
+void Vertex::draw() {
+	// to be implemented
+}
+
+Array<Edge*>* Vertex::getEdges() { return edges; }
+Point2 Vertex::getLocation() { return location; }
+
+void Vertex::setEdges(Array<Edge*>* param) { edges = param; }
+void Vertex::setLocation(Point2 param) { location = param; }
