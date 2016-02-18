@@ -1,4 +1,5 @@
 #include "vertex.h"
+#include <GL/glut.h>
 
 Vertex::Vertex(float x,float y) {
   edges = new Array<Edge*>();
@@ -20,7 +21,7 @@ Vertex::~Vertex() {
 }
 
 void Vertex::draw() {
-	// to be implemented
+	glVertex2f(location.xpos,location.ypos);
 }
 
 bool Vertex::isMatch(Point2 point) {

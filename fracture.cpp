@@ -1,4 +1,5 @@
 #include "fracture.h"
+#include <GL/glut.h>
 
 #include <iostream>
 
@@ -8,6 +9,7 @@ Fracture::Fracture() {
 	verts = new Array<Vertex*>();
 	edges = new Array<Edge*>();
 	faces = new Array<Face*>();
+	init(0);
 }
 
 Fracture::~Fracture() {
@@ -20,6 +22,24 @@ Fracture::~Fracture() {
 	delete verts;
 	delete edges;
 	delete faces;
+}
+
+void Fracture::init(int points) {
+	verts->add(new Vertex(-0.5,-0.5));
+	verts->add(new Vertex(-0.5,0.5));
+	verts->add(new Vertex(0.5,0.5));
+	verts->add(new Vertex(0.5,-0.5));
+	edges->add(new Edge(-0.5,-0.5,-0.5,0.5));
+	edges->add(new Edge(-0.5,0.5,0.5,0.5));
+	edges->add(new Edge(0.5,0.5,0.5,-0.5));
+	edges->add(new Edge(0.5,-0.5,-0.5,-0.5));
+	Face* face = new Face();
+	for(int i=0;i<4;i++){
+		face->getVerts()->add(verts->get(i));
+		face->getEdges()->add(edges->get(i));
+	}
+	faces->add(face);
+	for(int i=0;i<points;i++) { /* implement later */ }
 }
 
 void Fracture::clearAndReloadFaces() {
@@ -82,12 +102,27 @@ Array<Face*>* Fracture::getFacesWithEdge(Edge* edge) {
 	return tmp;
 }
 
-void Fracture::draw() {
-	for(int i=0;i<verts->getSize();i++)
-		verts->get(i)->draw();
-	for(int i=0;i<edges->getSize();i++)
-		edges->get(i)->draw();
-	// maybe draw the faces
+void Fracture::draw(RenderSettings* renderSettings) {
+	if(renderSettings->getDisplayFaces()) {
+		// maybe draw the faces
+	}
+	if(renderSettings->getDisplayVerts()) {
+		glPointSize((float)renderSettings->getVertSize());
+		glBegin(GL_POINTS);
+		//glPointSize((float)renderSettings->getVertSize());
+		cout << "DRAWING VERTS :: " << (float)renderSettings->getVertSize() << endl;
+		for(int i=0;i<verts->getSize();i++)
+			verts->get(i)->draw();
+		glEnd();
+	}
+	if(renderSettings->getDisplayEdges()) {
+		glLineWidth((float)renderSettings->getEdgeSize());
+		glBegin(GL_LINES);
+		//glLineWidth((float)renderSettings->getEdgeSize());
+		for(int i=0;i<edges->getSize();i++)
+			edges->get(i)->draw();
+		glEnd();
+	}
 }
 
 Array<Vertex*>* Fracture::getVerts() { return verts; }

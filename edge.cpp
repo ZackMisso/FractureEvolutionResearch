@@ -1,4 +1,5 @@
 #include "edge.h"
+#include <GL/glut.h>
 
 Edge::Edge(Point2 one,Point2 two) {
   first.xpos = one.xpos;
@@ -17,7 +18,8 @@ Edge::Edge(float x,float y,float xx,float yy) {
 }
 
 void Edge::draw() {
-	// to be implemented
+	glVertex2f(first.xpos,first.ypos);
+  glVertex2f(second.xpos,second.ypos);
 }
 
 bool Edge::intersects(Edge* other) {

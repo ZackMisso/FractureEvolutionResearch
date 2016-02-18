@@ -22,3 +22,9 @@ void ProgramData::load() {
 void ProgramData::createNewFracture() {
   // to be implemented
 }
+
+Array<Fracture*>* ProgramData::getStoredFractures() { return storedFractures; }
+Fracture* ProgramData::getCurrentFracture() { return currentFracture; }
+
+void ProgramData::setStoredFractures(Array<Fracture*>* param) { storedFractures = param; }
+void ProgramData::setCurrentFracture(Fracture* param) { currentFracture = param; }

@@ -18,7 +18,7 @@ public:
   Array<Fracture*>* getStoredFractures();
   Fracture* getCurrentFracture();
   // setter methods
-  void setStoredFracures(Array<Fracture*>* param);
+  void setStoredFractures(Array<Fracture*>* param);
   void setCurrentFracture(Fracture* param);
 };
 
