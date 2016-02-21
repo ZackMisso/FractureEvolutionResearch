@@ -1,4 +1,5 @@
 #include "face.h"
+#include "rng.h"
 
 #include <cstdlib>
 
@@ -57,6 +58,7 @@ bool Face::contains(Edge* edge) {
   return false;
 }
 
+// THIS METHOD IS PROBABLY INCORRECT
 Array<Face*>* Face::separate(Vertex* newVert) {
   Array<Face*>* newFaces = new Array<Face*>();
   verts->add(newVert);
@@ -96,6 +98,86 @@ Array<Face*>* Face::separate(Vertex* newVert) {
 
   newFaces->add(oneFace);
   newFaces->add(twoFace);
+
+  return newFaces;
+}
+
+Array<Face*>* Face::separate(float x,float y) {
+  Array<Face*>* newFaces = new Array<Face*>();
+
+  int numSeperations = RNG::RandomInt(2,edges->getSize(),4);
+  // do the first two seperations
+  Array<Edge*>* oneEdges = new Array<Edge*>();
+  Array<Edge*>* twoEdges = new Array<Edge*>();
+  Array<Vertex*>* oneVerts = new Array<Vertex*>();
+  Array<Vertex*>* twoVerts = new Array<Vertex*>();
+
+  Vertex* sharedPoint = new Vertex(x,y);
+  oneVerts->add(sharedPoint);
+  twoVerts->add(sharedPoint);
+
+  Point2 oneLoc;
+  Point2 twoLoc;
+
+  for(int i=0;i<2;i++) {
+    int edgeInd = RNG::RandomInt(edges->getSize());
+    float edgeDist = RNG::RandomFloat();
+    Edge* edge = edges->get(edgeInd);
+    Point2 newPoint = edge->getPointBetween(edgeDist);
+
+    Edge* newEdge = new Edge(x,y,newPoint.xpos,newPoint.ypos);
+    // THIS IS INEFFICIENT... WILL HAVE TO FIX LATER
+    for(int j=0;j<edges->getSize();j++)
+      if(edges->get(j)!=edge)
+        if(edges->get(i)->intersects(newEdge)) {
+          // fix the newEdge's second location
+          // TODO :: LATER
+        }
+
+    if(i) {
+      oneLoc.xpos = newPoint.xpos;
+      oneLoc.ypos = newPoint.ypos;
+    } else {
+      twoLoc.xpos = newPoint.xpos;
+      twoLoc.ypos = newPoint.ypos;
+    }
+
+    Vertex* newVert = new Vertex(newPoint);
+    oneVerts->add(newVert);
+    twoVerts->add(newVert);
+
+    oneEdges->add(newEdge);
+    twoEdges->add(newEdge);
+
+    numSeperations--;
+  }
+  // update faces
+  findSeparatePaths(oneEdges,twoEdges,oneLoc,twoLoc);
+  Array<Vertex*>* tmpOne = findVertsOnPath(oneEdges);
+  Array<Vertex*>* tmpTwo = findVertsOnPath(twoEdges);
+  while(tmpOne->getSize())
+    oneVerts->add(tmpOne->removeLast());
+  while(tmpTwo->getSize())
+    twoVerts->add(tmpTwo->removeLast());
+  delete tmpOne;
+  delete tmpTwo;
+
+  Face* oneFace = new Face();
+  oneFace->setVerts(oneVerts);
+  oneFace->setEdges(oneEdges);
+
+  Face* twoFace = new Face();
+  twoFace->setVerts(twoVerts);
+  twoFace->setEdges(twoEdges);
+
+  newFaces->add(oneFace);
+  newFaces->add(twoFace);
+
+  // do the remaining separations
+  while(numSeperations) {
+    // to be implemented
+    numSeperations--;
+  }
 
   return newFaces;
 }

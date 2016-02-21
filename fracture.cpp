@@ -46,7 +46,7 @@ void Fracture::clearAndReloadFaces() {
 	// we may not want to do this
 }
 
-void Fracture::createNewVertex(float x,float y) {
+void Fracture::createNewVertex(float x,float y) { // probably do not need
 	// need to figure out how to connect it with all verts near it...
 	Vertex* newVert = new Vertex(x,y);
 	Point2 p;

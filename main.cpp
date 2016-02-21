@@ -6,6 +6,7 @@
 #include "interface.h"
 #include "programData.h"
 #include "renderSettings.h"
+#include "mutations.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ void cb_clearFracture(int id);
 void cb_vertsOnOff(int id);
 void cb_edgesOnOff(int id);
 void cb_facesOnOff(int id);
+void cb_randomMutation(int id);
 
 // Arguements
 GLUI* subwindow;
@@ -91,6 +93,7 @@ void createInterface() {
   interface->displayFacesButton = subwindow->add_button_to_panel(interface->renderMenu,"Faces On/Off",1,cb_facesOnOff);
   // Evolution Menu
   interface->evolutionMenu = subwindow->add_rollout("Evolution",false);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Random Mutation",1,cb_randomMutation);
 }
 
 void display() {
@@ -164,4 +167,9 @@ void cb_facesOnOff(int id) {
   //renderSettings->setDisplayFaces(!renderSettings->getDisplayFaces());
   //glutSetWindow(window);
   //glutPostRedisplay();
+}
+
+void cb_randomMutation(int id) {
+  cout << "Random Mutation Needs to be implemented" << endl;
+  Mutations::AddRandomVertex(programData->getCurrentFracture());
 }

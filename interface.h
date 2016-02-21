@@ -28,6 +28,7 @@ public:
   GLUI_Button* displayFacesButton;
   // evolution menu
   GLUI_Rollout* evolutionMenu;
+  GLUI_Button* randomMutation;
 
 //public:
   Interface(GLUI* subwindow);

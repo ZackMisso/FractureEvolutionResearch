@@ -48,10 +48,25 @@ bool Edge::intersects(Edge* other) {
   return false;
 }
 
+Point2 Edge::getIntersectionPoint(Edge* other) {
+  Point2 intersection;
+  intersection.xpos = -1;
+  intersection.ypos = -1;
+  // to be implemented
+  return intersection;
+}
+
 Point2 Edge::getOtherPoint(Point2 point) {
   if(point.xpos == first.xpos && point.ypos == first.ypos)
     return second;
   return first;
+}
+
+Point2 Edge::getPointBetween(float linePos) {
+  Point2 newPoint;
+  newPoint.xpos = (second.xpos-first.xpos) * linePos;
+  newPoint.ypos = (second.ypos-first.ypos) * linePos;
+  return newPoint;
 }
 
 Point2 Edge::getFirst() { return first; }

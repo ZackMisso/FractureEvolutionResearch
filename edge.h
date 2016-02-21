@@ -13,7 +13,9 @@ public:
   Edge(float x,float y,float xx,float yy);
   void draw();
   bool intersects(Edge* other);
+  Point2 getIntersectionPoint(Edge* other);
   Point2 getOtherPoint(Point2 point);
+  Point2 getPointBetween(float pos);
 	// getters
   Point2 getFirst();
   Point2 getSecond();
