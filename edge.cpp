@@ -1,6 +1,10 @@
 #include "edge.h"
 #include <GL/glut.h>
 
+#include <iostream>
+
+using namespace std;
+
 Edge::Edge(Point2 one,Point2 two) {
   first.xpos = one.xpos;
   first.ypos = one.ypos;
@@ -23,15 +27,26 @@ void Edge::draw() {
 }
 
 bool Edge::intersects(Edge* other) {
+  cout << "////////////////////////////////////////" << endl;
   Point2 oFirst = other->getFirst();
   Point2 oSecond = other->getSecond();
+
+  cout << "TWO :: " << oFirst.xpos << " " << oFirst.ypos << " " << oSecond.xpos << " " << oSecond.ypos << endl;
+  cout << "ONE :: " << first.xpos << " " << first.ypos << " " << second.xpos << " " << second.ypos << endl;
 
   float s1x = first.xpos - second.xpos;
   float s1y = first.ypos - second.ypos;
   float s2x = oFirst.xpos - oSecond.xpos;
   float s2y = oFirst.ypos - oSecond.ypos;
 
+  cout << "S1X :: " << s1x << endl;
+  cout << "S2X :: " << s2x << endl;
+  cout << "S1Y :: " << s1y << endl;
+  cout << "S2Y :: " << s2y << endl;
+
   float det = -s2x * s1y + s1x * s2y;
+
+  cout << "Det :: " << det << endl;
 
   if(det == 0.0f)
     return false;
@@ -42,8 +57,15 @@ bool Edge::intersects(Edge* other) {
   float s = -s1y * tmp1 + s1x * tmp2;
   float t = -s2y * tmp1 + s2x * tmp2;
 
+  cout << "S :: " << s << endl;
+  cout << "T :: " << t << endl;
+
+  cout << "////////////////////////////////////////" << endl;
+
   if(s > 0 && s < det && t > 0 && t < det)
     return true;
+
+
 
   return false;
 }

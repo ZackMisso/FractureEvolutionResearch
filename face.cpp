@@ -3,6 +3,10 @@
 
 #include <cstdlib>
 
+#include <iostream>
+
+using namespace std;
+
 Face::Face() {
   verts = new Array<Vertex*>();
   edges = new Array<Edge*>();
@@ -39,6 +43,7 @@ bool Face::contains(Point2 point) {
   for(int i=0;i<edges->getSize();i++)
     if(edges->get(i)->intersects(ray))
       intersections++;
+  cout << "Intersections :: " << intersections << endl;
   // if odd this face contains the point
   delete ray;
   return intersections % 2;
@@ -104,7 +109,7 @@ Array<Face*>* Face::separate(Vertex* newVert) {
 
 Array<Face*>* Face::separate(float x,float y) {
   Array<Face*>* newFaces = new Array<Face*>();
-
+  cout << "Beginning Separation" << endl;
   int numSeperations = RNG::RandomInt(2,edges->getSize(),4);
   // do the first two seperations
   Array<Edge*>* oneEdges = new Array<Edge*>();
@@ -119,21 +124,26 @@ Array<Face*>* Face::separate(float x,float y) {
   Point2 oneLoc;
   Point2 twoLoc;
 
+  cout << "Initialized Everything" << endl;
+
   for(int i=0;i<2;i++) {
+    cout << "Starting Face" << endl;
     int edgeInd = RNG::RandomInt(edges->getSize());
     float edgeDist = RNG::RandomFloat();
     Edge* edge = edges->get(edgeInd);
+    cout << "Calculating Point Between" << endl;
     Point2 newPoint = edge->getPointBetween(edgeDist);
-
+    cout << "Creating new Edge" << endl;
     Edge* newEdge = new Edge(x,y,newPoint.xpos,newPoint.ypos);
     // THIS IS INEFFICIENT... WILL HAVE TO FIX LATER
+    cout << "Checking Intersections" << endl;
     for(int j=0;j<edges->getSize();j++)
       if(edges->get(j)!=edge)
         if(edges->get(i)->intersects(newEdge)) {
           // fix the newEdge's second location
           // TODO :: LATER
         }
-
+    cout << "Setting Point Location" << endl;
     if(i) {
       oneLoc.xpos = newPoint.xpos;
       oneLoc.ypos = newPoint.ypos;
@@ -141,7 +151,7 @@ Array<Face*>* Face::separate(float x,float y) {
       twoLoc.xpos = newPoint.xpos;
       twoLoc.ypos = newPoint.ypos;
     }
-
+    cout << "Creating New Vertex" << endl;
     Vertex* newVert = new Vertex(newPoint);
     oneVerts->add(newVert);
     twoVerts->add(newVert);
@@ -152,24 +162,28 @@ Array<Face*>* Face::separate(float x,float y) {
     numSeperations--;
   }
   // update faces
+  cout << "Calculating The Separate Paths" << endl;
   findSeparatePaths(oneEdges,twoEdges,oneLoc,twoLoc);
+  cout << "Finding The Verts on the First Path" << endl;
   Array<Vertex*>* tmpOne = findVertsOnPath(oneEdges);
+  cout << "finding The Verts on the Second Path" << endl;
   Array<Vertex*>* tmpTwo = findVertsOnPath(twoEdges);
+  cout << "Cleaning Up" << endl;
   while(tmpOne->getSize())
     oneVerts->add(tmpOne->removeLast());
   while(tmpTwo->getSize())
     twoVerts->add(tmpTwo->removeLast());
   delete tmpOne;
   delete tmpTwo;
-
+  cout << "Creating First Face" << endl;
   Face* oneFace = new Face();
   oneFace->setVerts(oneVerts);
   oneFace->setEdges(oneEdges);
-
+  cout << "Creating Second Face" << endl;
   Face* twoFace = new Face();
   twoFace->setVerts(twoVerts);
   twoFace->setEdges(twoEdges);
-
+  cout << "Adding Faces" << endl;
   newFaces->add(oneFace);
   newFaces->add(twoFace);
 
@@ -178,7 +192,7 @@ Array<Face*>* Face::separate(float x,float y) {
     // to be implemented
     numSeperations--;
   }
-
+  cout << "Exiting Separation" << endl;
   return newFaces;
 }
 
