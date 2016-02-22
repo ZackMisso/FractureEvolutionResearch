@@ -90,6 +90,14 @@ Point2 Edge::getIntersectionPoint(Edge* other) {
   return intersection;
 }
 
+bool Edge::eitherMatch(Point2 point) {
+  if(first.xpos == point.xpos && first.ypos == point.ypos)
+    return true;
+  if(second.xpos == point.xpos && second.ypos == point.ypos)
+    return true;
+  return false;
+}
+
 Point2 Edge::getOtherPoint(Point2 point) {
   if(point.xpos == first.xpos && point.ypos == first.ypos)
     return second;

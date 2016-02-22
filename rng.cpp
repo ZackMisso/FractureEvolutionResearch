@@ -37,6 +37,6 @@ int RNG::RandomInt(int min,int max,int num) {
 
 int RNG::RandomIntWithException(int max,int exe) {
   int num=-1;
-  while((num=RandomInt(max))!=exe) {}
+  while((num=RandomInt(max))==exe) {}
   return num;
 }

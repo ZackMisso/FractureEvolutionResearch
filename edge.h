@@ -15,6 +15,7 @@ public:
   void draw();
   bool intersects(Edge* other);
   void debug();
+  bool eitherMatch(Point2 point);
   Point2 getIntersectionPoint(Edge* other);
   Point2 getOtherPoint(Point2 point);
   Point2 getPointBetween(float pos);

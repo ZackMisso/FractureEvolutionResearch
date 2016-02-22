@@ -1,5 +1,6 @@
 #include "face.h"
 #include "rng.h"
+#include "debug.h"
 
 #include <cstdlib>
 
@@ -132,6 +133,7 @@ Array<Face*>* Face::separate(float x,float y) {
   int edgeIndOne = -1;
 
   Array<Edge*>* tmpEdges = new Array<Edge*>();
+  Array<Edge*>* edgesToRemove = new Array<Edge*>();
 
   for(int i=0;i<2;i++) {
     cout << "Starting Face" << endl;
@@ -176,14 +178,25 @@ Array<Face*>* Face::separate(float x,float y) {
 
     oneEdges->add(newEdge);
     twoEdges->add(newEdge);
+    edgesToRemove->add(edge);
 
     numSeperations--;
   }
   while(tmpEdges->getSize())
     edges->add(tmpEdges->removeLast());
+  while(edgesToRemove->getSize())
+    edges->remove(edgesToRemove->removeLast());
+  delete edgesToRemove;
+  delete tmpEdges;
   // update faces
   cout << "Calculating The Separate Paths" << endl;
   findSeparatePaths(oneEdges,twoEdges,oneLoc,twoLoc);
+  cout << "OneLoc :: " << oneLoc.xpos << " :: " << oneLoc.ypos << endl;
+  cout << "TwoLoc :: " << twoLoc.xpos << " :: " << twoLoc.ypos << endl;
+  cout << "One Edges :: " << endl;
+  Debug::printLines(oneEdges);
+  cout << "Two Edges :: " << endl;
+  Debug::printLines(twoEdges);
   cout << "Finding The Verts on the First Path" << endl;
   Array<Vertex*>* tmpOne = findVertsOnPath(oneEdges);
   cout << "finding The Verts on the Second Path" << endl;
@@ -231,8 +244,68 @@ void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,P
   cout << "Starting Separate Paths" << endl;
   Edge* startOne = 0x0;
   Edge* startTwo = 0x0;
+  Edge* errorFinder = 0x0;
   cout << "OneLoc :: " << oneLoc.xpos << " :: " << oneLoc.ypos << endl;
   cout << "TwoLoc :: " << twoLoc.xpos << " :: " << twoLoc.ypos << endl;
+  //Debug::printLines(edges);
+  //startOne->getFirst();
+  Array<Edge*>* tmpArray = new Array<Edge*>();
+  for(int i=0;i<edges->getSize();i++)
+    if(edges->get(i)->eitherMatch(oneLoc))
+      tmpArray->add(edges->get(i));
+  cout << "Size Of Edges :: " << tmpArray->getSize() << endl;
+  Debug::printLines(tmpArray);
+  Edge* on = tmpArray->get(0);
+  Point2 poi = on->getOtherPoint(oneLoc);
+  one->add(on);
+  cout << "POI :: " << poi.xpos << " " << poi.ypos << endl;
+  Point2 prev = oneLoc;
+  while(poi.xpos != twoLoc.xpos || poi.ypos != twoLoc.ypos) {
+    //cout << "THIS IS RUNNING" << endl;
+    cout << "POI :: " << poi.xpos << " " << poi.ypos << endl;
+    Edge* tmpe = 0x0;
+    for(int i=0;i<edges->getSize();i++)
+      if(edges->get(i)->eitherMatch(poi) && !edges->get(i)->eitherMatch(prev))
+        tmpe = edges->get(i);
+      //tmpe->debug();
+    one->add(tmpe);
+    prev.xpos = poi.xpos;
+    prev.ypos = poi.ypos;
+    poi = tmpe->getOtherPoint(poi);
+  }
+
+  on = tmpArray->get(1);
+  poi = on->getOtherPoint(oneLoc);
+  two->add(on);
+  prev = oneLoc;
+  cout << "POI :: " << poi.xpos << " " << poi.ypos << endl;
+  /*while(poi.xpos != twoLoc.xpos || poi.ypos != twoLoc.ypos) {
+    cout << "THIS IS RUNNING" << endl;
+    Point2 prev = oneLoc;
+    Edge* tmpe = 0x0;
+    for(int i=0;i<edges->getSize();i++)
+      if(edges->get(i)->eitherMatch(poi) && !edges->get(i)->eitherMatch(prev))
+        tmpe = edges->get(i);
+      //tmpe->debug();
+    two->add(tmpe);
+    prev.xpos = poi.xpos;
+    prev.ypos = poi.ypos;
+    poi = tmpe->getOtherPoint(poi);
+  }*/
+
+
+  cout << "Printing One :: " << endl;
+  Debug::printLines(one);
+  cout << "Printing Two :: " << endl;
+  Debug::printLines(two);
+
+  errorFinder->getFirst();
+
+
+
+
+
+
   for(int i=0;i<edges->getSize();i++) {
     cout << "Enter For Loop for Separate Paths" << endl;
     if(edges->get(i)->getFirst().xpos == oneLoc.xpos && edges->get(i)->getFirst().ypos == oneLoc.ypos) {
@@ -277,7 +350,17 @@ void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,P
 
   one->add(startOne);
   two->add(startTwo);
+
+  cout << "Start One :: ";
+  startOne->debug();
+
+  cout << "Start Two :: ";
+  startTwo->debug();
+
   cout << "Entering Traversal Loop" << endl;
+  cout << tmp.xpos << " " << tmp.ypos << endl;
+  //cout << tmp.xpos != twoLoc.xpos << endl;
+  cout << "Blah" << endl;
   while(tmp.xpos != twoLoc.xpos && tmp.ypos != twoLoc.ypos) {
     cout << "Traversing" << endl;
     for(int i=0;i<edges->getSize();i++) {
@@ -299,6 +382,7 @@ void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,P
   }
 
   while(tmp2.xpos != twoLoc.xpos && tmp2.ypos != twoLoc.ypos) {
+    cout << "Traversing Too" << endl;
     for(int i=0;i<edges->getSize();i++) {
       if(edges->get(i)->getFirst().xpos == tmp2.xpos && edges->get(i)->getFirst().ypos == tmp2.ypos)
         if(edges->get(i) != startTwo) {
