@@ -34,3 +34,9 @@ int RNG::RandomInt(int min,int max,int num) {
   else
     return RandomInt(min,max);
 }
+
+int RNG::RandomIntWithException(int max,int exe) {
+  int num=-1;
+  while((num=RandomInt(max))!=exe) {}
+  return num;
+}

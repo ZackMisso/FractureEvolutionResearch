@@ -7,6 +7,7 @@
 #include "programData.h"
 #include "renderSettings.h"
 #include "mutations.h"
+#include "tests.h"
 
 using namespace std;
 
@@ -17,6 +18,7 @@ void mouseMotion(int x,int y);
 void keyboard(unsigned char key,int x,int y);
 void reshape(int w,int h);
 void mainLoop(void);
+bool unitTests();
 
 // callbacks
 void cb_saveFracture(int id);
@@ -37,6 +39,13 @@ int window;
 
 int main(int argc,char** argv) {
   cout << "Beginning Initialization" << endl;
+
+  cout << "Running Unit Tests" << endl;
+  if(unitTests()) {
+    cout << "Exiting Because of Failed Unit Test" << endl;
+    return 2;
+  }
+
   programData = new ProgramData();
 
 	glutInit(&argc,argv);
@@ -132,6 +141,27 @@ void reshape(int w,int h) {
 
 void mainLoop(void) {
   // probably not going to use
+}
+
+bool unitTests() {
+  if(Tests::intersectionTestOne()) {
+    cout << "First Intersection Test Failed" << endl;
+    return true;
+  }
+  if(Tests::intersectionTestTwo()) {
+    cout << "Second Intersection Test Failed" << endl;
+    return true;
+  }
+  if(Tests::intersectionTestThree()) {
+    cout << "Third Intersection Test Failed" << endl;
+    return true;
+  }
+  if(Tests::pointBetweenTest()) {
+    cout << "Point Between Test Failed" << endl;
+    return true;
+  }
+  // implement more as needed
+  return false;
 }
 
 ///////////////////// CALLBACKS ////////////////////////

@@ -46,6 +46,9 @@ bool Edge::intersects(Edge* other) {
 
   float det = -s2x * s1y + s1x * s2y;
 
+  //if(det<0)
+  //  det*=-1;
+
   cout << "Det :: " << det << endl;
 
   if(det == 0.0f)
@@ -54,20 +57,29 @@ bool Edge::intersects(Edge* other) {
   float tmp1 = (first.xpos - oFirst.xpos);
   float tmp2 = (first.ypos - oFirst.ypos);
 
-  float s = -s1y * tmp1 + s1x * tmp2;
-  float t = -s2y * tmp1 + s2x * tmp2;
+  float s = (-s1y * tmp1 + s1x * tmp2) / det;
+  float t = (-s2y * tmp1 + s2x * tmp2) / det;
+
+  //if(s<0)
+  //  s*=-1;
+  //if(t<0)
+  //  t*=-1;
 
   cout << "S :: " << s << endl;
   cout << "T :: " << t << endl;
 
   cout << "////////////////////////////////////////" << endl;
 
-  if(s > 0 && s < det && t > 0 && t < det)
+  if(s < 0 && s > -1 && t < 0 && t > -1)
     return true;
 
 
 
   return false;
+}
+
+void Edge::debug() {
+  cout << first.xpos << " " << first.ypos << " " << second.xpos << " " << second.ypos << endl;
 }
 
 Point2 Edge::getIntersectionPoint(Edge* other) {
@@ -86,9 +98,14 @@ Point2 Edge::getOtherPoint(Point2 point) {
 
 Point2 Edge::getPointBetween(float linePos) {
   Point2 newPoint;
-  newPoint.xpos = (second.xpos-first.xpos) * linePos;
-  newPoint.ypos = (second.ypos-first.ypos) * linePos;
+  newPoint.xpos = ((second.xpos-first.xpos) * linePos) + first.xpos;
+  newPoint.ypos = ((second.ypos-first.ypos) * linePos) + first.ypos;
   return newPoint;
+}
+
+void Edge::split(Array<Edge*>* cb,Point2 point) {
+  cb->add(new Edge(first,point));
+  cb->add(new Edge(point,second));
 }
 
 Point2 Edge::getFirst() { return first; }

@@ -46,6 +46,11 @@ public:
 		return size;
 	}
 
+	void clear() {
+		while(size)
+			removeLast();
+	}
+
 	T removeLast() {
 		size--;
 		T last=ary[size];

@@ -10,6 +10,7 @@ public:
   static int RandomInt(int max);
   static int RandomInt(int min,int max);
   static int RandomInt(int min,int max,int num);
+  static int RandomIntWithException(int max,int exe);
 };
 
 #endif

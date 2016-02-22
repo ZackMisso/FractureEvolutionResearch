@@ -2,6 +2,7 @@
 #define __EDGE_H__
 
 #include "point2.h"
+#include "array.h"
 
 class Edge {
 private:
@@ -13,9 +14,11 @@ public:
   Edge(float x,float y,float xx,float yy);
   void draw();
   bool intersects(Edge* other);
+  void debug();
   Point2 getIntersectionPoint(Edge* other);
   Point2 getOtherPoint(Point2 point);
   Point2 getPointBetween(float pos);
+  void split(Array<Edge*>* cb,Point2 point);
 	// getters
   Point2 getFirst();
   Point2 getSecond();

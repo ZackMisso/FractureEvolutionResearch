@@ -71,6 +71,9 @@ Array<Face*>* Face::separate(Vertex* newVert) {
   // verts will always be >= 3 in size
   int indexOne = rand() % verts->getSize();
   int indexTwo = rand() % verts->getSize();
+
+  float* tmp = 0x0;
+
   while(indexOne == indexTwo)
     indexTwo = rand() % verts->getSize();
 
@@ -126,15 +129,29 @@ Array<Face*>* Face::separate(float x,float y) {
 
   cout << "Initialized Everything" << endl;
 
+  int edgeIndOne = -1;
+
+  Array<Edge*>* tmpEdges = new Array<Edge*>();
+
   for(int i=0;i<2;i++) {
     cout << "Starting Face" << endl;
-    int edgeInd = RNG::RandomInt(edges->getSize());
+    int edgeInd;
+    if(edgeIndOne==-1) {
+      edgeInd = RNG::RandomInt(edges->getSize());
+      edgeIndOne = edgeInd;
+    } else
+      edgeInd = RNG::RandomIntWithException(edges->getSize(),edgeIndOne);
+
     float edgeDist = RNG::RandomFloat();
     Edge* edge = edges->get(edgeInd);
     cout << "Calculating Point Between" << endl;
     Point2 newPoint = edge->getPointBetween(edgeDist);
+    edge->split(tmpEdges,newPoint);
     cout << "Creating new Edge" << endl;
     Edge* newEdge = new Edge(x,y,newPoint.xpos,newPoint.ypos);
+    cout << "OLD EDGE :: ";
+    edge->debug();
+    cout << "NEW EDGE :: " << x << " " << y << " " << newPoint.xpos << " "<< newPoint.ypos << endl;
     // THIS IS INEFFICIENT... WILL HAVE TO FIX LATER
     cout << "Checking Intersections" << endl;
     for(int j=0;j<edges->getSize();j++)
@@ -155,12 +172,15 @@ Array<Face*>* Face::separate(float x,float y) {
     Vertex* newVert = new Vertex(newPoint);
     oneVerts->add(newVert);
     twoVerts->add(newVert);
+    //verts->add(newVert);
 
     oneEdges->add(newEdge);
     twoEdges->add(newEdge);
 
     numSeperations--;
   }
+  while(tmpEdges->getSize())
+    edges->add(tmpEdges->removeLast());
   // update faces
   cout << "Calculating The Separate Paths" << endl;
   findSeparatePaths(oneEdges,twoEdges,oneLoc,twoLoc);
@@ -208,27 +228,48 @@ Array<Face*>* Face::separate(Point2 start,Point2 end) {
 }
 
 void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,Point2 twoLoc) {
+  cout << "Starting Separate Paths" << endl;
   Edge* startOne = 0x0;
   Edge* startTwo = 0x0;
+  cout << "OneLoc :: " << oneLoc.xpos << " :: " << oneLoc.ypos << endl;
+  cout << "TwoLoc :: " << twoLoc.xpos << " :: " << twoLoc.ypos << endl;
   for(int i=0;i<edges->getSize();i++) {
+    cout << "Enter For Loop for Separate Paths" << endl;
     if(edges->get(i)->getFirst().xpos == oneLoc.xpos && edges->get(i)->getFirst().ypos == oneLoc.ypos) {
+      cout << "TIS A MATCH" << endl;
       if(!startOne) {
+        cout << "Found First Edge in First" << endl;
         startOne = edges->get(i);
       } else if(startOne != edges->get(i)) {
+        cout << "Found Second Edge in First" << endl;
         startTwo = edges->get(i);
         i = edges->getSize();
       }
     }
 
     if(edges->get(i)->getSecond().xpos == oneLoc.xpos && edges->get(i)->getSecond().ypos == oneLoc.ypos) {
+      cout << "TIS A MATCH TOO" << endl;
       if(!startOne) {
+        cout << "Found First Edge in Second" << endl;
         startOne = edges->get(i);
       } else if(startOne != edges->get(i)) {
+        cout << "Found Second Edge in Second" << endl;
         startTwo = edges->get(i);
         i = edges->getSize();
       }
     }
   }
+
+  cout << "Getting Other Points" << endl;
+
+  if(!one)
+    cout << "First Array Not Initialized" << endl;
+  if(!two)
+    cout << "Second Array Not Initialized" << endl;
+  if(!startOne)
+    cout << "First Edge Not Initialized" << endl;
+  if(!startTwo)
+    cout << "Second Edge Not Initialized" << endl;
 
   // Follow edges until you reach the final point
   Point2 tmp = startOne->getOtherPoint(oneLoc);
@@ -236,8 +277,9 @@ void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,P
 
   one->add(startOne);
   two->add(startTwo);
-
+  cout << "Entering Traversal Loop" << endl;
   while(tmp.xpos != twoLoc.xpos && tmp.ypos != twoLoc.ypos) {
+    cout << "Traversing" << endl;
     for(int i=0;i<edges->getSize();i++) {
       if(edges->get(i)->getFirst().xpos == tmp.xpos && edges->get(i)->getFirst().ypos == tmp.ypos)
         if(edges->get(i) != startOne) {
