@@ -279,9 +279,9 @@ void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,P
   two->add(on);
   prev = oneLoc;
   cout << "POI :: " << poi.xpos << " " << poi.ypos << endl;
-  /*while(poi.xpos != twoLoc.xpos || poi.ypos != twoLoc.ypos) {
-    cout << "THIS IS RUNNING" << endl;
-    Point2 prev = oneLoc;
+  while(poi.xpos != twoLoc.xpos || poi.ypos != twoLoc.ypos) {
+    cout << "POI :: " << poi.xpos << " " << poi.ypos << endl;
+    //Point2 prev = oneLoc;
     Edge* tmpe = 0x0;
     for(int i=0;i<edges->getSize();i++)
       if(edges->get(i)->eitherMatch(poi) && !edges->get(i)->eitherMatch(prev))
@@ -291,7 +291,7 @@ void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,P
     prev.xpos = poi.xpos;
     prev.ypos = poi.ypos;
     poi = tmpe->getOtherPoint(poi);
-  }*/
+  }
 
 
   cout << "Printing One :: " << endl;
@@ -299,14 +299,14 @@ void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,P
   cout << "Printing Two :: " << endl;
   Debug::printLines(two);
 
-  errorFinder->getFirst();
+  //errorFinder->getFirst();
 
 
 
 
 
 
-  for(int i=0;i<edges->getSize();i++) {
+  /*for(int i=0;i<edges->getSize();i++) {
     cout << "Enter For Loop for Separate Paths" << endl;
     if(edges->get(i)->getFirst().xpos == oneLoc.xpos && edges->get(i)->getFirst().ypos == oneLoc.ypos) {
       cout << "TIS A MATCH" << endl;
@@ -399,7 +399,7 @@ void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,P
           i = edges->getSize();
         }
     }
-  }
+  }*/
 
 }
 
