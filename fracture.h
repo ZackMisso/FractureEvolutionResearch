@@ -19,6 +19,8 @@ public:
   void clearAndReloadFaces();
 	void createNewVertex(float x,float y);
 	void createNewEdge(Vertex* one,Vertex* two);
+  void recount();
+  //void debug();
   Array<Face*>* getFacesWithVertex(Vertex* vert);
   Array<Face*>* getFacesWithEdge(Edge* edge);
 	void draw(RenderSettings* renderSettings);

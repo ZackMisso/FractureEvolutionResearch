@@ -1,5 +1,6 @@
 #include "mutations.h"
 #include "rng.h"
+#include "debug.h"
 
 #include <iostream>
 
@@ -35,7 +36,9 @@ void Mutations::AddRandomVertex(Fracture* fracture) {
       newFaces->removeLast();
     delete oldFace;
     delete newFaces;
+    fracture->recount();
   }
+  Debug::printFracture(fracture);
 }
 
 void Mutations::RemoveRandomEdge(Fracture* fracture) {

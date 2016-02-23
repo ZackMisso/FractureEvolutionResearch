@@ -199,6 +199,7 @@ Array<Face*>* Face::separate(float x,float y) {
   Debug::printLines(twoEdges);
   cout << "Finding The Verts on the First Path" << endl;
   Array<Vertex*>* tmpOne = findVertsOnPath(oneEdges);
+  //Debug::printPoints(tmpOne);
   cout << "finding The Verts on the Second Path" << endl;
   Array<Vertex*>* tmpTwo = findVertsOnPath(twoEdges);
   cout << "Cleaning Up" << endl;
@@ -206,6 +207,10 @@ Array<Face*>* Face::separate(float x,float y) {
     oneVerts->add(tmpOne->removeLast());
   while(tmpTwo->getSize())
     twoVerts->add(tmpTwo->removeLast());
+  cout << "First Verts :: " << endl;
+  Debug::printPoints(oneVerts);
+  cout << "Second Verts :: " << endl;
+  Debug::printPoints(twoVerts);
   delete tmpOne;
   delete tmpTwo;
   cout << "Creating First Face" << endl;
@@ -406,17 +411,33 @@ void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,P
 Array<Vertex*>* Face::findVertsOnPath(Array<Edge*>* edgs) {
   // this should be fixed so that it only needs to check the first one's location
   Array<Vertex*>* vp = new Array<Vertex*>();
+  cout << "In find Verts" << endl;
+  //for(int i=0;i<edgs->getSize();i++) {
+  //  for(int j=0;j<verts->getSize();j++)
+  //    if(isMatch())
+  //}
+
+
   for(int i=0;i<edgs->getSize();i++)
     for(int j=0;j<verts->getSize();j++) {
-      if(edgs->get(i)->getFirst().xpos == verts->get(j)->getLocation().xpos && edgs->get(i)->getFirst().ypos == verts->get(j)->getLocation().ypos)
+      cout << "First Check" << endl;
+      if(edgs->get(i)->getFirst().xpos == verts->get(j)->getLocation().xpos && edgs->get(i)->getFirst().ypos == verts->get(j)->getLocation().ypos) {
+        cout << "Calling Contains" << endl;
         if(!vp->contains(verts->get(j))){
           vp->add(verts->get(j));
           j = verts->getSize();
         }
-      if(edgs->get(i)->getSecond().xpos == verts->get(j)->getLocation().xpos && edgs->get(i)->getSecond().ypos == verts->get(j)->getLocation().ypos)
-        if(!vp->contains(verts->get(j))){
-          vp->add(verts->get(j));
-          j = verts->getSize();
+        cout << "Outside Contains" << endl;
+      }
+      cout << "Second Check" << endl;
+      if(j!=verts->getSize())
+        if(edgs->get(i)->getSecond().xpos == verts->get(j)->getLocation().xpos && edgs->get(i)->getSecond().ypos == verts->get(j)->getLocation().ypos) {
+          cout << "Calling Contains" << endl;
+          if(!vp->contains(verts->get(j))){
+            vp->add(verts->get(j));
+            j = verts->getSize();
+          }
+          cout << "Outside Contains" << endl;
         }
     }
   return vp;

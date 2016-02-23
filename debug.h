@@ -4,11 +4,13 @@
 #include "array.h"
 #include "vertex.h"
 #include "edge.h"
+#include "fracture.h"
 
 class Debug {
 public:
   static void printPoints(Array<Vertex*>* verts);
   static void printLines(Array<Edge*>* edges);
+  static void printFracture(Fracture* fracture);
 };
 
 #endif

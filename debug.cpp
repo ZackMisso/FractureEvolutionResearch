@@ -21,3 +21,17 @@ void Debug::printLines(Array<Edge*>* edges) {
   }
   cout << "/////////////////////////////////////////" << endl;
 }
+
+void Debug::printFracture(Fracture* fracture) {
+  cout << "////////// PRINTING FRACTURE ////////////" << endl;
+  cout << endl;
+  for(int i=0;i<fracture->getFaces()->getSize();i++) {
+    cout << "FACE :: " << i << endl;
+    cout << endl;
+    printLines(fracture->getFaces()->get(i)->getEdges());
+    cout << endl;
+    printPoints(fracture->getFaces()->get(i)->getVerts());
+    cout << endl;
+  }
+  cout << "/////////////////////////////////////////" << endl;
+}
