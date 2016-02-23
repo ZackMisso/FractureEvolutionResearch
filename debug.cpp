@@ -35,3 +35,7 @@ void Debug::printFracture(Fracture* fracture) {
   }
   cout << "/////////////////////////////////////////" << endl;
 }
+
+void Debug::printLine(Edge* edge) {
+  cout << edge->getFirst().xpos << " " << edge->getFirst().ypos << " " << edge->getSecond().xpos << " " << edge->getSecond().ypos << endl;
+}

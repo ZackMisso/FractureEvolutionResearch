@@ -200,11 +200,11 @@ void cb_facesOnOff(int id) {
 }
 
 void cb_randomMutation(int id) {
-  cout << "Random Mutation Needs to be implemented" << endl;
+  //cout << "Random Mutation Needs to be implemented" << endl;
   Mutations::AddRandomVertex(programData->getCurrentFracture());
-  cout << "NUM FACES :: " << programData->getCurrentFracture()->getFaces()->getSize() << endl;
-  cout << "NUM Edges :: " << programData->getCurrentFracture()->getEdges()->getSize() << endl;
-  cout << "NUM Verts :: " << programData->getCurrentFracture()->getVerts()->getSize() << endl;
+  //cout << "NUM FACES :: " << programData->getCurrentFracture()->getFaces()->getSize() << endl;
+  //cout << "NUM Edges :: " << programData->getCurrentFracture()->getEdges()->getSize() << endl;
+  //cout << "NUM Verts :: " << programData->getCurrentFracture()->getVerts()->getSize() << endl;
   glutSetWindow(window);
   glutPostRedisplay();
 }

@@ -7,13 +7,13 @@
 using namespace std;
 
 void Mutations::AddRandomVertex(Fracture* fracture) {
-  cout << "Creating Random Position" << endl;
+  //cout << "Creating Random Position" << endl;
   float randX = RNG::RandomFloat(-0.5f,0.5f);
   float randY = RNG::RandomFloat(-0.5f,0.5f);
-  cout << "Position :: " << randX << " :: " << randY << endl;
+  //cout << "Position :: " << randX << " :: " << randY << endl;
   Array<Face*>* faces = fracture->getFaces();
   Face* oldFace = 0x0;
-  cout << "Running Contains Method" << endl;
+  //cout << "Running Contains Method" << endl;
   for(int i=0;i<faces->getSize();i++)
     if(faces->get(i)->contains(randX,randY))
       oldFace = faces->get(i);
@@ -23,14 +23,14 @@ void Mutations::AddRandomVertex(Fracture* fracture) {
     //AddRandomVertex(fracture);
     return;
   }
-  cout << "Found Face" << endl;
-  cout << "Separating the Face" << endl;
+  //cout << "Found Face" << endl;
+  //cout << "Separating the Face" << endl;
   Array<Face*>* newFaces = oldFace->separate(randX,randY);
-  cout << "Finished Separations" << endl;
+  //cout << "Finished Separations" << endl;
   if(newFaces) {
     for(int i=0;i<newFaces->getSize();i++)
       faces->add(newFaces->get(i));
-    cout << "Doing Final Removals" << endl;
+    //cout << "Doing Final Removals" << endl;
     faces->remove(oldFace);
     while(newFaces->getSize())
       newFaces->removeLast();
@@ -38,7 +38,7 @@ void Mutations::AddRandomVertex(Fracture* fracture) {
     delete newFaces;
     fracture->recount();
   }
-  Debug::printFracture(fracture);
+  //Debug::printFracture(fracture);
 }
 
 void Mutations::RemoveRandomEdge(Fracture* fracture) {

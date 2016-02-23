@@ -25,7 +25,7 @@ Fracture::~Fracture() {
 }
 
 void Fracture::init(int points) {
-	cout << "INITING" << endl;
+	//cout << "INITING" << endl;
 	verts->add(new Vertex(-0.5,-0.5));
 	verts->add(new Vertex(-0.5,0.5));
 	verts->add(new Vertex(0.5,0.5));
@@ -124,8 +124,8 @@ void Fracture::draw(RenderSettings* renderSettings) {
 		glPointSize((float)renderSettings->getVertSize());
 		glBegin(GL_POINTS);
 		//glPointSize((float)renderSettings->getVertSize());
-		cout << "DRAWING VERTS :: " << (float)renderSettings->getVertSize() << endl;
-		cout << "NUMBER OF VERTS :: " << verts->getSize() << endl;
+		//cout << "DRAWING VERTS :: " << (float)renderSettings->getVertSize() << endl;
+		//cout << "NUMBER OF VERTS :: " << verts->getSize() << endl;
 		for(int i=0;i<verts->getSize();i++)
 			verts->get(i)->draw();
 		glEnd();
@@ -133,7 +133,7 @@ void Fracture::draw(RenderSettings* renderSettings) {
 	if(renderSettings->getDisplayEdges()) {
 		glLineWidth((float)renderSettings->getEdgeSize());
 		glBegin(GL_LINES);
-		cout << "NUMBER OF EDGES :: " << edges->getSize() << endl;
+		//cout << "NUMBER OF EDGES :: " << edges->getSize() << endl;
 		//glLineWidth((float)renderSettings->getEdgeSize());
 		for(int i=0;i<edges->getSize();i++)
 			edges->get(i)->draw();

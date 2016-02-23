@@ -27,29 +27,29 @@ void Edge::draw() {
 }
 
 bool Edge::intersects(Edge* other) {
-  cout << "////////////////////////////////////////" << endl;
+  //cout << "////////////////////////////////////////" << endl;
   Point2 oFirst = other->getFirst();
   Point2 oSecond = other->getSecond();
 
-  cout << "TWO :: " << oFirst.xpos << " " << oFirst.ypos << " " << oSecond.xpos << " " << oSecond.ypos << endl;
-  cout << "ONE :: " << first.xpos << " " << first.ypos << " " << second.xpos << " " << second.ypos << endl;
+  //cout << "TWO :: " << oFirst.xpos << " " << oFirst.ypos << " " << oSecond.xpos << " " << oSecond.ypos << endl;
+  //cout << "ONE :: " << first.xpos << " " << first.ypos << " " << second.xpos << " " << second.ypos << endl;
 
   float s1x = first.xpos - second.xpos;
   float s1y = first.ypos - second.ypos;
   float s2x = oFirst.xpos - oSecond.xpos;
   float s2y = oFirst.ypos - oSecond.ypos;
 
-  cout << "S1X :: " << s1x << endl;
-  cout << "S2X :: " << s2x << endl;
-  cout << "S1Y :: " << s1y << endl;
-  cout << "S2Y :: " << s2y << endl;
+  //cout << "S1X :: " << s1x << endl;
+  //cout << "S2X :: " << s2x << endl;
+  //cout << "S1Y :: " << s1y << endl;
+  //cout << "S2Y :: " << s2y << endl;
 
   float det = -s2x * s1y + s1x * s2y;
 
   //if(det<0)
   //  det*=-1;
 
-  cout << "Det :: " << det << endl;
+  //cout << "Det :: " << det << endl;
 
   if(det == 0.0f)
     return false;
@@ -65,10 +65,10 @@ bool Edge::intersects(Edge* other) {
   //if(t<0)
   //  t*=-1;
 
-  cout << "S :: " << s << endl;
-  cout << "T :: " << t << endl;
+  //cout << "S :: " << s << endl;
+  //cout << "T :: " << t << endl;
 
-  cout << "////////////////////////////////////////" << endl;
+  //cout << "////////////////////////////////////////" << endl;
 
   if(s < 0 && s > -1 && t < 0 && t > -1)
     return true;
@@ -76,10 +76,6 @@ bool Edge::intersects(Edge* other) {
 
 
   return false;
-}
-
-void Edge::debug() {
-  cout << first.xpos << " " << first.ypos << " " << second.xpos << " " << second.ypos << endl;
 }
 
 Point2 Edge::getIntersectionPoint(Edge* other) {
