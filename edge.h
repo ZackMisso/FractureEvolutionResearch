@@ -14,6 +14,7 @@ public:
   Edge(float x,float y,float xx,float yy);
   void draw();
   bool intersects(Edge* other);
+  Edge* intersects(Array<Edge*>* edges,Edge* ignore);
   bool eitherMatch(Point2 point);
   Point2 getIntersectionPoint(Edge* other);
   Point2 getOtherPoint(Point2 point);

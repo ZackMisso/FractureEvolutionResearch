@@ -9,3 +9,11 @@ Point2::Point2(float x,float y) {
   xpos = x;
   ypos = y;
 }
+
+void Point2::setXpos(float param) {
+  xpos = param;
+}
+
+void Point2::setYpos(float param) {
+  ypos = param;
+}

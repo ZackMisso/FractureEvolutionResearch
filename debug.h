@@ -5,10 +5,12 @@
 #include "vertex.h"
 #include "edge.h"
 #include "fracture.h"
+#include "point2.h"
 
 class Debug {
 public:
   static void printPoints(Array<Vertex*>* verts);
+  static void printPoint(Point2 point);
   static void printLines(Array<Edge*>* edges);
   static void printFracture(Fracture* fracture);
   static void printLine(Edge* edge);

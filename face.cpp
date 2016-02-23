@@ -148,20 +148,43 @@ Array<Face*>* Face::separate(float x,float y) {
     Edge* edge = edges->get(edgeInd);
     //cout << "Calculating Point Between" << endl;
     Point2 newPoint = edge->getPointBetween(edgeDist);
-    edge->split(tmpEdges,newPoint);
+    //edge->split(tmpEdges,newPoint);
     //cout << "Creating new Edge" << endl;
     Edge* newEdge = new Edge(x,y,newPoint.xpos,newPoint.ypos);
+    cout << "Finding Intersector" << endl;
+    Edge* intersector = newEdge->intersects(edges,edge);
+    if(intersector){
+      cout << "Found Intersector" << endl;
+      Debug::printPoint(newPoint);
+      newPoint = intersector->getIntersectionPoint(newEdge);
+      Debug::printPoint(newPoint);
+      //Debug::printPoint(newPoint);
+      //Debug::printLine(intersector);
+      cout << "Testing New Edge" <<endl;
+      Debug::printLine(newEdge);
+      delete newEdge;
+      newEdge = new Edge(x,y,newPoint.xpos,newPoint.ypos);
+      //newEdge->getSecond().setXpos(newPoint.xpos);
+      //newEdge->getSecond().setYpos(newPoint.ypos);
+      Debug::printLine(newEdge);
+      edge = intersector;
+    }else{
+      cout << "No Intersector Found" << endl;
+    }
+    edge->split(tmpEdges,newPoint);
+    Debug::printLines(tmpEdges);
+
     //cout << "OLD EDGE :: ";
     //edge->debug();
     //cout << "NEW EDGE :: " << x << " " << y << " " << newPoint.xpos << " "<< newPoint.ypos << endl;
     // THIS IS INEFFICIENT... WILL HAVE TO FIX LATER
     //cout << "Checking Intersections" << endl;
-    for(int j=0;j<edges->getSize();j++)
-      if(edges->get(j)!=edge)
-        if(edges->get(i)->intersects(newEdge)) {
-          // fix the newEdge's second location
-          // TODO :: LATER
-        }
+    //for(int j=0;j<edges->getSize();j++)
+    //  if(edges->get(j)!=edge)
+    //    if(edges->get(i)->intersects(newEdge)) {
+    //      // fix the newEdge's second location
+    //      // TODO :: LATER
+    //    }
     //cout << "Setting Point Location" << endl;
     if(i) {
       oneLoc.xpos = newPoint.xpos;
@@ -188,6 +211,7 @@ Array<Face*>* Face::separate(float x,float y) {
     edges->remove(edgesToRemove->removeLast());
   delete edgesToRemove;
   delete tmpEdges;
+  //Debug::printLines(edges);
   // update faces
   //cout << "Calculating The Separate Paths" << endl;
   findSeparatePaths(oneEdges,twoEdges,oneLoc,twoLoc);

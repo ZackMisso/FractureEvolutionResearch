@@ -12,6 +12,12 @@ void Debug::printPoints(Array<Vertex*>* verts) {
   cout << "/////////////////////////////////////////" << endl;
 }
 
+void Debug::printPoint(Point2 point) {
+  cout << "//////////// PRINTING POINT /////////////" << endl;
+  cout << "X :: " << point.xpos << " Y :: " << point.ypos << endl;
+  cout << "/////////////////////////////////////////" << endl;
+}
+
 void Debug::printLines(Array<Edge*>* edges) {
   cout << "/////////// PRINTING LINES /////////////" << endl;
   for(int i=0;i<edges->getSize();i++) {

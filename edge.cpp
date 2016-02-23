@@ -1,5 +1,6 @@
 #include "edge.h"
 #include <GL/glut.h>
+#include "debug.h"
 
 #include <iostream>
 
@@ -78,11 +79,51 @@ bool Edge::intersects(Edge* other) {
   return false;
 }
 
+Edge* Edge::intersects(Array<Edge*>* edges,Edge* ignore) {
+  for(int i=0;i<edges->getSize();i++)
+    if(edges->get(i)!=ignore) {
+      cout << "Calling Intersects" << endl;
+      if(intersects(edges->get(i)))
+        return edges->get(i);
+    }
+  return 0x0;
+}
+
 Point2 Edge::getIntersectionPoint(Edge* other) {
+  cout << "//////////////////////////////////" << endl;
+  cout << "This Edge :: " << endl;
+  Debug::printLine(this);
+  cout << "Other Edge :: " << endl;
+  Debug::printLine(other);
   Point2 intersection;
   intersection.xpos = -1;
   intersection.ypos = -1;
-  // to be implemented
+  Point2 oFirst = other->getFirst();
+  Point2 oSecond = other->getSecond();
+  float s1x = first.xpos - second.xpos;
+  float s1y = first.ypos - second.ypos;
+  float s2x = oFirst.xpos - oSecond.xpos;
+  float s2y = oFirst.ypos - oSecond.ypos;
+  float det = -s2x * s1y + s1x * s2y;
+  float tmp1 = (first.xpos - oFirst.xpos);
+  float tmp2 = (first.ypos - oFirst.ypos);
+  float s = (-s1y * tmp1 + s1x * tmp2) / det;
+  float t = (-s2y * tmp1 + s2x * tmp2) / det;
+  s*=-1;
+  t*=-1;
+  cout << "s1x :: " << s1x << endl;
+  cout << "s1y :: " << s1y << endl;
+  cout << "s2x :: " << s2x << endl;
+  cout << "s2y :: " << s2y << endl;
+  cout << "T :: " << t << endl;
+  cout << "S :: " << s << endl;
+  cout << "Xpos :: " << first.xpos << endl;
+  cout << "Ypos :: " << first.ypos << endl;
+  intersection.xpos = first.xpos - t * s1x;
+  intersection.ypos = first.ypos - t * s1y;
+  cout << "INTERSECTION :: " << endl;
+  Debug::printPoint(intersection);
+  cout << "///////////////!!!///////////////////" << endl;
   return intersection;
 }
 

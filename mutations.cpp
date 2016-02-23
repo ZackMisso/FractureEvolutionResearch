@@ -38,7 +38,7 @@ void Mutations::AddRandomVertex(Fracture* fracture) {
     delete newFaces;
     fracture->recount();
   }
-  //Debug::printFracture(fracture);
+  Debug::printFracture(fracture);
 }
 
 void Mutations::RemoveRandomEdge(Fracture* fracture) {
