@@ -151,28 +151,28 @@ Array<Face*>* Face::separate(float x,float y) {
     //edge->split(tmpEdges,newPoint);
     //cout << "Creating new Edge" << endl;
     Edge* newEdge = new Edge(x,y,newPoint.xpos,newPoint.ypos);
-    cout << "Finding Intersector" << endl;
+    //cout << "Finding Intersector" << endl;
     Edge* intersector = newEdge->intersects(edges,edge);
     if(intersector){
-      cout << "Found Intersector" << endl;
-      Debug::printPoint(newPoint);
+      //cout << "Found Intersector" << endl;
+      //Debug::printPoint(newPoint);
       newPoint = intersector->getIntersectionPoint(newEdge);
-      Debug::printPoint(newPoint);
+      //Debug::printPoint(newPoint);
       //Debug::printPoint(newPoint);
       //Debug::printLine(intersector);
-      cout << "Testing New Edge" <<endl;
-      Debug::printLine(newEdge);
+      //cout << "Testing New Edge" <<endl;
+      //Debug::printLine(newEdge);
       delete newEdge;
       newEdge = new Edge(x,y,newPoint.xpos,newPoint.ypos);
       //newEdge->getSecond().setXpos(newPoint.xpos);
       //newEdge->getSecond().setYpos(newPoint.ypos);
-      Debug::printLine(newEdge);
+      //Debug::printLine(newEdge);
       edge = intersector;
     }else{
-      cout << "No Intersector Found" << endl;
+      //cout << "No Intersector Found" << endl;
     }
     edge->split(tmpEdges,newPoint);
-    Debug::printLines(tmpEdges);
+    //Debug::printLines(tmpEdges);
 
     //cout << "OLD EDGE :: ";
     //edge->debug();
