@@ -9,6 +9,7 @@ class Vertex3 {
 private:
   Array<Edge3*>* edges;
   Point3 location;
+  int id;
   bool selected;
 public:
   Vertex3(float x,float y,float z);
@@ -17,10 +18,12 @@ public:
   // getter methods
   Array<Edge3*>* getEdges();
   Point3 getLocation();
+  int getID();
   bool getSelected();
   // setter methods
   void setEdges(Array<Edge3*>* param);
   void setLocation(Point3 point);
+  void setID(int param);
   void setSelected(bool param);
 };
 

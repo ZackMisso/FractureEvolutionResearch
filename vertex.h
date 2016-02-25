@@ -9,6 +9,7 @@ class Vertex {
 private:
   Array<Edge*> *edges;
   Point2 location; // [0.0-1.0 , 0.0-1.0]
+  int id;
   bool selected;
 public:
   Vertex(float x,float y);
@@ -20,9 +21,13 @@ public:
 	// getters
 	Array<Edge*>* getEdges();
 	Point2	getLocation();
+  int getID();
+  bool getSelected();
 	// setters
 	void setEdges(Array<Edge*>* param);
 	void setLocation(Point2 param);
+  void setID(int param);
+  void setSelected(bool param);
 };
 
 #endif

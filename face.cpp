@@ -1,6 +1,7 @@
 #include "face.h"
 #include "rng.h"
 #include "debug.h"
+#include "debugController.h"
 
 #include <cstdlib>
 
@@ -11,12 +12,15 @@ using namespace std;
 Face::Face() {
   verts = new Array<Vertex*>();
   edges = new Array<Edge*>();
+  id = DebugController::getNextFace();
+  selected = false;
 }
 
 Face::Face(Array<Vertex*>* verts) {
   verts = new Array<Vertex*>();
   edges = new Array<Edge*>();
-  // initialize arrays
+  id = DebugController::getNextFace();
+  selected = false;
 }
 
 Face::~Face() {
@@ -468,6 +472,10 @@ Array<Vertex*>* Face::findVertsOnPath(Array<Edge*>* edgs) {
 
 Array<Vertex*>* Face::getVerts() { return verts; }
 Array<Edge*>* Face::getEdges() { return edges; }
+int Face::getID() { return id; }
+bool Face::getSelected() { return selected; }
 
 void Face::setVerts(Array<Vertex*>* param) { verts = param; }
 void Face::setEdges(Array<Edge*>* param) { edges = param; }
+void Face::setID(int param) { id = param; }
+void Face::setSelected(bool param) { selected = param; }

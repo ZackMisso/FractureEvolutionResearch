@@ -1,6 +1,7 @@
 #include "edge.h"
 #include <GL/glut.h>
 #include "debug.h"
+#include "debugcontroller.h"
 
 #include <iostream>
 
@@ -11,6 +12,7 @@ Edge::Edge(Point2 one,Point2 two) {
   first.ypos = one.ypos;
   second.xpos = two.xpos;
   second.ypos = two.ypos;
+  id = DebugController::getNextEdge();
   selected = false;
 }
 
@@ -19,6 +21,7 @@ Edge::Edge(float x,float y,float xx,float yy) {
   first.ypos = y;
   second.xpos = xx;
   second.ypos = yy;
+  id = DebugController::getNextEdge();
   selected = false;
 }
 
@@ -154,6 +157,8 @@ void Edge::split(Array<Edge*>* cb,Point2 point) {
 
 Point2 Edge::getFirst() { return first; }
 Point2 Edge::getSecond() { return second; }
+int Edge::getID() { return id; }
+bool Edge::getSelected() { return selected; }
 
 void Edge::setFirst(Point2 point) {
   first.xpos = point.xpos;
@@ -164,3 +169,6 @@ void Edge::setSecond(Point2 point) {
   second.xpos = point.xpos;
   second.ypos = point.ypos;
 }
+
+void Edge::setID(int param) { id = param; }
+void Edge::setSelected(bool param) { selected = param; }

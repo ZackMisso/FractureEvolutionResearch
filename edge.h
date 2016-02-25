@@ -8,6 +8,7 @@ class Edge {
 private:
   Point2 first;
   Point2 second;
+  int id;
   bool selected;
 public:
   Edge(Point2 one,Point2 two);
@@ -23,9 +24,13 @@ public:
 	// getters
   Point2 getFirst();
   Point2 getSecond();
+  int getID();
+  bool getSelected();
   // setters
   void setFirst(Point2 point);
   void setSecond(Point2 point);
+  void setID(int param);
+  void setSelected(bool param);
 };
 
 #endif

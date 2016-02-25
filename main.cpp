@@ -8,6 +8,7 @@
 #include "renderSettings.h"
 #include "mutations.h"
 #include "tests.h"
+#include "debugController.h"
 
 using namespace std;
 
@@ -39,7 +40,7 @@ int window;
 
 int main(int argc,char** argv) {
   cout << "Beginning Initialization" << endl;
-
+  DebugController::init();
   cout << "Running Unit Tests" << endl;
   if(unitTests()) {
     cout << "Exiting Because of Failed Unit Test" << endl;
@@ -75,8 +76,13 @@ int main(int argc,char** argv) {
   //glLoadIdentity();
   //glEnable(GL_CULL_FACE);
   /////////////////////////////////
-
   cout << "Finished Initialization" << endl;
+  if(argc > 2){
+    for(int i=0;i<6;i++)
+      Mutations::AddRandomVertex(programData->getCurrentFracture());
+    DebugController::writeDebugState(programData->getCurrentFracture());
+    return 0;
+  }
   glutMainLoop();
 
   return 0;
@@ -168,6 +174,8 @@ bool unitTests() {
 
 void cb_saveFracture(int id) {
   cout << "Saving still needs to be implemented" << endl;
+  cout << "Also Writing Log" << endl;
+  DebugController::writeDebugState(programData->getCurrentFracture());
 }
 
 void cb_loadFracture(int id) {

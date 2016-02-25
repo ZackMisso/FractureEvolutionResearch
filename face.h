@@ -11,6 +11,8 @@ class Face {
 private:
   Array<Vertex*>* verts;
   Array<Edge*>* edges;
+  int id;
+  bool selected;
 public:
   Face();
   Face(Array<Vertex*>* verts);
@@ -28,9 +30,13 @@ public:
   // getter methods
   Array<Vertex*>* getVerts();
   Array<Edge*>* getEdges();
+  int getID();
+  bool getSelected();
   // setter methods
   void setVerts(Array<Vertex*>* param);
   void setEdges(Array<Edge*>* param);
+  void setID(int param);
+  void setSelected(bool param);
 };
 
 #endif
