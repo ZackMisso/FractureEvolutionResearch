@@ -15,6 +15,13 @@ public:
   static int getNextVert();
   static int getNextEdge();
   static int getNextFace();
+  static void writeCreateSeparationPoint(float x,float y);
+  static void writeCreateEdge(Edge* newEdge);
+  static void writeCreateVert(Vertex* newVert);
+  static void writeCreateFace(Face* newFace);
+  static void writeDeleteEdge(Edge* oldEdge);
+  static void writeDeleteVertex(Vertex* oldVert);
+  static void writeDeleteFace(Face* oldFace);
   static void writeDebugState(Fracture* fracture);
   static void writeEdgeState(Edge* edge);
   static void writeVertState(Vertex* vert);

@@ -116,7 +116,19 @@ void display() {
   glClearColor(0.0f,0.0f,0.0f,1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  //glBegin(GL_QUADS);
+  glLineWidth(.5);
+  glBegin(GL_LINES);
+  glColor4f(0.7f,0.7f,0.7f,0.5f);
+  // Draw Grid for Debugging
+  for(float i=-0.5f;i<0.5f;i+=0.1f) {
+    glVertex2f(i,0.5);
+    glVertex2f(i,-0.5);
+//
+    glVertex2f(0.5f,i);
+    glVertex2f(-0.5f,i);
+  }
+
+  glEnd();
   glColor3f(0.0f,1.0f,0.0f);
   //glVertex2f(-0.5f,-0.5f);
   //glVertex2f(-0.5f,0.5f);

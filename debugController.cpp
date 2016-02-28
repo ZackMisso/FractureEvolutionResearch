@@ -1,4 +1,5 @@
 #include "debugController.h"
+#include "debug.h"
 
 #include <iostream>
 
@@ -24,6 +25,37 @@ int DebugController::getNextEdge() {
 
 int DebugController::getNextFace() {
   return nextFaceNum++;
+}
+
+void DebugController::writeCreateSeparationPoint(float x,float y) {
+  cout << "Creating Separation Point X :: " << x << " Y :: " << y << endl;
+}
+
+void DebugController::writeCreateEdge(Edge* newEdge) {
+  cout << "Creating Edge :: " << newEdge->getID() << " ";
+  Debug::printLine(newEdge);
+}
+
+void DebugController::writeCreateVert(Vertex* newVert) {
+  cout << "Creating Vert :: " << newVert->getID() << " ";
+  Debug::printVert(newVert);
+}
+
+void DebugController::writeCreateFace(Face* newFace) {
+  cout << "Creating Face :: " << newFace->getID() << " ";
+  Debug::printFace(newFace);
+}
+
+void DebugController::writeDeleteEdge(Edge* oldEdge) {
+  cout << "Deleting Edge :: " << oldEdge->getID() << endl;
+}
+
+void DebugController::writeDeleteFace(Face* oldFace) {
+  cout << "Deleting Face :: " << oldFace->getID() << endl;
+}
+
+void DebugController::writeDeleteVertex(Vertex* oldVert) {
+  cout << "Deleting Vert :: " << oldVert->getID() << endl;
 }
 
 void DebugController::writeDebugState(Fracture* fracture) {

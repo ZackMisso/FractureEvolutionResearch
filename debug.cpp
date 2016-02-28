@@ -18,6 +18,20 @@ void Debug::printPoint(Point2 point) {
   cout << "/////////////////////////////////////////" << endl;
 }
 
+void Debug::printVert(Vertex* vert) {
+  cout << "X :: " << vert->getLocation().xpos << " Y :: " << vert->getLocation().ypos << endl;
+}
+
+void Debug::printFace(Face* face) {
+  cout << " E :: ";
+  for(int i=0;i<face->getEdges()->getSize();i++)
+    cout << face->getEdges()->get(i)->getID() << ",";
+  cout << " V :: ";
+  for(int i=0;i<face->getVerts()->getSize();i++)
+    cout << face->getVerts()->get(i)->getID() << ",";
+  cout << endl;
+}
+
 void Debug::printLines(Array<Edge*>* edges) {
   cout << "/////////// PRINTING LINES /////////////" << endl;
   for(int i=0;i<edges->getSize();i++) {
@@ -43,5 +57,5 @@ void Debug::printFracture(Fracture* fracture) {
 }
 
 void Debug::printLine(Edge* edge) {
-  cout << edge->getFirst().xpos << " " << edge->getFirst().ypos << " " << edge->getSecond().xpos << " " << edge->getSecond().ypos << endl;
+  cout << "(" << edge->getFirst().xpos << "," << edge->getFirst().ypos << ")->(" << edge->getSecond().xpos << "," << edge->getSecond().ypos << ")" << endl;
 }

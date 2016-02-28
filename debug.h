@@ -14,6 +14,8 @@ public:
   static void printLines(Array<Edge*>* edges);
   static void printFracture(Fracture* fracture);
   static void printLine(Edge* edge);
+  static void printVert(Vertex* vert);
+  static void printFace(Face* face);
 };
 
 #endif

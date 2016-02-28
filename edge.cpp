@@ -151,8 +151,12 @@ Point2 Edge::getPointBetween(float linePos) {
 }
 
 void Edge::split(Array<Edge*>* cb,Point2 point) {
-  cb->add(new Edge(first,point));
-  cb->add(new Edge(point,second));
+  Edge* one = new Edge(first,point);
+  Edge* two = new Edge(point,second);
+  DebugController::writeCreateEdge(one);
+  DebugController::writeCreateEdge(two);
+  cb->add(one);
+  cb->add(two);
 }
 
 Point2 Edge::getFirst() { return first; }
