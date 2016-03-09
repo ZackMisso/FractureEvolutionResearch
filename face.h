@@ -9,10 +9,12 @@
 
 class Face {
 private:
+  Array<Face*>* triMesh;
   Array<Vertex*>* verts;
   Array<Edge*>* edges;
   int id;
   bool selected;
+  void clearTrimesh();
 public:
   Face();
   Face(Array<Vertex*>* verts);
@@ -22,9 +24,10 @@ public:
   bool contains(Vertex* vert);
   bool contains(Edge* edge);
   Array<Face*>* separate(Vertex* newVert);
-  Array<Face*>* separate(Point2 newPoint);
-  Array<Face*>* separate(Point2 start,Point2 end);
+  //Array<Face*>* separate(Point2 newPoint);
+  //Array<Face*>* separate(Point2 start,Point2 end);
   Array<Face*>* separate(float x,float y);
+  void splitIntoTrimesh();
   void findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,Point2 twoLoc);
   Array<Vertex*>* findVertsOnPath(Array<Edge*>* edges);
   // getter methods

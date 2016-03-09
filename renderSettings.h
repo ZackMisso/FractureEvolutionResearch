@@ -8,6 +8,7 @@ private:
   bool displayVerts;
   bool displayEdges;
   bool displayFaces;
+  bool displayFaceTrimesh;
 public:
   RenderSettings();
   ~RenderSettings();
@@ -17,12 +18,14 @@ public:
   bool getDisplayVerts();
   bool getDisplayEdges();
   bool getDisplayFaces();
+  bool getDisplayFaceTrimesh();
   // setter methods
   void setVertSize(int param);
   void setEdgeSize(int param);
   void setDisplayVerts(bool param);
   void setDisplayEdges(bool param);
   void setDisplayFaces(bool param);
+  void setDisplayFaceTrimesh(bool param);
 };
 
 #endif

@@ -10,6 +10,7 @@
 using namespace std;
 
 Face::Face() {
+  triMesh = new Array<Face*>();
   verts = new Array<Vertex*>();
   edges = new Array<Edge*>();
   id = DebugController::getNextFace();
@@ -17,6 +18,7 @@ Face::Face() {
 }
 
 Face::Face(Array<Vertex*>* verts) {
+  triMesh = new Array<Face*>();
   verts = new Array<Vertex*>();
   edges = new Array<Edge*>();
   id = DebugController::getNextFace();
@@ -218,16 +220,24 @@ Array<Face*>* Face::separate(float x,float y) {
   return newFaces;
 }
 
-// this may also need different forms of implementations
-Array<Face*>* Face::separate(Point2 newPoint) {
-  // to be implemented
-  return 0x0;
+void Face::clearTrimesh() {
+  triMesh->clear();
 }
 
-Array<Face*>* Face::separate(Point2 start,Point2 end) {
+void Face::splitIntoTrimesh() {
   // to be implemented
-  return 0x0;
 }
+
+// this may also need different forms of implementations
+//Array<Face*>* Face::separate(Point2 newPoint) {
+//  // to be implemented
+//  return 0x0;
+//}
+
+//Array<Face*>* Face::separate(Point2 start,Point2 end) {
+//  // to be implemented
+//  return 0x0;
+//}
 
 void Face::findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,Point2 twoLoc) {
   Edge* startOne = 0x0;

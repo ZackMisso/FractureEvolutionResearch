@@ -1,7 +1,7 @@
 #include "edge.h"
 #include <GL/glut.h>
 #include "debug.h"
-#include "debugcontroller.h"
+#include "debugController.h"
 
 #include <iostream>
 

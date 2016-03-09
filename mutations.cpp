@@ -27,7 +27,7 @@ void Mutations::AddRandomVertex(Fracture* fracture) {
   if(newFaces) {
     for(int i=0;i<newFaces->getSize();i++)
       faces->add(newFaces->get(i));
-
+    DebugController::writeDeleteFace(oldFace);
     faces->remove(oldFace);
     while(newFaces->getSize())
       newFaces->removeLast();

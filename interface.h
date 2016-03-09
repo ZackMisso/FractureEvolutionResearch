@@ -26,6 +26,7 @@ public:
   GLUI_Button* displayVertsButton;
   GLUI_Button* displayEdgesButton;
   GLUI_Button* displayFacesButton;
+  GLUI_Button* displayFaceTrimeshButton;
   // evolution menu
   GLUI_Rollout* evolutionMenu;
   GLUI_Button* randomMutation;

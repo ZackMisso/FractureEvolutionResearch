@@ -29,6 +29,7 @@ void cb_vertsOnOff(int id);
 void cb_edgesOnOff(int id);
 void cb_facesOnOff(int id);
 void cb_randomMutation(int id);
+void cb_trimeshOnOff(int id);
 
 // Arguements
 GLUI* subwindow;
@@ -106,6 +107,7 @@ void createInterface() {
   interface->displayVertsButton = subwindow->add_button_to_panel(interface->renderMenu,"Verts On/Off",1,cb_vertsOnOff);
   interface->displayEdgesButton = subwindow->add_button_to_panel(interface->renderMenu,"Edges On/Off",1,cb_edgesOnOff);
   interface->displayFacesButton = subwindow->add_button_to_panel(interface->renderMenu,"Faces On/Off",1,cb_facesOnOff);
+  interface->displayFaceTrimeshButton = subwindow->add_button_to_panel(interface->renderMenu,"Trimesh On/Off",1,cb_trimeshOnOff);
   // Evolution Menu
   interface->evolutionMenu = subwindow->add_rollout("Evolution",false);
   interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Random Mutation",1,cb_randomMutation);
@@ -219,8 +221,15 @@ void cb_facesOnOff(int id) {
   //glutPostRedisplay();
 }
 
+void cb_trimeshOnOff(int id) {
+  cout << "Displaying Face Trimesh Still needs to be implemented" << endl;
+}
+
 void cb_randomMutation(int id) {
+  cout << endl;
   //cout << "Random Mutation Needs to be implemented" << endl;
+  DebugController::writeDebugState(programData->getCurrentFracture());
+  cout << endl;
   Mutations::AddRandomVertex(programData->getCurrentFracture());
   //cout << "NUM FACES :: " << programData->getCurrentFracture()->getFaces()->getSize() << endl;
   //cout << "NUM Edges :: " << programData->getCurrentFracture()->getEdges()->getSize() << endl;
