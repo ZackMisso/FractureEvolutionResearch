@@ -10,6 +10,10 @@ Point2::Point2(float x,float y) {
   ypos = y;
 }
 
+bool Point2::equals(Point other) {
+  return xpos == other.xpos && ypos == other.ypos;
+}
+
 void Point2::setXpos(float param) {
   xpos = param;
 }

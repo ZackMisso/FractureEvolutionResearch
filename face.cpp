@@ -228,6 +228,34 @@ void Face::splitIntoTrimesh() {
   // to be implemented
 }
 
+void Face::detectIfConvex() {
+  //for(int i=0;i<edges->getSize();i++) {
+  //  for(int j=0;j<edges->getSize();j++) {
+  //
+  //  }
+  //}
+  Array<Point>* hull = getConvexHull();
+  if(hull->getSize() != verts->getSize())
+    isConvex = false;
+  else {
+
+  }
+}
+
+// Simple Gift Wrapping Algorithm
+Array<Point2>* Face::getConvexHull() {
+  Array<Point2>* = new Array<Point2>(verts->getSize()+1);
+  // Get LeftMost Point
+  Point2 pointOnHull = verts->get(0)->getLocation();
+  for(int i=1;i<verts->getSize();i++)
+    if(pointOnHull.xpos > verts->get(i)->getLocation().xpos)
+      pointOnHull = verts->get(i)->getLocation();
+  Point2 endpoint = verts->get(1)->getLocation();
+  while(!pointOnHull.equals(endpoint)) {
+    // Implement From Here
+  }
+}
+
 // this may also need different forms of implementations
 //Array<Face*>* Face::separate(Point2 newPoint) {
 //  // to be implemented
@@ -303,8 +331,10 @@ Array<Vertex*>* Face::getVerts() { return verts; }
 Array<Edge*>* Face::getEdges() { return edges; }
 int Face::getID() { return id; }
 bool Face::getSelected() { return selected; }
+bool Face::getIsConvex() { return isConvex; }
 
 void Face::setVerts(Array<Vertex*>* param) { verts = param; }
 void Face::setEdges(Array<Edge*>* param) { edges = param; }
 void Face::setID(int param) { id = param; }
 void Face::setSelected(bool param) { selected = param; }
+void Face::setIsConvex(bool param) { isConvex = param; }

@@ -216,13 +216,16 @@ void cb_edgesOnOff(int id) {
 
 void cb_facesOnOff(int id) {
   cout << "Displaying Faces Still needs to be implemented" << endl;
-  //renderSettings->setDisplayFaces(!renderSettings->getDisplayFaces());
-  //glutSetWindow(window);
-  //glutPostRedisplay();
+  renderSettings->setDisplayFaces(!renderSettings->getDisplayFaces());
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_trimeshOnOff(int id) {
   cout << "Displaying Face Trimesh Still needs to be implemented" << endl;
+  renderSettings->setDisplayFaceTrimesh(!renderSettings->getDisplayFaceTrimesh());
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_randomMutation(int id) {

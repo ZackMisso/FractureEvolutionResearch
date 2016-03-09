@@ -4,7 +4,7 @@ RenderSettings::RenderSettings() {
   displayVerts = true;
   displayEdges = true;
   displayFaces = false;
-  displayTrimesh = false;
+  displayFaceTrimesh = false;
   vertSize = 10;
   edgeSize = 3;
 }

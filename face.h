@@ -13,6 +13,7 @@ private:
   Array<Vertex*>* verts;
   Array<Edge*>* edges;
   int id;
+  bool isConvex;
   bool selected;
   void clearTrimesh();
 public:
@@ -24,9 +25,11 @@ public:
   bool contains(Vertex* vert);
   bool contains(Edge* edge);
   Array<Face*>* separate(Vertex* newVert);
+  Array<Point>* getConvexHull();
   //Array<Face*>* separate(Point2 newPoint);
   //Array<Face*>* separate(Point2 start,Point2 end);
   Array<Face*>* separate(float x,float y);
+  void detectIfConvex();
   void splitIntoTrimesh();
   void findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,Point2 twoLoc);
   Array<Vertex*>* findVertsOnPath(Array<Edge*>* edges);
@@ -35,11 +38,13 @@ public:
   Array<Edge*>* getEdges();
   int getID();
   bool getSelected();
+  bool getIsConvex();
   // setter methods
   void setVerts(Array<Vertex*>* param);
   void setEdges(Array<Edge*>* param);
   void setID(int param);
   void setSelected(bool param);
+  void setIsConvex(bool param);
 };
 
 #endif
