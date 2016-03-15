@@ -20,11 +20,15 @@ Tri::Tri(Tri* one,Tri* two,Tri* trhee) {
 
 Tri::~Tri() {
   delete edges[2];
-  delete edhes[1];
+  delete edges[1];
   delete edges[0];
   delete adjacents[2];
   delete adjacents[1];
   delete adjacents[0];
+}
+
+void findAdjacents(Array<Tri*>* triangles) {
+  // to be implemented
 }
 
 Point2 getPointOne() { return points[0]; }

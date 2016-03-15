@@ -10,7 +10,7 @@
 using namespace std;
 
 Face::Face() {
-  triMesh = new Array<Face*>();
+  triMesh = new Array<Tri*>();
   verts = new Array<Vertex*>();
   edges = new Array<Edge*>();
   id = DebugController::getNextFace();
@@ -18,7 +18,7 @@ Face::Face() {
 }
 
 Face::Face(Array<Vertex*>* verts) {
-  triMesh = new Array<Face*>();
+  triMesh = new Array<Tri*>();
   verts = new Array<Vertex*>();
   edges = new Array<Edge*>();
   id = DebugController::getNextFace();
@@ -26,6 +26,8 @@ Face::Face(Array<Vertex*>* verts) {
 }
 
 Face::~Face() {
+  while(triMesh->getSize())
+    delete triMesh->removeLast();
   while(verts->getSize())
     verts->removeLast();
   while(edges->getSize())
@@ -224,7 +226,57 @@ void Face::clearTrimesh() {
   triMesh->clear();
 }
 
+Array<Point2>* Face::sortPointsByPath() { // Need To Test
+  Array<Point2>* sortedPoints = new Array<Point2>();
+  Edge* edge = edges->get(0);
+  Point2 start = edges->getFirst();
+  Point2 current = edges->getFirst();
+  Point2 next = edges->getSecond();
+  while(next.xpos != start.xpos && next.ypos != start.ypos) {
+    sortedPoints->add(current);
+    bool chk = false;
+    for(int i=0;i<edges->getSize();i++)
+      if(edges->get(i)->eitherMatch(next) && edges->get(i) != edge) {
+        edge = edges->get(i);
+        current = next;
+        next = edge->getOtherPoint(next);
+        i=edges->getSize();
+        chk=true;
+      }
+    if(!chk)
+      cout << "ERROR IN SORT POINTS BY PATH" << endl;
+  }
+  return sortedPoints;
+}
+
 void Face::splitIntoTrimesh() {
+  detectIfConvex();
+  if(isConvex)
+    splitIntoTrimeshConvex();
+  else
+    splitIntoTrimeshConcave();
+}
+
+void Face::splitIntoTrimeshConvex() {
+  Array<Point2>* points = sortPointsByPath();
+  // clear previous triMesh if it exists
+  while(triMesh->getSize())
+    delete triMesh->removeLast();
+  // Garunteed to have at least 3 points
+  Point2 one = points->get(0);
+  Point2 two = points->get(1);
+  Point2 three = points->get(2);
+  triMesh->add(new Tri(one,two,three));
+  int counter=3;
+  for(;counter<points->getSize();counter++) {
+    two = points->get(counter-1);
+    three = points->get(counter);
+    triMesh->add(new Tri(one,two,three));
+  }
+  delete points;
+}
+
+void Face::splitIntoTrimeshConcave() {
   // to be implemented
 }
 
@@ -347,12 +399,14 @@ Array<Vertex*>* Face::findVertsOnPath(Array<Edge*>* edgs) {
   return vp;
 }
 
+Array<Tri*>* Face::getTriMesh() { return triMesh; }
 Array<Vertex*>* Face::getVerts() { return verts; }
 Array<Edge*>* Face::getEdges() { return edges; }
 int Face::getID() { return id; }
 bool Face::getSelected() { return selected; }
 bool Face::getIsConvex() { return isConvex; }
 
+void Face::setTriMesh(Array<Tri*>* param) { triMesh = param; }
 void Face::setVerts(Array<Vertex*>* param) { verts = param; }
 void Face::setEdges(Array<Edge*>* param) { edges = param; }
 void Face::setID(int param) { id = param; }

@@ -6,10 +6,11 @@
 #include "vertex.h"
 #include "point2.h"
 #include "box.h"
+#include "tri.h"
 
 class Face {
 private:
-  Array<Face*>* triMesh;
+  Array<Tri*>* triMesh;
   Array<Vertex*>* verts;
   Array<Edge*>* edges;
   int id;
@@ -29,17 +30,22 @@ public:
   //Array<Face*>* separate(Point2 newPoint);
   //Array<Face*>* separate(Point2 start,Point2 end);
   Array<Face*>* separate(float x,float y);
+  void sortPointsByPath();
   void detectIfConvex();
   void splitIntoTrimesh();
+  void splitIntoTrimeshConvex();
+  void splitIntoTrimeshConcave();
   void findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,Point2 twoLoc);
   Array<Vertex*>* findVertsOnPath(Array<Edge*>* edges);
   // getter methods
+  Array<Tri*>* getTriMesh();
   Array<Vertex*>* getVerts();
   Array<Edge*>* getEdges();
   int getID();
   bool getSelected();
   bool getIsConvex();
   // setter methods
+  void setTriMesh(Array<Tri*>* param);
   void setVerts(Array<Vertex*>* param);
   void setEdges(Array<Edge*>* param);
   void setID(int param);

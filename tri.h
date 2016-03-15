@@ -10,11 +10,14 @@ private:
   Edge* edges;
   Tri* adjacents;
 public:
+  // constructors
   Tri();
   Tri(Point2 one,Point2 two,Point2 three);
   Tri(Edge* one,Edge* two,Edge* three);
   Tri(Tri* one,Tri* two,Tri* trhee);
   ~Tri();
+  // other methods
+  void findAdjacents(Array<Tri*>* triangles);
   // getter methods
   Point2 getPointOne();
   Point2 getPointTwo();
