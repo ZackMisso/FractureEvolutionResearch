@@ -57,11 +57,18 @@ public:
 		return last;
 	}
 
-	T remove(int ind) { // TODO :: improve
+	T remove(int ind) {
 		T replaced=ary[ind];
 		size--;
 		for(int i=ind;i<size;i++)
 			replace(i,ary[i+1]);
+		return replaced;
+	}
+
+	T removeEff(int ind) { // TODO :: TEST
+		T replaced=ary[ind];
+		size--;
+		ary[ind]=ary[size];
 		return replaced;
 	}
 
@@ -76,6 +83,12 @@ public:
 		int ind=indexOf(val);
 		if(ind!=-1)
 			remove(ind);
+	}
+
+	void removeEff(T val) {
+		int ind=indexOf(val);
+		if(ind!=-1)
+			removeEff(ind);
 	}
 
 	T replace(int ind,T newVal) {

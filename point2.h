@@ -7,7 +7,7 @@ public:
   float ypos;
   Point2();
   Point2(float x,float y);
-  bool equals(Point other);
+  bool equals(Point2 other);
   void setXpos(float param);
   void setYpos(float param);
 };

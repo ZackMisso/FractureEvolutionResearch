@@ -228,31 +228,51 @@ void Face::splitIntoTrimesh() {
   // to be implemented
 }
 
-void Face::detectIfConvex() {
-  //for(int i=0;i<edges->getSize();i++) {
-  //  for(int j=0;j<edges->getSize();j++) {
-  //
-  //  }
-  //}
+void Face::detectIfConvex() { // Need To Test
   Array<Point>* hull = getConvexHull();
   if(hull->getSize() != verts->getSize())
     isConvex = false;
   else {
-
+    // O(N^2) This can be Faster
+    int counter=0;
+    for(int i=0;i<verts->getSize();i++)
+      for(int j=0;j<hull->getSize();j++)
+        if(verts->get(i)->getLocation().xpos == hull->get(j).xpos)
+          if(verts->get(i)->getLocation().ypos == hull->get(j).ypos)
+            counter++;
+    isConvex=counter==verts->getSize();
   }
 }
 
 // Simple Gift Wrapping Algorithm
-Array<Point2>* Face::getConvexHull() {
-  Array<Point2>* = new Array<Point2>(verts->getSize()+1);
+Array<Point2>* Face::getConvexHull() { // Need to Test
+  // Set Up Variables
+  Array<Point2>* hull = new Array<Point2>(verts->getSize()+1);
+  Array<Point2>* contents = new Array<Point2>(verts->getSize()+1);
+  for(int i=0;i<verts->getSize();i++)
+    contents->add(verts->get(i));
+  Point2 pointOnHull;
+  Point2 lastPoint;
+  Point2 endpoint;
   // Get LeftMost Point
-  Point2 pointOnHull = verts->get(0)->getLocation();
-  for(int i=1;i<verts->getSize();i++)
-    if(pointOnHull.xpos > verts->get(i)->getLocation().xpos)
-      pointOnHull = verts->get(i)->getLocation();
-  Point2 endpoint = verts->get(1)->getLocation();
-  while(!pointOnHull.equals(endpoint)) {
-    // Implement From Here
+  for(int i=0;i<contents->getSize();i++)
+    if(pointOnHull.xpos > contents->get(i)->getLocation().xpos)
+      endPoint = contents->get(i)->getLocation();
+  lastPoint = endPoint;
+  // Find the Leftmost point then add until found convex hull
+  while(!lastPoint.equals(endpoint)||!hull->getSize()) {
+    pointOnHull = contents->get(0);
+    for(int i=1;i<contents->getSize();i++) {
+      Edge* edgeOne = new Edge(lastPoint,pointOnHull);
+      Edge* edgeTwo = new Edge(lastPoint,contents->get(i));
+      if(edgeOne->determinant(edgeTwo) > 0)
+        pointOnHull = contents->get(i);
+      delete edgeOne;
+      delete edgeTwo;
+    }
+    lastPoint = pointOnHull;
+    hull->add(pointOnHull);
+    contents->remove(pointOnHull);
   }
 }
 

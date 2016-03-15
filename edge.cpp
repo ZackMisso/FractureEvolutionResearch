@@ -159,6 +159,14 @@ void Edge::split(Array<Edge*>* cb,Point2 point) {
   cb->add(two);
 }
 
+float Edge::determinant(Edge* other) {
+  float xOne = second.xpos - first.xpos;
+  float yOne = second.ypos - first.ypos;
+  float xTwo = other->getSecond().xpos - other->getFirst().xpos;
+  float yTwo = other->getSecond().ypos - other->getFirst().ypos;
+  return xOne*yTwo - yOne*xTwo;
+}
+
 Point2 Edge::getFirst() { return first; }
 Point2 Edge::getSecond() { return second; }
 int Edge::getID() { return id; }

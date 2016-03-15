@@ -21,6 +21,7 @@ public:
   Point2 getOtherPoint(Point2 point);
   Point2 getPointBetween(float pos);
   void split(Array<Edge*>* cb,Point2 point);
+  float determinant(Edge* other);
 	// getters
   Point2 getFirst();
   Point2 getSecond();
