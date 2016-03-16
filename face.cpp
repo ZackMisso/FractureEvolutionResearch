@@ -277,7 +277,7 @@ void Face::splitIntoTrimeshConvex() {
 }
 
 // THIS BECOMES AN ISSUE WHEN SPLITTING A POLYGON WITH HOLES
-void Face::splitIntoTrimeshConcave() {
+void Face::splitIntoTrimeshConcave() { // NEEDS TO BE TESTED
   clearTrimesh();
   Array<Point2>* points = sortPointsByPath();
   if(isClockwise(points))
@@ -288,26 +288,62 @@ void Face::splitIntoTrimeshConcave() {
     for(int i=0;i<points->getSize();i++) {
       Point2 current = points->get(i);
       Point2 next,prev;
-      if(i==0)
+      int nextI,prevI;
+      if(i==0) {
         prev = points->get(points->getSize()-1);
-      else
+        prevI = points->getSize()-1;
+      } else {
         prev = points->get(i-1);
-      if(i==points->getSize()-1)
+        prevI = i-1;
+      } if(i==points->getSize()-1) {
         next = points->get(0);
-      else
+        nextI = 0;
+      } else {
         next = points->get(i+1);
+        nextI = i+1;
+      }
+      // bary logic that will be used for mutations
       Point2 wedgeOne = Point2(prev.xpos-current.xpos,prev.ypos-current.ypos);
       Point2 wedgeTwo = Point2(next.xpos-current.xpos,next.ypos-current.ypos);
       if(wedgeOne.wedgeProduct(wedgeTwo) > 0) {
         // the point is an interior angle
-        
+        bool containsOtherVert = false;
+        Point2 v0 = Point2(next.xpos-current.xpos,next.ypos-current.ypos);
+        Point2 v1 = Point2(prev.xpos-current.xpos,prev.ypos-current.ypos);
+        for(int j=0;j<points->getSize();j++) {
+          if(j != i && j != nextI && j != prevI) {
+            Point2 point = points->get(j);
+            Point2 v2 = Point2(point.xpos-current.xpos,point.ypos-current.ypos);
+            float v0dotv0 = v0.dot(v0);
+            float v1dotv1 = v1.dot(v1);
+            float v1dotv0 = v1.dot(v0);
+            float v2dotv0 = v2.dot(v0);
+            float v2dotv1 = v2.dot(v1);
+            float div = (v0dotv0 * v1dotv1) - (v1dotv0*v1dotv0);
+            if(div != 0.0) {
+              float u = (v1dotv1*v2dotv0) - (v1dotv0*v2dotv1) / div;
+              float v = (v0dotv0*v2dotv1) - (v1dotv0*v2dotv0) / div;
+              if(u<0.0f || v <0.0f || u+v > 1.0f)
+                containsOtherVert = false;
+              else {
+                containsOtherVert = true;
+                j = points->getSize();
+              }
+            }
+          }
+        }
+        if(!containsOtherVert) {
+          // add triangle
+          triMesh->add(new Tri(current,prev,next));
+          points->remove(i);
+          i--;
+          separating = true;
+        }
       }
-      // to be implemented
     }
   }
   points->clear();
   delete points;
-  // to be implemented
 }
 
 bool Face::isClockwise(Array<Point2>* sortedPath) {

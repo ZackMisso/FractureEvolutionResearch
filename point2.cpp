@@ -18,6 +18,10 @@ float Point2::wedgeProduct(Point2 other) {
   return xpos*other.ypos - ypos*other.xpos;
 }
 
+float Point2::dot(Point2 other) {
+  return xpos*other.xpos + ypos*other.ypos;
+}
+
 void Point2::setXpos(float param) {
   xpos = param;
 }
