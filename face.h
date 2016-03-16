@@ -26,11 +26,11 @@ public:
   bool contains(Vertex* vert);
   bool contains(Edge* edge);
   Array<Face*>* separate(Vertex* newVert);
-  Array<Point>* getConvexHull();
+  Array<Point2>* getConvexHull();
   //Array<Face*>* separate(Point2 newPoint);
   //Array<Face*>* separate(Point2 start,Point2 end);
   Array<Face*>* separate(float x,float y);
-  void sortPointsByPath();
+  Array<Point2>* sortPointsByPath();
   void detectIfConvex();
   void splitIntoTrimesh();
   void splitIntoTrimeshConvex();

@@ -1,20 +1,62 @@
 #include "tri.h"
+// USE ON LINUX
+#include <GL/glut.h>
+// USE ON MAC
+//#include <OpenGL/gl.h>
+// #include <OpenGL/glu.h>
+//#include <GLUT/glut.h>
+
+#include <iostream>
+
+using namespace std;
 
 Tri::Tri() {
-  // to be implemented
-  edges = new Edge()[3];
   // adjacents must be created outside of this class
+  edges = new Edge*[3];
+  adjacents = new Tri*[3];
+  edges[0] = 0x0;
+  edges[1] = 0x0;
+  edges[2] = 0x0;
+  adjacents[0] = 0x0;
+  adjacents[1] = 0x0;
+  adjacents[2] = 0x0;
 }
 
 Tri::Tri(Point2 one,Point2 two,Point2 three) {
-  // to be implemented
+  points[0] = one;
+  points[1] = two;
+  points[2] = three;
+  edges = new Edge*[3];
+  adjacents = new Tri*[3];
+  edges[0] = new Edge(one,two);
+  edges[1] = new Edge(two,three);
+  edges[2] = new Edge(three,one);
+  adjacents[0] = 0x0;
+  adjacents[1] = 0x0;
+  adjacents[2] = 0x0;
 }
 
 Tri::Tri(Edge* one,Edge* two,Edge* three) {
+  edges = new Edge*[3];
+  adjacents = new Tri*[3];
+  edges[0] = 0x0;
+  edges[1] = 0x0;
+  edges[2] = 0x0;
+  adjacents[0] = 0x0;
+  adjacents[1] = 0x0;
+  adjacents[2] = 0x0;
   // to be implemented
 }
 
 Tri::Tri(Tri* one,Tri* two,Tri* trhee) {
+  edges = new Edge*[3];
+  adjacents = new Tri*[3];
+  edges[0] = 0x0;
+  edges[1] = 0x0;
+  edges[2] = 0x0;
+  adjacents[0] = 0x0;
+  adjacents[1] = 0x0;
+  adjacents[2] = 0x0;
   // to be implemented
 }
 
@@ -27,26 +69,33 @@ Tri::~Tri() {
   delete adjacents[0];
 }
 
-void findAdjacents(Array<Tri*>* triangles) {
+void Tri::findAdjacents(Array<Tri*>* triangles) {
+  cout << "NOT IMPLEMENTED :: FIND ADJACENTS" << endl;
   // to be implemented
 }
 
-Point2 getPointOne() { return points[0]; }
-Point2 getPointTwo() { return points[1]; }
-Point2 getPointThree() { return points[2]; }
-Edge* getEdgeOne() { return edges[0]; }
-Edge* getEdgeTwo() { return edges[1]; }
-Edge* getEdgeThree() { return edges[2]; }
-Tri* getAdjacentOne() { return adjacents[0]; }
-Tri* getAdjacentTwo() { return adjacents[1]; }
-Tri* getAdjacentThree() { return adjacents[2]; }
+void Tri::draw() {
+  glVertex2f(points[0].xpos,points[0].ypos);
+  glVertex2f(points[1].xpos,points[1].ypos);
+  glVertex2f(points[2].xpos,points[2].ypos);
+}
 
-void setPointOne(Point2 param) { points[0] = param; }
-void setPointTwo(Point2 param) { points[1] = param; }
-void setPointThree(Point2 param) { points[2] = param; }
-void setEdgeOne(Edge* param) { edges[0] = param; }
-void setEdgeTwo(Edge* param) { edges[1] = param; }
-void setEdgeThree(Edge* param) { edges[2] = param; }
-void setAdjacentOne(Tri* param) { adjacents[0] = param; }
-void setAdjacentTwo(Tri* param) { adjacents[1] = param; }
-void setAdjacentThree(Tri* param) { adjacents[2] = param; }
+Point2 Tri::getPointOne() { return points[0]; }
+Point2 Tri::getPointTwo() { return points[1]; }
+Point2 Tri::getPointThree() { return points[2]; }
+Edge* Tri::getEdgeOne() { return edges[0]; }
+Edge* Tri::getEdgeTwo() { return edges[1]; }
+Edge* Tri::getEdgeThree() { return edges[2]; }
+Tri* Tri::getAdjacentOne() { return adjacents[0]; }
+Tri* Tri::getAdjacentTwo() { return adjacents[1]; }
+Tri* Tri::getAdjacentThree() { return adjacents[2]; }
+
+void Tri::setPointOne(Point2 param) { points[0] = param; }
+void Tri::setPointTwo(Point2 param) { points[1] = param; }
+void Tri::setPointThree(Point2 param) { points[2] = param; }
+void Tri::setEdgeOne(Edge* param) { edges[0] = param; }
+void Tri::setEdgeTwo(Edge* param) { edges[1] = param; }
+void Tri::setEdgeThree(Edge* param) { edges[2] = param; }
+void Tri::setAdjacentOne(Tri* param) { adjacents[0] = param; }
+void Tri::setAdjacentTwo(Tri* param) { adjacents[1] = param; }
+void Tri::setAdjacentThree(Tri* param) { adjacents[2] = param; }

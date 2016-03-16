@@ -7,8 +7,8 @@
 class Tri {
 private:
   Point2 points[3];
-  Edge* edges;
-  Tri* adjacents;
+  Edge** edges;
+  Tri** adjacents;
 public:
   // constructors
   Tri();
@@ -18,6 +18,7 @@ public:
   ~Tri();
   // other methods
   void findAdjacents(Array<Tri*>* triangles);
+  void draw();
   // getter methods
   Point2 getPointOne();
   Point2 getPointTwo();

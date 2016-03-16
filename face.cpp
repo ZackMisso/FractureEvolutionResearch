@@ -229,9 +229,9 @@ void Face::clearTrimesh() {
 Array<Point2>* Face::sortPointsByPath() { // Need To Test
   Array<Point2>* sortedPoints = new Array<Point2>();
   Edge* edge = edges->get(0);
-  Point2 start = edges->getFirst();
-  Point2 current = edges->getFirst();
-  Point2 next = edges->getSecond();
+  Point2 start = edge->getFirst();
+  Point2 current = edge->getFirst();
+  Point2 next = edge->getSecond();
   while(next.xpos != start.xpos && next.ypos != start.ypos) {
     sortedPoints->add(current);
     bool chk = false;
@@ -251,6 +251,9 @@ Array<Point2>* Face::sortPointsByPath() { // Need To Test
 
 void Face::splitIntoTrimesh() {
   detectIfConvex();
+  // clear previous triMesh if it exists
+  while(triMesh->getSize())
+    delete triMesh->removeLast();
   if(isConvex)
     splitIntoTrimeshConvex();
   else
@@ -259,9 +262,6 @@ void Face::splitIntoTrimesh() {
 
 void Face::splitIntoTrimeshConvex() {
   Array<Point2>* points = sortPointsByPath();
-  // clear previous triMesh if it exists
-  while(triMesh->getSize())
-    delete triMesh->removeLast();
   // Garunteed to have at least 3 points
   Point2 one = points->get(0);
   Point2 two = points->get(1);
@@ -281,7 +281,7 @@ void Face::splitIntoTrimeshConcave() {
 }
 
 void Face::detectIfConvex() { // Need To Test
-  Array<Point>* hull = getConvexHull();
+  Array<Point2>* hull = getConvexHull();
   if(hull->getSize() != verts->getSize())
     isConvex = false;
   else {
@@ -302,30 +302,34 @@ Array<Point2>* Face::getConvexHull() { // Need to Test
   Array<Point2>* hull = new Array<Point2>(verts->getSize()+1);
   Array<Point2>* contents = new Array<Point2>(verts->getSize()+1);
   for(int i=0;i<verts->getSize();i++)
-    contents->add(verts->get(i));
+    contents->add(verts->get(i)->getLocation());
   Point2 pointOnHull;
   Point2 lastPoint;
-  Point2 endpoint;
+  Point2 endpoint = contents->get(0);
   // Get LeftMost Point
-  for(int i=0;i<contents->getSize();i++)
-    if(pointOnHull.xpos > contents->get(i)->getLocation().xpos)
-      endPoint = contents->get(i)->getLocation();
-  lastPoint = endPoint;
+  for(int i=1;i<contents->getSize();i++)
+    if(endpoint.xpos > contents->get(i).xpos)
+      endpoint = contents->get(i);
+  lastPoint = endpoint;
   // Find the Leftmost point then add until found convex hull
   while(!lastPoint.equals(endpoint)||!hull->getSize()) {
+    int ind = 0;
     pointOnHull = contents->get(0);
     for(int i=1;i<contents->getSize();i++) {
       Edge* edgeOne = new Edge(lastPoint,pointOnHull);
       Edge* edgeTwo = new Edge(lastPoint,contents->get(i));
-      if(edgeOne->determinant(edgeTwo) > 0)
+      if(edgeOne->determinant(edgeTwo) > 0) {
+        ind = i;
         pointOnHull = contents->get(i);
+      }
       delete edgeOne;
       delete edgeTwo;
     }
     lastPoint = pointOnHull;
     hull->add(pointOnHull);
-    contents->remove(pointOnHull);
+    contents->remove(ind);
   }
+  return hull;
 }
 
 // this may also need different forms of implementations

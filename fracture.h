@@ -5,6 +5,7 @@
 #include "vertex.h"
 #include "edge.h"
 #include "face.h"
+#include "trimesh.h"
 #include "renderSettings.h"
 
 class Fracture {
@@ -12,6 +13,7 @@ private:
   Array<Vertex*>* verts;
   Array<Edge*>* edges; // will have multiple references
   Array<Face*>* faces;
+  TriMesh* triMesh;
 public:
   Fracture();
   ~Fracture();
@@ -19,6 +21,7 @@ public:
   void clearAndReloadFaces();
 	void createNewVertex(float x,float y);
 	void createNewEdge(Vertex* one,Vertex* two);
+  void createTriMesh();
   void recount();
   //void debug();
   Array<Face*>* getFacesWithVertex(Vertex* vert);
@@ -28,6 +31,7 @@ public:
   Array<Face*>* getFaces();
   Array<Edge*>* getEdges();
   Array<Vertex*>* getVerts();
+  TriMesh* getTriMesh();
 };
 
 #endif

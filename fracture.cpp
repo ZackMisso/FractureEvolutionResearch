@@ -1,5 +1,10 @@
 #include "fracture.h"
+// USE ON LINUX
 #include <GL/glut.h>
+// USE ON MAC
+//#include <OpenGL/gl.h>
+// #include <OpenGL/glu.h>
+//#include <GLUT/glut.h>
 
 #include <iostream>
 
@@ -9,6 +14,7 @@ Fracture::Fracture() {
 	verts = new Array<Vertex*>();
 	edges = new Array<Edge*>();
 	faces = new Array<Face*>();
+	triMesh = new TriMesh();
 	init(0);
 }
 
@@ -58,6 +64,16 @@ void Fracture::recount() {
 			if(!edges->contains(faces->get(i)->getEdges()->get(j)))
 				edges->add(faces->get(i)->getEdges()->get(j));
 	}
+}
+
+void Fracture::createTriMesh() { // TODO :: TEST
+	triMesh->clean();
+	for(int i=0;i<faces->getSize();i++) {
+		faces->get(i)->splitIntoTrimesh();
+		triMesh->addTriangles(faces->get(i)->getTriMesh());
+	}
+	triMesh->addBoundaryTriangles();
+	triMesh->calculateAllAdjacents();
 }
 
 void Fracture::createNewVertex(float x,float y) { // probably do not need
@@ -117,8 +133,16 @@ Array<Face*>* Fracture::getFacesWithEdge(Edge* edge) {
 }
 
 void Fracture::draw(RenderSettings* renderSettings) {
-	if(renderSettings->getDisplayFaces()) {
-		// maybe draw the faces
+	// DRAWING FACES WILL NOT BE IMPLEMENTED
+	//if(renderSettings->getDisplayFaces()) {
+	//	// maybe draw the faces
+	//}
+	if(renderSettings->getDisplayFaceTrimesh()) {
+		glLineWidth((float)renderSettings->getEdgeSize()*1.2);
+		glColor3f(0.0f,0.0f,1.0f);
+		glBegin(GL_TRIANGLES);
+		triMesh->draw();
+		glEnd();
 	}
 	if(renderSettings->getDisplayVerts()) {
 		glPointSize((float)renderSettings->getVertSize());
@@ -144,3 +168,4 @@ void Fracture::draw(RenderSettings* renderSettings) {
 Array<Vertex*>* Fracture::getVerts() { return verts; }
 Array<Edge*>* Fracture::getEdges() { return edges; }
 Array<Face*>* Fracture::getFaces() { return faces; }
+TriMesh* Fracture::getTriMesh() { return triMesh; }

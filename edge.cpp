@@ -1,7 +1,12 @@
 #include "edge.h"
-#include <GL/glut.h>
 #include "debug.h"
 #include "debugController.h"
+// USE ON LINUX
+#include <GL/glut.h>
+// USE ON MAC
+//#include <OpenGL/gl.h>
+ //#include <OpenGL/glu.h>
+//#include <GLUT/glut.h>
 
 #include <iostream>
 

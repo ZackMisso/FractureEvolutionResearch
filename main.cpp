@@ -1,4 +1,10 @@
+// USE ON LINUX
 #include <GL/glut.h>
+// USE ON MAC
+//#include <OpenGL/gl.h>
+// #include <OpenGL/glu.h>
+//#include <GLUT/glut.h>
+
 #include <iostream>
 #include "src/include/GL/glui.h"
 #include "fracture.h"
@@ -125,17 +131,12 @@ void display() {
   for(float i=-0.5f;i<0.5f;i+=0.1f) {
     glVertex2f(i,0.5);
     glVertex2f(i,-0.5);
-//
     glVertex2f(0.5f,i);
     glVertex2f(-0.5f,i);
   }
 
   glEnd();
   glColor3f(0.0f,1.0f,0.0f);
-  //glVertex2f(-0.5f,-0.5f);
-  //glVertex2f(-0.5f,0.5f);
-  //glVertex2f(0.5f,0.5f);
-  //glVertex2f(0.5f,-0.5f);
 
   programData->getCurrentFracture()->draw(renderSettings);
 
