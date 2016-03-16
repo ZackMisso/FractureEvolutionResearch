@@ -276,8 +276,54 @@ void Face::splitIntoTrimeshConvex() {
   delete points;
 }
 
+// THIS BECOMES AN ISSUE WHEN SPLITTING A POLYGON WITH HOLES
 void Face::splitIntoTrimeshConcave() {
+  clearTrimesh();
+  Array<Point2>* points = sortPointsByPath();
+  if(isClockwise(points))
+    points = reversePath(points);
+  bool separating = true;
+  while(separating) {
+    separating = false;
+    for(int i=0;i<points->getSize();i++) {
+      Point2 current = points->get(i);
+      Point2 next,prev;
+      if(i==0)
+        prev = points->get(points->getSize()-1);
+      else
+        prev = points->get(i-1);
+      if(i==points->getSize()-1)
+        next = points->get(0);
+      else
+        next = points->get(i+1);
+      Point2 wedgeOne = Point2(prev.xpos-current.xpos,prev.ypos-current.ypos);
+      Point2 wedgeTwo = Point2(next.xpos-current.xpos,next.ypos-current.ypos);
+      if(wedgeOne.wedgeProduct(wedgeTwo) > 0) {
+        // the point is an interior angle
+        
+      }
+      // to be implemented
+    }
+  }
+  points->clear();
+  delete points;
   // to be implemented
+}
+
+bool Face::isClockwise(Array<Point2>* sortedPath) {
+  float sum = 0.0f;
+  for(int i=1;i<sortedPath->getSise();i++)
+    sum += (sortedPath->get(i).xpos-sortedPath->get(i-1).xpos) *
+      (sortedPath->get(i).ypos + sortedPath->get(i-1).ypos);
+  return slope > 0.0f;
+}
+
+Array<Point2>* Face::reversePath(Array<Point2>* sortedPath) {
+  Array<Point2>* reversedPath = new Array<Point2>(sortedPath->getSize()+1);
+  while(sortedPath->getSize())
+    reversedPath->add(sortedPath->removeLast());
+  delete sortedPath;
+  return reversedPath;
 }
 
 void Face::detectIfConvex() { // Need To Test

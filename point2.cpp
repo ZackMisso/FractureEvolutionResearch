@@ -14,6 +14,10 @@ bool Point2::equals(Point2 other) {
   return xpos == other.xpos && ypos == other.ypos;
 }
 
+float Point2::wedgeProduct(Point2 other) {
+  return xpos*other.ypos - ypos*other.xpos;
+}
+
 void Point2::setXpos(float param) {
   xpos = param;
 }

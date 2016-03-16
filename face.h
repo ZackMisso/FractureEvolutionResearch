@@ -31,6 +31,8 @@ public:
   //Array<Face*>* separate(Point2 start,Point2 end);
   Array<Face*>* separate(float x,float y);
   Array<Point2>* sortPointsByPath();
+  Array<Point2>* reversePath(Array<Point2>* sortedPath);
+  bool isClockwise(Array<Point2>* sortedPath);
   void detectIfConvex();
   void splitIntoTrimesh();
   void splitIntoTrimeshConvex();

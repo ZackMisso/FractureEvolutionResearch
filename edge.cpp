@@ -172,6 +172,27 @@ float Edge::determinant(Edge* other) {
   return xOne*yTwo - yOne*xTwo;
 }
 
+bool Edge::isOn(Edge* other) { // THIS NEEDS TO BE TESTED
+  float dxOne = second.xpos - first.xpos;
+  float dyOne = second.ypos - first.ypos;
+  float dxTwo = other->getSecond().xpos - other->getFirst().xpos;
+  float dyTwo = other->getSecond().ypos - other->getSecond().ypos;
+  bool vert = dxOne==0 && dxTwo==0;
+  if(!vert && (dxOne==0 || dxTwo==0))
+    return false;
+  float slOne = dyOne/dxOne;
+  float slTwo = dyTwo/dxTwo;
+  if(slOne==-slTwo)
+    slOne*=-1;
+  if(vert || slOne == slTwo || slOne == -slTwo) {
+    float bOne = second.ypos - second.xpos * slOne;
+    float bTwo = other->getSecond().ypos - other->getSecond().xpos * slTwo;
+    if(bOne == bTwo)
+      return true;
+  }
+  return false;
+}
+
 Point2 Edge::getFirst() { return first; }
 Point2 Edge::getSecond() { return second; }
 int Edge::getID() { return id; }
