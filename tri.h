@@ -19,6 +19,7 @@ public:
   ~Tri();
   // other methods
   void findAdjacents(Array<Tri*>* triangles);
+  bool equals(Tri* other);
   void draw();
   // getter methods
   Point2 getPoint(int num);

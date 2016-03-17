@@ -78,6 +78,14 @@ void Tri::findAdjacents(Array<Tri*>* triangles) {
   // to be implemented
 }
 
+bool Tri::equals(Tri* other) {
+  bool equals = true;
+  equals = equals && points[0].equals(other->getPointOne());
+  equals = equals && points[1].equals(other->getPointTwo());
+  equals = equals && points[2].equals(other->getPointThree());
+  return equals;
+}
+
 void Tri::draw() {
   glVertex2f(points[0].xpos,points[0].ypos);
   glVertex2f(points[1].xpos,points[1].ypos);

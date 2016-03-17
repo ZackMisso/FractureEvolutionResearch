@@ -197,6 +197,10 @@ bool unitTests() {
     cout << "Adjacents Test Failed" << endl;
     return true;
   }
+  if(Tests::detectIfConvexTest()) {
+    cout << "Detect If Convex Failed" << endl;
+    return true;
+  }
   if(Tests::convexSplitTest()) {
     cout << "Convex Split Test Failed" << endl;
     return true;

@@ -10,6 +10,7 @@ public:
   static bool vertSortTest();
   static bool vertReverseTest();
   static bool edgeIsOnTest();
+  static bool detectIfConvexTest();
   static bool adjacentsTest();
   static bool convexSplitTest();
   static bool concaveSplitTest();

@@ -75,18 +75,110 @@ bool Tests::vertSortTest() {
     if(!sortedPoints->get(i).equals(points->get(i)))
       return true;
   }
-  // check the sorted Points are correct
   return false;
 }
 
 bool Tests::vertReverseTest() {
-  // to be implemented
+  Array<Point2>* points = new Array<Point2>();
+  Point2 one(0,0);
+  Point2 two(0,0);
+  Point2 three(0,0);
+  Point2 four(0,0);
+  Point2 five(0,0);
+  Point2 six(0,0);
+  Point2 seven(0,0);
+  Point2 eight(0,0);
+  Point2 nine(0,0);
+  Point2 ten(0,0);
+  points->add(one);
+  points->add(two);
+  points->add(three);
+  points->add(four);
+  points->add(five);
+  points->add(six);
+  points->add(seven);
+  points->add(eight);
+  points->add(nine);
+  points->add(ten);
+  Array<Point2>* reversedPoints = new Array<Point2>();
+  while(points->getSize())
+    reversedPoints->add(points->removeLast();
+  delete points;
+  Array<Edge*> edges = new Array<Edge*>();
+  edges->add(new Edge(one,two));
+  edges->add(new Edge(two,three));
+  edges->add(new Edge(three,four));
+  edges->add(new Edge(four,five));
+  edges->add(new Edge(five,six));
+  edges->add(new Edge(six,seven));
+  edges->add(new Edge(seven,eight));
+  edges->add(new Edge(eight,nine));
+  edges->add(new Edge(nine,ten));
+  edges->add(new Edge(ten,one));
+  Face* face = new Face();
+  face->setEdges(edges);
+  Array<Point2>* sortedPoints = face->sortPointsByPath();
+  sortedPoints = face->reversePath(sortedPoints);
+  if(sortedPoints->getSize() != points->getSize())
+    return true;
+  for(int i=0;i<sortedPoints->getSize();i++) {
+    if(!sortedPoints->get(i).equals(reversedPoints->get(i)))
+      return true;
+  }
   return true;
 }
 
-bool Tests::edgeIsOnTest() {
-  // to be implemented
-  return true;
+bool Tests::edgeIsOnTest() { // implement Data
+  // horizontal test no overlap
+  Edge* oneA = new Edge(0,0,1,0);
+  Edge* twoA = new Edge(1.2,0,2,0);
+  // horizontal test overlap
+  Edge* oneB = new Edge(0,0,1,0);
+  Edge* twoB = new Edge(.5,0,2,0);
+  // vertical test no overlap
+  Edge* oneC = new Edge();
+  Edge* twoC = new Edge();
+  // vertical test overlap
+  Edge* oneD = new Edge();
+  Edge* twoD = new Edge();
+  // opposite slopes test
+  Edge* oneE = new Edge();
+  Edge* twoE = new Edge();
+  // same slopes different b test
+  Edge* oneF = new Edge();
+  Edge* twoF = new Edge();
+  // same slopes same b test
+  Edge* oneG = new Edge();
+  Edge* twoG = new Edge();
+  if(oneA->isOn(twoA)) {
+    cout << "First Test Failed" << endl;
+    return true;
+  }
+  if(!oneB->isOn(twoB)) {
+    cout << "Second Test Failed" << endl;
+    return true;
+  }
+  if(oneC->isOn(twoC)) {
+    cout << "Third Test Failed" << endl;
+    return true;
+  }
+  if(!oneD->isOn(twoD)) {
+    cout << "Fourth Test Failed" << endl;
+    return true;
+  }
+  if(oneE->isOn(twoE)) {
+    cout << "Fifth Test Failed" << endl;
+    return true;
+  }
+  if(oneF->isOn(twoF)) {
+    cout << "Sixth Test Failed" << endl;
+    return true;
+  }
+  if(!oneG->isOn(twoG)) {
+    cout << "Sevent Test Failed" << endl;
+    return true;
+  }
+  return false;
 }
 
 bool Tests::adjacentsTest() {
@@ -94,17 +186,188 @@ bool Tests::adjacentsTest() {
   return true;
 }
 
+bool Tests::detectIfConvexTest() { // implement Data
+  Face* convexFace = new Face();
+  Face* concaveFace = new Face();
+  Point2 one();
+  Point2 two();
+  Point2 three();
+  Point2 four();
+  Point2 five();
+  Point2 sixOne();
+  Point2 sixTwo();
+  Array<Edge*>* oneEdges = new Array<Edge*>();
+  Array<Edge*>* twoEdges = new Array<Edge*>();
+  Array<Vertex*>* oneVerts = new Array<Vertex*>();
+  Array<Vertex*>* twoVerts = new Array<Vertex*>();
+  Edge* eOne = new Edge(one,two);
+  Edge* eTwo = new Edge(two,three);
+  Edge* eThree = new Edge(three,four);
+  Edge* eFour = new Edge(four,five);
+  Edge* eFiveOne = new Edge(five,sixOne);
+  Edge* eFiveTwo = new Edge(five,sixTwo);
+  Edge* eSixOne = new Edge(sixOne,one);
+  Edge* eSixTwo = new Edge(sixTwo,one);
+  oneEdges->add(eOne);
+  oneEdges->add(eTwo);
+  oneEdges->add(eThree);
+  oneEdges->add(eFour);
+  oneEdges->add(eFiveOne);
+  oneEdges->add(eSixOne);
+  twoEdges->add(eOne);
+  twoEdges->add(eTwo);
+  twoEdges->add(eThree);
+  twoEdges->add(eFour);
+  twoEdges->add(eFiveTwo);
+  twoEdges->add(eSixTwo);
+  oneVerts->add(new Vertex(one));
+  oneVerts->add(new Vertex(two));
+  oneVerts->add(new Vertex(three));
+  oneVerts->add(new Vertex(four));
+  oneVerts->add(new Vertex(five));
+  oneVerts->add(new Vertex(sixOne));
+  twoVerts->add(new Vertex(one));
+  twoVerts->add(new Vertex(two));
+  twoVerts->add(new Vertex(three));
+  twoVerts->add(new Vertex(four));
+  twoVerts->add(new Vertex(five));
+  twoVerts->add(new Vertex(sixTwo));
+  convexFace->setVerts(oneVerts);
+  convexFace->setEdges(oneEdges);
+  concaveFace->setVerts(twoVerts);
+  concaveFace->setEdges(twoEdges);
+  convexFace->detectIfConvex();
+  concaveFace->detectIfConvex();
+  if(!convexFace->getIsConvex()) {
+    cout << "Convex is not Convex" << endl;
+    return true;
+  }
+  if(concaveFace->getIsConvex()) {
+    cout << "Concave Face is Convex" << endl;
+    return true;
+  }
+  // TODO :: DELETE STUFFS
+  return false;
+}
+
 bool Tests::convexSplitTest() {
+  Face* convexFace = new Face();
+  //Face* concaveFace = new Face();
+  Point2 one();
+  Point2 two();
+  Point2 three();
+  Point2 four();
+  Point2 five();
+  Point2 sixOne();
+  //Point2 sixTwo();
+  Array<Edge*>* oneEdges = new Array<Edge*>();
+  //Array<Edge*>* twoEdges = new Array<Edge*>();
+  Array<Vertex*>* oneVerts = new Array<Vertex*>();
+  //Array<Vertex*>* twoVerts = new Array<Vertex*>();
+  Edge* eOne = new Edge(one,two);
+  Edge* eTwo = new Edge(two,three);
+  Edge* eThree = new Edge(three,four);
+  Edge* eFour = new Edge(four,five);
+  Edge* eFiveOne = new Edge(five,sixOne);
+  //Edge* eFiveTwo = new Edge(five,sixTwo);
+  Edge* eSixOne = new Edge(sixOne,one);
+  //Edge* eSixTwo = new Edge(sixTwo,one);
+  oneEdges->add(eOne);
+  oneEdges->add(eTwo);
+  oneEdges->add(eThree);
+  oneEdges->add(eFour);
+  oneEdges->add(eFiveOne);
+  oneEdges->add(eSixOne);
+  //twoEdges->add(eOne);
+  //twoEdges->add(eTwo);
+  //twoEdges->add(eThree);
+  //twoEdges->add(eFour);
+  //twoEdges->add(eFiveTwo);
+  //twoEdges->add(eSixTwo);
+  oneVerts->add(new Vertex(one));
+  oneVerts->add(new Vertex(two));
+  oneVerts->add(new Vertex(three));
+  oneVerts->add(new Vertex(four));
+  oneVerts->add(new Vertex(five));
+  oneVerts->add(new Vertex(sixOne));
+  //twoVerts->add(new Vertex(one));
+  //twoVerts->add(new Vertex(two));
+  //twoVerts->add(new Vertex(three));
+  //twoVerts->add(new Vertex(four));
+  //twoVerts->add(new Vertex(five));
+  //twoVerts->add(new Vertex(sixTwo));
+  convexFace->setVerts(oneVerts);
+  convexFace->setEdges(oneEdges);
+  //concaveFace->setVerts(twoVerts);
+  //concaveFace->setEdges(twoEdges);
+  convexFace->splitIntoTrimesh();
+  // Create Correct Tris
+  // Do Check
   // to be implemented
   return true;
 }
 
 bool Tests::concaveSplitTest() {
   // to be implemented
+  //Face* convexFace = new Face();
+  Face* concaveFace = new Face();
+  Point2 one();
+  Point2 two();
+  Point2 three();
+  Point2 four();
+  Point2 five();
+  //Point2 sixOne();
+  Point2 sixTwo();
+  //Array<Edge*>* oneEdges = new Array<Edge*>();
+  Array<Edge*>* twoEdges = new Array<Edge*>();
+  //Array<Vertex*>* oneVerts = new Array<Vertex*>();
+  Array<Vertex*>* twoVerts = new Array<Vertex*>();
+  Edge* eOne = new Edge(one,two);
+  Edge* eTwo = new Edge(two,three);
+  Edge* eThree = new Edge(three,four);
+  Edge* eFour = new Edge(four,five);
+  //Edge* eFiveOne = new Edge(five,sixOne);
+  Edge* eFiveTwo = new Edge(five,sixTwo);
+  //Edge* eSixOne = new Edge(sixOne,one);
+  Edge* eSixTwo = new Edge(sixTwo,one);
+  //oneEdges->add(eOne);
+  //oneEdges->add(eTwo);
+  //oneEdges->add(eThree);
+  //oneEdges->add(eFour);
+  //oneEdges->add(eFiveOne);
+  //oneEdges->add(eSixOne);
+  twoEdges->add(eOne);
+  twoEdges->add(eTwo);
+  twoEdges->add(eThree);
+  twoEdges->add(eFour);
+  twoEdges->add(eFiveTwo);
+  twoEdges->add(eSixTwo);
+  //oneVerts->add(new Vertex(one));
+  //oneVerts->add(new Vertex(two));
+  //oneVerts->add(new Vertex(three));
+  //oneVerts->add(new Vertex(four));
+  //oneVerts->add(new Vertex(five));
+  //oneVerts->add(new Vertex(sixOne));
+  twoVerts->add(new Vertex(one));
+  twoVerts->add(new Vertex(two));
+  twoVerts->add(new Vertex(three));
+  twoVerts->add(new Vertex(four));
+  twoVerts->add(new Vertex(five));
+  twoVerts->add(new Vertex(sixTwo));
+  //convexFace->setVerts(oneVerts);
+  //convexFace->setEdges(oneEdges);
+  concaveFace->setVerts(twoVerts);
+  concaveFace->setEdges(twoEdges);
+  //convexFace->detectIfConvex();
+  //concaveFace->detectIfConvex();
+  concaveFace->splitIntoTrimeshConcave();
+  // Create Correct Tris
+  // Do Check
+  // to be implemented
   return true;
 }
 
 bool Tests::trimeshCreationTest() {
-  // to be implemented
-  return true;
+  // This is probably not even needed
+  return false;
 }
