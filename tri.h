@@ -40,11 +40,11 @@ public:
   void setPointOne(Point2 param);
   void setPointTwo(Point2 param);
   void setPointThree(Point2 param);
-  void setEdge(int num,Point2 param);
+  void setEdge(int num,Edge* param);
   void setEdgeOne(Edge* param);
   void setEdgeTwo(Edge* param);
   void setEdgeThree(Edge* param);
-  void setAdjacent(int num,Point2 param);
+  void setAdjacent(int num,Tri* param);
   void setAdjacentOne(Tri* param);
   void setAdjacentTwo(Tri* param);
   void setAdjacentThree(Tri* param);

@@ -5,7 +5,7 @@
 #include <GL/glut.h>
 // USE ON MAC
 //#include <OpenGL/gl.h>
- //#include <OpenGL/glu.h>
+//#include <OpenGL/glu.h>
 //#include <GLUT/glut.h>
 
 #include <iostream>

@@ -1,5 +1,11 @@
 #include "tests.h"
 #include "edge.h"
+#include "face.h"
+#include "vertex.h"
+
+#include <iostream>
+
+using namespace std;
 
 bool Tests::intersectionTestOne() {
   Edge* one = new Edge(-1,4,1,4);
@@ -35,16 +41,16 @@ bool Tests::pointBetweenTest() {
 
 bool Tests::vertSortTest() {
   Array<Point2>* points = new Array<Point2>();
-  Point2 one(0,0);
-  Point2 two(0,0);
-  Point2 three(0,0);
-  Point2 four(0,0);
-  Point2 five(0,0);
-  Point2 six(0,0);
-  Point2 seven(0,0);
-  Point2 eight(0,0);
-  Point2 nine(0,0);
-  Point2 ten(0,0);
+  Point2 one=Point2(0,0);
+  Point2 two=Point2(0,0);
+  Point2 three=Point2(0,0);
+  Point2 four=Point2(0,0);
+  Point2 five=Point2(0,0);
+  Point2 six=Point2(0,0);
+  Point2 seven=Point2(0,0);
+  Point2 eight=Point2(0,0);
+  Point2 nine=Point2(0,0);
+  Point2 ten=Point2(0,0);
   points->add(one);
   points->add(two);
   points->add(three);
@@ -55,7 +61,7 @@ bool Tests::vertSortTest() {
   points->add(eight);
   points->add(nine);
   points->add(ten);
-  Array<Edge*> edges = new Array<Edge*>();
+  Array<Edge*>* edges = new Array<Edge*>();
   edges->add(new Edge(one,two));
   edges->add(new Edge(two,three));
   edges->add(new Edge(three,four));
@@ -80,16 +86,16 @@ bool Tests::vertSortTest() {
 
 bool Tests::vertReverseTest() {
   Array<Point2>* points = new Array<Point2>();
-  Point2 one(0,0);
-  Point2 two(0,0);
-  Point2 three(0,0);
-  Point2 four(0,0);
-  Point2 five(0,0);
-  Point2 six(0,0);
-  Point2 seven(0,0);
-  Point2 eight(0,0);
-  Point2 nine(0,0);
-  Point2 ten(0,0);
+  Point2 one=Point2(0,0);
+  Point2 two=Point2(0,0);
+  Point2 three=Point2(0,0);
+  Point2 four=Point2(0,0);
+  Point2 five=Point2(0,0);
+  Point2 six=Point2(0,0);
+  Point2 seven=Point2(0,0);
+  Point2 eight=Point2(0,0);
+  Point2 nine=Point2(0,0);
+  Point2 ten=Point2(0,0);
   points->add(one);
   points->add(two);
   points->add(three);
@@ -102,9 +108,9 @@ bool Tests::vertReverseTest() {
   points->add(ten);
   Array<Point2>* reversedPoints = new Array<Point2>();
   while(points->getSize())
-    reversedPoints->add(points->removeLast();
+    reversedPoints->add(points->removeLast());
   delete points;
-  Array<Edge*> edges = new Array<Edge*>();
+  Array<Edge*>* edges = new Array<Edge*>();
   edges->add(new Edge(one,two));
   edges->add(new Edge(two,three));
   edges->add(new Edge(three,four));
@@ -136,20 +142,20 @@ bool Tests::edgeIsOnTest() { // implement Data
   Edge* oneB = new Edge(0,0,1,0);
   Edge* twoB = new Edge(.5,0,2,0);
   // vertical test no overlap
-  Edge* oneC = new Edge();
-  Edge* twoC = new Edge();
+  Edge* oneC = new Edge(0,0,0,0);
+  Edge* twoC = new Edge(0,0,0,0);
   // vertical test overlap
-  Edge* oneD = new Edge();
-  Edge* twoD = new Edge();
+  Edge* oneD = new Edge(0,0,0,0);
+  Edge* twoD = new Edge(0,0,0,0);
   // opposite slopes test
-  Edge* oneE = new Edge();
-  Edge* twoE = new Edge();
+  Edge* oneE = new Edge(0,0,0,0);
+  Edge* twoE = new Edge(0,0,0,0);
   // same slopes different b test
-  Edge* oneF = new Edge();
-  Edge* twoF = new Edge();
+  Edge* oneF = new Edge(0,0,0,0);
+  Edge* twoF = new Edge(0,0,0,0);
   // same slopes same b test
-  Edge* oneG = new Edge();
-  Edge* twoG = new Edge();
+  Edge* oneG = new Edge(0,0,0,0);
+  Edge* twoG = new Edge(0,0,0,0);
   if(oneA->isOn(twoA)) {
     cout << "First Test Failed" << endl;
     return true;
@@ -189,13 +195,13 @@ bool Tests::adjacentsTest() {
 bool Tests::detectIfConvexTest() { // implement Data
   Face* convexFace = new Face();
   Face* concaveFace = new Face();
-  Point2 one();
-  Point2 two();
-  Point2 three();
-  Point2 four();
-  Point2 five();
-  Point2 sixOne();
-  Point2 sixTwo();
+  Point2 one = Point2(0,0);
+  Point2 two = Point2(0,0);
+  Point2 three = Point2(0,0);
+  Point2 four = Point2(0,0);
+  Point2 five = Point2(0,0);
+  Point2 sixOne = Point2(0,0);
+  Point2 sixTwo = Point2(0,0);
   Array<Edge*>* oneEdges = new Array<Edge*>();
   Array<Edge*>* twoEdges = new Array<Edge*>();
   Array<Vertex*>* oneVerts = new Array<Vertex*>();
@@ -253,12 +259,12 @@ bool Tests::detectIfConvexTest() { // implement Data
 bool Tests::convexSplitTest() {
   Face* convexFace = new Face();
   //Face* concaveFace = new Face();
-  Point2 one();
-  Point2 two();
-  Point2 three();
-  Point2 four();
-  Point2 five();
-  Point2 sixOne();
+  Point2 one = Point2(0,0);
+  Point2 two = Point2(0,0);
+  Point2 three = Point2(0,0);
+  Point2 four = Point2(0,0);
+  Point2 five = Point2(0,0);
+  Point2 sixOne = Point2(0,0);
   //Point2 sixTwo();
   Array<Edge*>* oneEdges = new Array<Edge*>();
   //Array<Edge*>* twoEdges = new Array<Edge*>();
@@ -311,13 +317,13 @@ bool Tests::concaveSplitTest() {
   // to be implemented
   //Face* convexFace = new Face();
   Face* concaveFace = new Face();
-  Point2 one();
-  Point2 two();
-  Point2 three();
-  Point2 four();
-  Point2 five();
+  Point2 one = Point2(0,0);
+  Point2 two = Point2(0,0);
+  Point2 three = Point2(0,0);
+  Point2 four = Point2(0,0);
+  Point2 five = Point2(0,0);
   //Point2 sixOne();
-  Point2 sixTwo();
+  Point2 sixTwo = Point2(0,0);
   //Array<Edge*>* oneEdges = new Array<Edge*>();
   Array<Edge*>* twoEdges = new Array<Edge*>();
   //Array<Vertex*>* oneVerts = new Array<Vertex*>();

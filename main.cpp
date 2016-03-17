@@ -181,38 +181,38 @@ bool unitTests() {
     cout << "Point Between Test Failed" << endl;
     return true;
   }
-  if(Tests::vertSortTest()) {
-    cout << "Vert Sort Test Failed" << endl;
-    return true;
-  }
-  if(Tests::vertReverseTest()) {
-    cout << "Vert Reverse Test Failed" << endl;
-    return true;
-  }
-  if(Tests::edgeIsOnTest()) {
-    cout << "Edge Is On Test Failed" << endl;
-    return true;
-  }
-  if(Tests::adjacentsTest()) {
-    cout << "Adjacents Test Failed" << endl;
-    return true;
-  }
-  if(Tests::detectIfConvexTest()) {
-    cout << "Detect If Convex Failed" << endl;
-    return true;
-  }
-  if(Tests::convexSplitTest()) {
-    cout << "Convex Split Test Failed" << endl;
-    return true;
-  }
-  if(Tests::concaveSplitTest()) {
-    cout << "Concave Split Test Failed" << endl;
-    return true;
-  }
-  if(Tests::trimeshCreationTest()) {
-    cout << "Trimesh Creation Test Failed" << endl;
-    return true;
-  }
+  //if(Tests::vertSortTest()) {
+  //  cout << "Vert Sort Test Failed" << endl;
+  //  return true;
+  //}
+  //if(Tests::vertReverseTest()) {
+  //  cout << "Vert Reverse Test Failed" << endl;
+  //  return true;
+  //}
+  //if(Tests::edgeIsOnTest()) {
+  //  cout << "Edge Is On Test Failed" << endl;
+  //  return true;
+  //}
+  //if(Tests::adjacentsTest()) {
+  //  cout << "Adjacents Test Failed" << endl;
+  //  return true;
+  //}
+  //if(Tests::detectIfConvexTest()) {
+  //  cout << "Detect If Convex Failed" << endl;
+  //  return true;
+  //}
+  //if(Tests::convexSplitTest()) {
+  //  cout << "Convex Split Test Failed" << endl;
+  //  return true;
+  //}
+  //if(Tests::concaveSplitTest()) {
+  //  cout << "Concave Split Test Failed" << endl;
+  //  return true;
+  //}
+  //if(Tests::trimeshCreationTest()) {
+  //  cout << "Trimesh Creation Test Failed" << endl;
+  //  return true;
+  //}
   // implement more as needed
   return false;
 }

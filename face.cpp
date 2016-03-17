@@ -348,10 +348,10 @@ void Face::splitIntoTrimeshConcave() { // NEEDS TO BE TESTED
 
 bool Face::isClockwise(Array<Point2>* sortedPath) {
   float sum = 0.0f;
-  for(int i=1;i<sortedPath->getSise();i++)
+  for(int i=1;i<sortedPath->getSize();i++)
     sum += (sortedPath->get(i).xpos-sortedPath->get(i-1).xpos) *
       (sortedPath->get(i).ypos + sortedPath->get(i-1).ypos);
-  return slope > 0.0f;
+  return sum > 0.0f;
 }
 
 Array<Point2>* Face::reversePath(Array<Point2>* sortedPath) {

@@ -51,7 +51,7 @@ void TriMesh::draw() {
 // THIS IS SLOW.... NEEDS OPTIMIZATIONS
 // NEEDS HEAVY OPTIMIZATIONS
 void TriMesh::calculateAllAdjacents() { // NEED TO TEST
-  for(int i=0;i<triangles.getSize();i++) {
+  for(int i=0;i<triangles->getSize();i++) {
     Tri* current = triangles->get(i);
     // Adjacents for boundaries dont need to be known...
     if(!current->getIsBoundary()) {
