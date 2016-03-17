@@ -22,6 +22,7 @@ public:
 	void createNewVertex(float x,float y);
 	void createNewEdge(Vertex* one,Vertex* two);
   void createTriMesh();
+  bool doesSimilarEdgeExists(Edge* edge);
   void recount();
   //void debug();
   Array<Face*>* getFacesWithVertex(Vertex* vert);

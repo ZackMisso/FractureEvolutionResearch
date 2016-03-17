@@ -53,6 +53,14 @@ void Fracture::clearAndReloadFaces() {
 	// we may not want to do this
 }
 
+void Fracture::doesSimilarEdgeExists(Edge* edge) {
+	for(int i=0;i<edges->getSize();i++)
+		if(edge->getFirst().equals(edges->get(i)->getFirst()))
+			if(edge->getSecond().equals(edges->get(i)->getSecond()))
+				return true;
+	return false;
+}
+
 void Fracture::recount() {
 	edges->clear();
 	verts->clear();

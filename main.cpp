@@ -40,6 +40,7 @@ void cb_trimeshOnOff(int id);
 // Arguements
 GLUI* subwindow;
 Interface* interface;
+InterfaceData* interfaceData;
 ProgramData* programData;
 RenderSettings* renderSettings;
 int window;
@@ -69,9 +70,11 @@ int main(int argc,char** argv) {
   GLUI_Master.set_glutIdleFunc(mainLoop);
   // create the subwindow
   subwindow = GLUI_Master.create_glui_subwindow(window,GLUI_SUBWINDOW_LEFT);
+  // create required subsystems
+  interfaceData = new InterfaceData();
   interface = new Interface(subwindow);
   renderSettings = new RenderSettings();
-
+  renderSettings->setInterfaceRef(interfaceData);
   createInterface();
 
   // STUFF FOR LATER //////////////
@@ -84,18 +87,18 @@ int main(int argc,char** argv) {
   //glEnable(GL_CULL_FACE);
   /////////////////////////////////
   cout << "Finished Initialization" << endl;
-  if(argc > 2){
-    for(int i=0;i<6;i++)
-      Mutations::AddRandomVertex(programData->getCurrentFracture());
-    DebugController::writeDebugState(programData->getCurrentFracture());
-    return 0;
-  }
+  //if(argc > 2){
+  //  for(int i=0;i<6;i++)
+  //    Mutations::AddRandomVertex(programData->getCurrentFracture());
+  //  DebugController::writeDebugState(programData->getCurrentFracture());
+  //  return 0;
+  //}
   glutMainLoop();
 
   return 0;
 }
 
-void createInterface() {
+void createInterface() { // TODO :: MOVE THIS TO INTEFACE CLASS
   // Object Descripition Menu
   interface->objectDescriptionMenu = subwindow->add_rollout("Fracture Description",false);
   interface->edgesLabel = subwindow->add_statictext_to_panel(interface->objectDescriptionMenu,"Num Edges Will Go Here");
