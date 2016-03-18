@@ -1,11 +1,12 @@
 #ifndef __RENDERSETTINGS_H__
 #define __RENDERSETTINGS_H__
 
-#include "interfaceData.h"
+// Causes Linking Errors
+//#include "interfaceData.h"
 
 class RenderSettings {
 private:
-  InterfaceData* interfaceRef;
+  //InterfaceData* interfaceRef;
   int vertSize;
   int edgeSize;
   bool displayVerts;
@@ -16,7 +17,7 @@ public:
   RenderSettings();
   ~RenderSettings();
   // getter methods
-  InterfaceData* getInterfaceRef();
+  //InterfaceData* getInterfaceRef();
   int getVertSize();
   int getEdgeSize();
   bool getDisplayVerts();
@@ -24,7 +25,7 @@ public:
   bool getDisplayFaces();
   bool getDisplayFaceTrimesh();
   // setter methods
-  void setInterfaceRef(InterfaceData* param);
+  //void setInterfaceRef(InterfaceData* param);
   void setVertSize(int param);
   void setEdgeSize(int param);
   void setDisplayVerts(bool param);

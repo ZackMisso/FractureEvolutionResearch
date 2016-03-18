@@ -16,18 +16,18 @@ public:
   GLUI_Button* loadFracture;
   GLUI_Button* clearFracture;
   // interface menu
-  GLUI_Rollout* interfaceMenu; // new
-  GLUI_Button* selectFacesButton; // new
-  GLUI_Button* selectEdgesButton; // new
-  GLUI_Button* selectVertsButton; // new
-  GLUI_Button* selectNoneButton; // new
+  GLUI_Rollout* interfaceMenu;
+  GLUI_Button* selectFacesButton;
+  GLUI_Button* selectEdgesButton;
+  GLUI_Button* selectVertsButton;
+  GLUI_Button* selectNoneButton;
   // edit fracture
   GLUI_Rollout* editFractureMenu;
-  GLUI_Rollout* addVertexMenu; // new
-  GLUI_EditText* vertexXCoord; // new
-  GLUI_EditText* vertexYCoord; // new
-  GLUI_Button* addVertexButton; // new
-  GLUI_Button* addEdge; // new
+  GLUI_Rollout* addVertexMenu;
+  GLUI_EditText* vertexXCoord;
+  GLUI_EditText* vertexYCoord;
+  GLUI_Button* addVertexButton;
+  GLUI_Button* addEdgeButton;
   // camera menu
   GLUI_Rollout* cameraMenu;
   // render menu

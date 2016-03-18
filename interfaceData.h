@@ -1,11 +1,14 @@
 #ifndef __INTERFACEDATA_H__
 #define __INTERFACEDATA_H__
 
-#include "fracture.h"
+//#include "fracture.h"
+#include "face.h"
+#include "edge.h"
+#include "vertex.h"
 
 class InterfaceData {
 private:
-  Fracture* currentFracture;
+  //Fracture* currentFracture; // I dont think this is needed
   Face* selectedFace;
   Edge* selectedEdge;
   Vertex* selectedVertOne;
@@ -20,7 +23,7 @@ public:
   ~InterfaceData();
   void draw();
   // getter methods
-  Fracture* getCurrentFracture();
+  //Fracture* getCurrentFracture();
   Face* getSelectedFace();
   Edge* getSelectedEdge();
   Vertex* getSelectedVertOne();
@@ -31,7 +34,7 @@ public:
   bool getSelectingEdges();
   bool getSelectingVerts();
   // setter methods
-  void setCurrentFracture(Fracture* param);
+  //void setCurrentFracture(Fracture* param);
   void setSelectedFace(Face* param);
   void setSelectedEdge(Edge* param);
   void setSelectedVertOne(Vertex* param);

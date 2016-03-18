@@ -68,15 +68,21 @@ Tri::~Tri() {
   delete edges[2];
   delete edges[1];
   delete edges[0];
+  delete edges;
   delete adjacents[2];
   delete adjacents[1];
   delete adjacents[0];
+  delete adjacents;
 }
 
-void Tri::findAdjacents(Array<Tri*>* triangles) {
-  cout << "NOT IMPLEMENTED :: FIND ADJACENTS" << endl;
-  // to be implemented
-}
+// IMPLEMENT THIS LATER INSTEAD OF USING TRIMESH CALCALLADJ
+//void Tri::findAdjacents(Array<Tri*>* triangles) {
+//  //cout << "NOT IMPLEMENTED :: FIND ADJACENTS" << endl;
+//  //for(int i=0;i<triangles->getSize();i++) {
+//  //
+//  //}
+//  // to be implemented
+//}
 
 bool Tri::equals(Tri* other) {
   bool equals = true;

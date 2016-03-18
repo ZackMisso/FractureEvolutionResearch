@@ -10,6 +10,7 @@
 #include "fracture.h"
 #include "array.h"
 #include "interface.h"
+#include "interfaceData.h"
 #include "programData.h"
 #include "renderSettings.h"
 #include "mutations.h"
@@ -36,6 +37,12 @@ void cb_edgesOnOff(int id);
 void cb_facesOnOff(int id);
 void cb_randomMutation(int id);
 void cb_trimeshOnOff(int id);
+void cb_selectFaces(int id);
+void cb_selectEdges(int id);
+void cb_selectVerts(int id);
+void cb_selectNone(int id);
+void cb_createVertex(int id);
+void cb_createEdge(int id);
 
 // Arguements
 GLUI* subwindow;
@@ -74,7 +81,7 @@ int main(int argc,char** argv) {
   interfaceData = new InterfaceData();
   interface = new Interface(subwindow);
   renderSettings = new RenderSettings();
-  renderSettings->setInterfaceRef(interfaceData);
+  //renderSettings->setInterfaceRef(interfaceData);
   createInterface();
 
   // STUFF FOR LATER //////////////
@@ -107,8 +114,19 @@ void createInterface() { // TODO :: MOVE THIS TO INTEFACE CLASS
   interface->saveFracture = subwindow->add_button_to_panel(interface->objectDescriptionMenu,"Save Fracture",1,cb_saveFracture);
   interface->loadFracture = subwindow->add_button_to_panel(interface->objectDescriptionMenu,"Load Fracture",1,cb_loadFracture);
   interface->clearFracture = subwindow->add_button_to_panel(interface->objectDescriptionMenu,"Clear Fracture",1,cb_clearFracture);
+  // Interface Menu
+  interface->interfaceMenu = subwindow->add_rollout("Settings",false);
+  interface->selectFacesButton = subwindow->add_button_to_panel(interface->interfaceMenu,"Select Faces",1,cb_selectFaces);
+  interface->selectEdgesButton = subwindow->add_button_to_panel(interface->interfaceMenu,"Select Edges",1,cb_selectEdges);
+  interface->selectVertsButton = subwindow->add_button_to_panel(interface->interfaceMenu,"Select Verts",1,cb_selectVerts);
+  interface->selectNoneButton = subwindow->add_button_to_panel(interface->interfaceMenu,"Select None",1,cb_selectNone);
   // Edit Fracture Menu
   interface->editFractureMenu = subwindow->add_rollout("Edit Fracture",false);
+  interface->addVertexMenu = subwindow->add_rollout_to_panel(interface->editFractureMenu,"Add Vertex",false);
+  interface->vertexXCoord = subwindow->add_edittext_to_panel(interface->addVertexMenu,"Add Vertex X",GLUI_EDITTEXT_FLOAT);
+  interface->vertexYCoord = subwindow->add_edittext_to_panel(interface->addVertexMenu,"Add Vertex Y",GLUI_EDITTEXT_FLOAT);
+  interface->addVertexButton = subwindow->add_button_to_panel(interface->addVertexMenu,"Create Vertex",1,cb_createVertex);
+  interface->addEdgeButton = subwindow->add_button_to_panel(interface->editFractureMenu,"Create Edge",1,cb_createEdge);
   // Camera Menu
   interface->cameraMenu = subwindow->add_rollout("Camera",false);
   // Render Menu
@@ -141,7 +159,7 @@ void display() {
   glEnd();
   glColor3f(0.0f,1.0f,0.0f);
 
-  programData->getCurrentFracture()->draw(renderSettings);
+  programData->getCurrentFracture()->draw(renderSettings,interfaceData);
 
   glEnd();
   glutSwapBuffers();
@@ -275,4 +293,34 @@ void cb_randomMutation(int id) {
   //cout << "NUM Verts :: " << programData->getCurrentFracture()->getVerts()->getSize() << endl;
   glutSetWindow(window);
   glutPostRedisplay();
+}
+
+void cb_selectFaces(int id) {
+  cout << "Selecting Faces has yet to be implemented" << endl;
+  // to be implemented
+}
+
+void cb_selectEdges(int id) {
+  cout << "Selecting Edges has yet to be implemented" << endl;
+  // to be implemented
+}
+
+void cb_selectVerts(int id) {
+  cout << "Selecting Verts has yet to be implemented" << endl;
+  // to be implemented
+}
+
+void cb_selectNone(int id) {
+  cout << "Selecting None has yet to be implemented" << endl;
+  // to be implemented
+}
+
+void cb_createVertex(int id) {
+  cout << "Creating Vertex has Yet to be implemented" << endl;
+  // to be implemented
+}
+
+void cb_createEdge(int id) {
+  cout << "Creating Edge has Yet to be implemented" << endl;
+  // to be implemented
 }

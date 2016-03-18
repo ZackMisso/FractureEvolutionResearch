@@ -1,4 +1,5 @@
 #include "trimesh.h"
+#include <GL/glut.h>
 
 TriMesh::TriMesh() {
   triangles = new Array<Tri*>();
@@ -43,9 +44,12 @@ void TriMesh::addBoundaryTriangles() {
   triangles->add(four);
 }
 
-void TriMesh::draw() {
+void TriMesh::draw(InterfaceData* data) {
+  if(face==data->getSelectedFace())
+    glColor3f(.3f,.3f,.3f);
   for(int i=0;i<triangles->getSize();i++)
     triangles->get(i)->draw();
+  glColor3f(0.0f,0.0f,1.0f);
 }
 
 // THIS IS SLOW.... NEEDS OPTIMIZATIONS
@@ -71,9 +75,10 @@ void TriMesh::calculateAllAdjacents() { // NEED TO TEST
       }
     }
   }
-  // Finished
 }
 
 Array<Tri*>* TriMesh::getTriangles() { return triangles; }
+Face* TriMesh::getFace() { return face; }
 
 void TriMesh::setTriangles(Array<Tri*>* param) { triangles = param; }
+void TriMesh::setFace(Face* param) { face = param; }

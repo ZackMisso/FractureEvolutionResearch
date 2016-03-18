@@ -1,7 +1,7 @@
 #include "interfaceData.h"
 
 InterfaceData::InterfaceData() {
-  currentFracture = 0x0;
+  //currentFracture = 0x0;
   selectedEdge = 0x0;
   selectedVertOne = 0x0;
   selectedVertTwo = 0x0;
@@ -20,7 +20,7 @@ void InterfaceData::draw() {
   // implement if needed
 }
 
-Fracture* InterfaceData::getCurrentFracture() { return currentFracture; }
+//Fracture* InterfaceData::getCurrentFracture() { return currentFracture; }
 Face* InterfaceData::getSelectedFace() { return selectedFace; }
 Edge* InterfaceData::getSelectedEdge() { return selectedEdge; }
 Vertex* InterfaceData::getSelectedVertOne() { return selectedVertOne; }
@@ -31,7 +31,7 @@ bool InterfaceData::getSelectingFaces() { return selectingFaces; }
 bool InterfaceData::getSelectingEdges() { return selectingEdges; }
 bool InterfaceData::getSelectingVerts() { return selectingVerts; }
 
-void InterfaceData::setCurrentFracture(Fracture* param) { currentFracture = param; }
+//void InterfaceData::setCurrentFracture(Fracture* param) { currentFracture = param; }
 void InterfaceData::setSelectedFace(Face* param) { selectedFace = param; }
 void InterfaceData::setSelectedEdge(Edge* param) { selectedEdge = param; }
 void InterfaceData::setSelectedVertOne(Vertex* param) { selectedVertOne = param; }

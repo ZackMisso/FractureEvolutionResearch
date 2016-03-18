@@ -7,6 +7,7 @@
 #include "face.h"
 #include "trimesh.h"
 #include "renderSettings.h"
+//#include "interfaceData.h"
 
 class Fracture {
 private:
@@ -27,7 +28,8 @@ public:
   //void debug();
   Array<Face*>* getFacesWithVertex(Vertex* vert);
   Array<Face*>* getFacesWithEdge(Edge* edge);
-	void draw(RenderSettings* renderSettings);
+	void draw(RenderSettings* renderSettings,InterfaceData* interfaceData);
+  Array<Face*>* calculateAllFaces();
   // getter methods
   Array<Face*>* getFaces();
   Array<Edge*>* getEdges();

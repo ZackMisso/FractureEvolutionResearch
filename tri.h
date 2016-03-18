@@ -18,7 +18,7 @@ public:
   Tri(Tri* one,Tri* two,Tri* trhee);
   ~Tri();
   // other methods
-  void findAdjacents(Array<Tri*>* triangles);
+  //void findAdjacents(Array<Tri*>* triangles); // implement later
   bool equals(Tri* other);
   void draw();
   // getter methods

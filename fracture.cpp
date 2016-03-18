@@ -53,7 +53,7 @@ void Fracture::clearAndReloadFaces() {
 	// we may not want to do this
 }
 
-void Fracture::doesSimilarEdgeExists(Edge* edge) {
+bool Fracture::doesSimilarEdgeExists(Edge* edge) {
 	for(int i=0;i<edges->getSize();i++)
 		if(edge->getFirst().equals(edges->get(i)->getFirst()))
 			if(edge->getSecond().equals(edges->get(i)->getSecond()))
@@ -140,7 +140,7 @@ Array<Face*>* Fracture::getFacesWithEdge(Edge* edge) {
 	return tmp;
 }
 
-void Fracture::draw(RenderSettings* renderSettings) {
+void Fracture::draw(RenderSettings* renderSettings,InterfaceData* interfaceData) {
 	// DRAWING FACES WILL NOT BE IMPLEMENTED
 	//if(renderSettings->getDisplayFaces()) {
 	//	// maybe draw the faces
@@ -149,7 +149,7 @@ void Fracture::draw(RenderSettings* renderSettings) {
 		glLineWidth((float)renderSettings->getEdgeSize()*1.2);
 		glColor3f(0.0f,0.0f,1.0f);
 		glBegin(GL_TRIANGLES);
-		triMesh->draw();
+		triMesh->draw(interfaceData);
 		glEnd();
 	}
 	if(renderSettings->getDisplayVerts()) {
@@ -171,6 +171,12 @@ void Fracture::draw(RenderSettings* renderSettings) {
 			edges->get(i)->draw();
 		glEnd();
 	}
+}
+
+// Brute Force Method
+Array<Face*>* Fracture::calculateAllFaces() {
+	// to be implemented
+	return 0x0;
 }
 
 Array<Vertex*>* Fracture::getVerts() { return verts; }
