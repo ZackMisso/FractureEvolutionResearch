@@ -232,8 +232,14 @@ Array<Point2>* Face::sortPointsByPath() { // Need To Test
   Point2 start = edge->getFirst();
   Point2 current = edge->getFirst();
   Point2 next = edge->getSecond();
-  while(next.xpos != start.xpos && next.ypos != start.ypos) {
+  //cout << "Before While Loop" << endl;
+  while(next.xpos != start.xpos || next.ypos != start.ypos) {
+    //cout << "IN WHILE LOOP" << endl;
     sortedPoints->add(current);
+    //cout << "Current :: ";
+    //current.debug();
+    //cout << "Next :: ";
+    //next.debug();
     bool chk = false;
     for(int i=0;i<edges->getSize();i++)
       if(edges->get(i)->eitherMatch(next) && edges->get(i) != edge) {
@@ -246,6 +252,7 @@ Array<Point2>* Face::sortPointsByPath() { // Need To Test
     if(!chk)
       cout << "ERROR IN SORT POINTS BY PATH" << endl;
   }
+  sortedPoints->add(current);
   return sortedPoints;
 }
 

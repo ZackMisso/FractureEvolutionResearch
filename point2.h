@@ -10,6 +10,8 @@ public:
   bool equals(Point2 other);
   float wedgeProduct(Point2 other);
   float dot(Point2 other);
+  // debug
+  void debug();
   // setter methods
   void setXpos(float param);
   void setYpos(float param);

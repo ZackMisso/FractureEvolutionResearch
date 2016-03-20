@@ -41,16 +41,16 @@ bool Tests::pointBetweenTest() {
 
 bool Tests::vertSortTest() {
   Array<Point2>* points = new Array<Point2>();
-  Point2 one=Point2(0,0);
-  Point2 two=Point2(0,0);
-  Point2 three=Point2(0,0);
-  Point2 four=Point2(0,0);
-  Point2 five=Point2(0,0);
-  Point2 six=Point2(0,0);
-  Point2 seven=Point2(0,0);
-  Point2 eight=Point2(0,0);
-  Point2 nine=Point2(0,0);
-  Point2 ten=Point2(0,0);
+  Point2 one=Point2(-.25,.3);
+  Point2 two=Point2(-.05,.3);
+  Point2 three=Point2(.3,.3);
+  Point2 four=Point2(.3,.1);
+  Point2 five=Point2(.3,-1.2);
+  Point2 six=Point2(.3,-.4);
+  Point2 seven=Point2(0.1,-.4);
+  Point2 eight=Point2(-.25,-.4);
+  Point2 nine=Point2(-.25,-.1);
+  Point2 ten=Point2(-.25,.25);
   points->add(one);
   points->add(two);
   points->add(three);
@@ -63,39 +63,45 @@ bool Tests::vertSortTest() {
   points->add(ten);
   Array<Edge*>* edges = new Array<Edge*>();
   edges->add(new Edge(one,two));
-  edges->add(new Edge(two,three));
-  edges->add(new Edge(three,four));
-  edges->add(new Edge(four,five));
-  edges->add(new Edge(five,six));
-  edges->add(new Edge(six,seven));
-  edges->add(new Edge(seven,eight));
-  edges->add(new Edge(eight,nine));
   edges->add(new Edge(nine,ten));
+  edges->add(new Edge(two,three));
+  edges->add(new Edge(seven,eight));
+  edges->add(new Edge(three,four));
   edges->add(new Edge(ten,one));
+  edges->add(new Edge(six,seven));
+  edges->add(new Edge(eight,nine));
+  edges->add(new Edge(five,six));
+  edges->add(new Edge(four,five));
   Face* face = new Face();
   face->setEdges(edges);
   Array<Point2>* sortedPoints = face->sortPointsByPath();
-  if(sortedPoints->getSize() != points->getSize())
+  if(sortedPoints->getSize() != points->getSize()) {
+    //cout << "Size :: " << sortedPoints->getSize() << endl;
+    //cout << "Correct Size :: " << points->getSize() << endl;
     return true;
+  }
   for(int i=0;i<sortedPoints->getSize();i++) {
-    if(!sortedPoints->get(i).equals(points->get(i)))
+    if(!sortedPoints->get(i).equals(points->get(i))) {
+      //for(int j=0;j<sortedPoints->getSize();j++)
+      //  sortedPoints->get(j).debug();
       return true;
+    }
   }
   return false;
 }
 
 bool Tests::vertReverseTest() {
   Array<Point2>* points = new Array<Point2>();
-  Point2 one=Point2(0,0);
-  Point2 two=Point2(0,0);
-  Point2 three=Point2(0,0);
-  Point2 four=Point2(0,0);
-  Point2 five=Point2(0,0);
-  Point2 six=Point2(0,0);
-  Point2 seven=Point2(0,0);
-  Point2 eight=Point2(0,0);
-  Point2 nine=Point2(0,0);
-  Point2 ten=Point2(0,0);
+  Point2 one=Point2(-.25,.3);
+  Point2 two=Point2(-.05,.3);
+  Point2 three=Point2(.3,.3);
+  Point2 four=Point2(.3,.1);
+  Point2 five=Point2(.3,-1.2);
+  Point2 six=Point2(.3,-.4);
+  Point2 seven=Point2(0.1,-.4);
+  Point2 eight=Point2(-.25,-.4);
+  Point2 nine=Point2(-.25,-.1);
+  Point2 ten=Point2(-.25,.25);
   points->add(one);
   points->add(two);
   points->add(three);
@@ -112,15 +118,15 @@ bool Tests::vertReverseTest() {
   delete points;
   Array<Edge*>* edges = new Array<Edge*>();
   edges->add(new Edge(one,two));
-  edges->add(new Edge(two,three));
-  edges->add(new Edge(three,four));
-  edges->add(new Edge(four,five));
-  edges->add(new Edge(five,six));
-  edges->add(new Edge(six,seven));
-  edges->add(new Edge(seven,eight));
-  edges->add(new Edge(eight,nine));
   edges->add(new Edge(nine,ten));
+  edges->add(new Edge(two,three));
+  edges->add(new Edge(seven,eight));
+  edges->add(new Edge(three,four));
   edges->add(new Edge(ten,one));
+  edges->add(new Edge(six,seven));
+  edges->add(new Edge(eight,nine));
+  edges->add(new Edge(five,six));
+  edges->add(new Edge(four,five));
   Face* face = new Face();
   face->setEdges(edges);
   Array<Point2>* sortedPoints = face->sortPointsByPath();

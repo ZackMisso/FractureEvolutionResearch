@@ -202,10 +202,10 @@ bool unitTests() {
     cout << "Point Between Test Failed" << endl;
     return true;
   }
-  //if(Tests::vertSortTest()) {
-  //  cout << "Vert Sort Test Failed" << endl;
-  //  return true;
-  //}
+  if(Tests::vertSortTest()) {
+    cout << "Vert Sort Test Failed" << endl;
+    return true;
+  }
   //if(Tests::vertReverseTest()) {
   //  cout << "Vert Reverse Test Failed" << endl;
   //  return true;
