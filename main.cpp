@@ -206,10 +206,10 @@ bool unitTests() {
     cout << "Vert Sort Test Failed" << endl;
     return true;
   }
-  //if(Tests::vertReverseTest()) {
-  //  cout << "Vert Reverse Test Failed" << endl;
-  //  return true;
-  //}
+  if(Tests::vertReverseTest()) {
+    cout << "Vert Reverse Test Failed" << endl;
+    return true;
+  }
   //if(Tests::edgeIsOnTest()) {
   //  cout << "Edge Is On Test Failed" << endl;
   //  return true;

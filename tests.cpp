@@ -131,13 +131,15 @@ bool Tests::vertReverseTest() {
   face->setEdges(edges);
   Array<Point2>* sortedPoints = face->sortPointsByPath();
   sortedPoints = face->reversePath(sortedPoints);
-  if(sortedPoints->getSize() != points->getSize())
+  if(sortedPoints->getSize() != points->getSize()) {
+    //cout << "Sorted Points not the same size" << endl;
     return true;
+  }
   for(int i=0;i<sortedPoints->getSize();i++) {
     if(!sortedPoints->get(i).equals(reversedPoints->get(i)))
       return true;
   }
-  return true;
+  return false;
 }
 
 bool Tests::edgeIsOnTest() { // implement Data
