@@ -22,7 +22,7 @@ public:
   Point2 getPointBetween(float pos);
   void split(Array<Edge*>* cb,Point2 point);
   float determinant(Edge* other);
-  bool isOn(Edge* other);
+  //bool isOn(Edge* other);
 	// getters
   Point2 getFirst();
   Point2 getSecond();

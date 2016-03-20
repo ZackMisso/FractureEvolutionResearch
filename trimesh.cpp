@@ -54,28 +54,28 @@ void TriMesh::draw(InterfaceData* data) {
 
 // THIS IS SLOW.... NEEDS OPTIMIZATIONS
 // NEEDS HEAVY OPTIMIZATIONS
-void TriMesh::calculateAllAdjacents() { // NEED TO TEST
-  for(int i=0;i<triangles->getSize();i++) {
-    Tri* current = triangles->get(i);
-    // Adjacents for boundaries dont need to be known...
-    if(!current->getIsBoundary()) {
-      for(int j=0;j<3;j++) {
-        for(int k=0;k<triangles->getSize();k++) {
-          if(k!=i) {
-            Tri* toTest = triangles->get(k);
-            for(int l=0;l<3;l++) {
-              if(toTest->getEdge(l)->isOn(current->getEdge(j))) {
-                current->setAdjacent(j,toTest);
-                l=4;
-                k=triangles->getSize();
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
+//void TriMesh::calculateAllAdjacents() { // NEED TO TEST
+//  for(int i=0;i<triangles->getSize();i++) {
+//    Tri* current = triangles->get(i);
+//    // Adjacents for boundaries dont need to be known...
+//    if(!current->getIsBoundary()) {
+//      for(int j=0;j<3;j++) {
+//        for(int k=0;k<triangles->getSize();k++) {
+//          if(k!=i) {
+//            Tri* toTest = triangles->get(k);
+//            for(int l=0;l<3;l++) {
+//              if(toTest->getEdge(l)->isOn(current->getEdge(j))) {
+//                current->setAdjacent(j,toTest);
+//                l=4;
+//                k=triangles->getSize();
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
 
 Array<Tri*>* TriMesh::getTriangles() { return triangles; }
 Face* TriMesh::getFace() { return face; }

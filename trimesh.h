@@ -15,7 +15,7 @@ public:
   ~TriMesh();
   void addTriangles(Array<Tri*>* moreTriangles);
   void addBoundaryTriangles();
-  void calculateAllAdjacents();
+  //void calculateAllAdjacents();
   void clean();
   void draw(InterfaceData* interfaceData);
   // getter methods

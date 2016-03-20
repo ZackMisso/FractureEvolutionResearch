@@ -210,10 +210,11 @@ bool unitTests() {
     cout << "Vert Reverse Test Failed" << endl;
     return true;
   }
-  //if(Tests::edgeIsOnTest()) {
-  //  cout << "Edge Is On Test Failed" << endl;
-  //  return true;
-  //}
+  if(Tests::edgeIsOnTest()) {
+    cout << "Edge Is On Test Failed" << endl;
+    return true;
+  }
+  // I don't think I need adjacentcies
   //if(Tests::adjacentsTest()) {
   //  cout << "Adjacents Test Failed" << endl;
   //  return true;

@@ -80,8 +80,9 @@ void Fracture::createTriMesh() { // TODO :: TEST
 		faces->get(i)->splitIntoTrimesh();
 		triMesh->addTriangles(faces->get(i)->getTriMesh());
 	}
-	triMesh->addBoundaryTriangles();
-	triMesh->calculateAllAdjacents();
+	// WHY IS THIS NEEDED DONT NEED ADJACENTCIES
+	//triMesh->addBoundaryTriangles();
+	//triMesh->calculateAllAdjacents();
 }
 
 void Fracture::createNewVertex(float x,float y) { // probably do not need
