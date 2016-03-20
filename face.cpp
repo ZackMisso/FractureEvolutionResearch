@@ -226,7 +226,7 @@ void Face::clearTrimesh() {
   triMesh->clear();
 }
 
-Array<Point2>* Face::sortPointsByPath() { // Need To Test
+Array<Point2>* Face::sortPointsByPath() {
   Array<Point2>* sortedPoints = new Array<Point2>();
   Edge* edge = edges->get(0);
   Point2 start = edge->getFirst();
@@ -284,7 +284,7 @@ void Face::splitIntoTrimeshConvex() {
 }
 
 // THIS BECOMES AN ISSUE WHEN SPLITTING A POLYGON WITH HOLES
-void Face::splitIntoTrimeshConcave() { // NEEDS TO BE TESTED
+void Face::splitIntoTrimeshConcave() { // REWRITE
   clearTrimesh();
   Array<Point2>* points = sortPointsByPath();
   if(isClockwise(points))
@@ -369,7 +369,7 @@ Array<Point2>* Face::reversePath(Array<Point2>* sortedPath) {
   return reversedPath;
 }
 
-void Face::detectIfConvex() { // Need To Test
+void Face::detectIfConvex() {
   Array<Point2>* hull = getConvexHull();
   if(hull->getSize() != verts->getSize())
     isConvex = false;
@@ -386,7 +386,7 @@ void Face::detectIfConvex() { // Need To Test
 }
 
 // Simple Gift Wrapping Algorithm
-Array<Point2>* Face::getConvexHull() { // Need to Test
+Array<Point2>* Face::getConvexHull() {
   // Set Up Variables
   Array<Point2>* hull = new Array<Point2>(verts->getSize()+1);
   Array<Point2>* contents = new Array<Point2>(verts->getSize()+1);

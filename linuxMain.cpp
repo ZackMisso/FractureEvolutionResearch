@@ -1,3 +1,5 @@
+// this is a main class to be built on the Lab Machines (No Graphics representation)
+/*
 // USE ON LINUX
 #include <GL/glut.h>
 // USE ON MAC
@@ -53,7 +55,7 @@ RenderSettings* renderSettings;
 int window;
 
 
-int main(int argc,char** argv) {
+int mainLinux(int argc,char** argv) {
   cout << "Beginning Initialization" << endl;
   DebugController::init();
   cout << "Running Unit Tests" << endl;
@@ -326,3 +328,4 @@ void cb_createEdge(int id) {
   cout << "Creating Edge has Yet to be implemented" << endl;
   // to be implemented
 }
+*/

@@ -21,28 +21,29 @@ void TriMesh::addTriangles(Array<Tri*>* moreTriangles) {
     triangles->add(moreTriangles->get(i));
 }
 
-void TriMesh::addBoundaryTriangles() {
-  Point2 tl(-0.5,0.5);
-  Point2 tr(0.5,0.5);
-  Point2 bl(-0.5,-0.5);
-  Point2 br(0.5,-0.5);
-  Point2 n(0.0,1.0);
-  Point2 s(0.0,-1.0);
-  Point2 e(1.0,0.0);
-  Point2 w(-1.0,0.0);
-  Tri* one = new Tri(tl,bl,w);
-  Tri* two = new Tri(tl,tr,n);
-  Tri* three = new Tri(bl,br,s);
-  Tri* four = new Tri(tr,br,e);
-  one->setIsBoundary(true);
-  two->setIsBoundary(true);
-  three->setIsBoundary(true);
-  four->setIsBoundary(true);
-  triangles->add(one);
-  triangles->add(two);
-  triangles->add(three);
-  triangles->add(four);
-}
+// Not Needed if Adjacencies are not needed
+//void TriMesh::addBoundaryTriangles() {
+//  Point2 tl(-0.5,0.5);
+//  Point2 tr(0.5,0.5);
+//  Point2 bl(-0.5,-0.5);
+//  Point2 br(0.5,-0.5);
+//  Point2 n(0.0,1.0);
+//  Point2 s(0.0,-1.0);
+//  Point2 e(1.0,0.0);
+//  Point2 w(-1.0,0.0);
+//  Tri* one = new Tri(tl,bl,w);
+//  Tri* two = new Tri(tl,tr,n);
+//  Tri* three = new Tri(bl,br,s);
+//  Tri* four = new Tri(tr,br,e);
+//  one->setIsBoundary(true);
+//  two->setIsBoundary(true);
+//  three->setIsBoundary(true);
+//  four->setIsBoundary(true);
+//  triangles->add(one);
+//  triangles->add(two);
+//  triangles->add(three);
+//  triangles->add(four);
+//}
 
 void TriMesh::draw(InterfaceData* data) {
   if(face==data->getSelectedFace())
@@ -50,6 +51,10 @@ void TriMesh::draw(InterfaceData* data) {
   for(int i=0;i<triangles->getSize();i++)
     triangles->get(i)->draw();
   glColor3f(0.0f,0.0f,1.0f);
+}
+
+void TriMesh::debug() {
+  // to be implemented
 }
 
 // THIS IS SLOW.... NEEDS OPTIMIZATIONS

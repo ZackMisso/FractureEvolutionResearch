@@ -8,8 +8,8 @@ class Tri {
 private:
   Point2 points[3];
   Edge** edges;
-  Tri** adjacents;
-  bool isBoundary; // sort of hack
+  //Tri** adjacents;
+  //bool isBoundary; // sort of hack
 public:
   // constructors
   Tri();
@@ -20,6 +20,7 @@ public:
   // other methods
   //void findAdjacents(Array<Tri*>* triangles); // implement later
   bool equals(Tri* other);
+  void debug();
   void draw();
   // getter methods
   Point2 getPoint(int num);
@@ -30,11 +31,11 @@ public:
   Edge* getEdgeOne();
   Edge* getEdgeTwo();
   Edge* getEdgeThree();
-  Tri* getAdjacent(int num);
-  Tri* getAdjacentOne();
-  Tri* getAdjacentTwo();
-  Tri* getAdjacentThree();
-  bool getIsBoundary();
+  //Tri* getAdjacent(int num);
+  //Tri* getAdjacentOne();
+  //Tri* getAdjacentTwo();
+  //Tri* getAdjacentThree();
+  //bool getIsBoundary();
   // setter methods
   void setPoint(int num,Point2 param);
   void setPointOne(Point2 param);
@@ -44,11 +45,11 @@ public:
   void setEdgeOne(Edge* param);
   void setEdgeTwo(Edge* param);
   void setEdgeThree(Edge* param);
-  void setAdjacent(int num,Tri* param);
-  void setAdjacentOne(Tri* param);
-  void setAdjacentTwo(Tri* param);
-  void setAdjacentThree(Tri* param);
-  void setIsBoundary(bool param);
+  //void setAdjacent(int num,Tri* param);
+  //void setAdjacentOne(Tri* param);
+  //void setAdjacentTwo(Tri* param);
+  //void setAdjacentThree(Tri* param);
+  //void setIsBoundary(bool param);
 };
 
 #endif

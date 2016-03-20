@@ -1,12 +1,6 @@
-// USE ON LINUX
-#include <GL/glut.h>
-// USE ON MAC
-//#include <OpenGL/gl.h>
-// #include <OpenGL/glu.h>
-//#include <GLUT/glut.h>
+// this is a main class to be built on my laptop (No Graphics representation)
 
-#include <iostream>
-#include "src/include/GL/glui.h"
+/*#include <iostream>
 #include "fracture.h"
 #include "array.h"
 #include "interface.h"
@@ -45,15 +39,12 @@ void cb_createVertex(int id);
 void cb_createEdge(int id);
 
 // Arguements
-GLUI* subwindow;
-Interface* interface;
-InterfaceData* interfaceData;
 ProgramData* programData;
 RenderSettings* renderSettings;
 int window;
 
 
-int main(int argc,char** argv) {
+int mainMac(int argc,char** argv) {
   cout << "Beginning Initialization" << endl;
   DebugController::init();
   cout << "Running Unit Tests" << endl;
@@ -63,106 +54,19 @@ int main(int argc,char** argv) {
   }
 
   programData = new ProgramData();
-
-	glutInit(&argc,argv);
-  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-  glutInitWindowSize(1200,1000);
-  window = glutCreateWindow("Zackary Misso - Fracture Evolver");
-  // init the callbacks
-  glutDisplayFunc(display);
-  //glutMotionFunc(mouseMotion);
-  GLUI_Master.set_glutKeyboardFunc(keyboard);
-  GLUI_Master.set_glutMouseFunc(mouseClick);
-  GLUI_Master.set_glutReshapeFunc(reshape);
-  GLUI_Master.set_glutIdleFunc(mainLoop);
-  // create the subwindow
-  subwindow = GLUI_Master.create_glui_subwindow(window,GLUI_SUBWINDOW_LEFT);
-  // create required subsystems
-  interfaceData = new InterfaceData();
-  interface = new Interface(subwindow);
   renderSettings = new RenderSettings();
-  //renderSettings->setInterfaceRef(interfaceData);
   createInterface();
 
-  // STUFF FOR LATER //////////////
-  //glEnable(GL_DEPTH_TEST);
-  //glClearColor(0.0,0.0,0.0,1.0);
-  //glMatrixMode(GL_PROJECTION);
-  //gluPerspective(60,1,.1,100);
-  //glMatrixMode(GL_MODELVIEW);
-  //glLoadIdentity();
-  //glEnable(GL_CULL_FACE);
-  /////////////////////////////////
   cout << "Finished Initialization" << endl;
-  //if(argc > 2){
-  //  for(int i=0;i<6;i++)
-  //    Mutations::AddRandomVertex(programData->getCurrentFracture());
-  //  DebugController::writeDebugState(programData->getCurrentFracture());
-  //  return 0;
-  //}
-  glutMainLoop();
-
   return 0;
 }
 
 void createInterface() { // TODO :: MOVE THIS TO INTEFACE CLASS
-  // Object Descripition Menu
-  interface->objectDescriptionMenu = subwindow->add_rollout("Fracture Description",false);
-  interface->edgesLabel = subwindow->add_statictext_to_panel(interface->objectDescriptionMenu,"Num Edges Will Go Here");
-  interface->vertexsLabel = subwindow->add_statictext_to_panel(interface->objectDescriptionMenu,"Num Vertices Will Go Here");
-  interface->facesLabel = subwindow->add_statictext_to_panel(interface->objectDescriptionMenu,"Num Faces Will Go Here");
-  interface->saveFracture = subwindow->add_button_to_panel(interface->objectDescriptionMenu,"Save Fracture",1,cb_saveFracture);
-  interface->loadFracture = subwindow->add_button_to_panel(interface->objectDescriptionMenu,"Load Fracture",1,cb_loadFracture);
-  interface->clearFracture = subwindow->add_button_to_panel(interface->objectDescriptionMenu,"Clear Fracture",1,cb_clearFracture);
-  // Interface Menu
-  interface->interfaceMenu = subwindow->add_rollout("Settings",false);
-  interface->selectFacesButton = subwindow->add_button_to_panel(interface->interfaceMenu,"Select Faces",1,cb_selectFaces);
-  interface->selectEdgesButton = subwindow->add_button_to_panel(interface->interfaceMenu,"Select Edges",1,cb_selectEdges);
-  interface->selectVertsButton = subwindow->add_button_to_panel(interface->interfaceMenu,"Select Verts",1,cb_selectVerts);
-  interface->selectNoneButton = subwindow->add_button_to_panel(interface->interfaceMenu,"Select None",1,cb_selectNone);
-  // Edit Fracture Menu
-  interface->editFractureMenu = subwindow->add_rollout("Edit Fracture",false);
-  interface->addVertexMenu = subwindow->add_rollout_to_panel(interface->editFractureMenu,"Add Vertex",false);
-  interface->vertexXCoord = subwindow->add_edittext_to_panel(interface->addVertexMenu,"Add Vertex X",GLUI_EDITTEXT_FLOAT);
-  interface->vertexYCoord = subwindow->add_edittext_to_panel(interface->addVertexMenu,"Add Vertex Y",GLUI_EDITTEXT_FLOAT);
-  interface->addVertexButton = subwindow->add_button_to_panel(interface->addVertexMenu,"Create Vertex",1,cb_createVertex);
-  interface->addEdgeButton = subwindow->add_button_to_panel(interface->editFractureMenu,"Create Edge",1,cb_createEdge);
-  // Camera Menu
-  interface->cameraMenu = subwindow->add_rollout("Camera",false);
-  // Render Menu
-  interface->renderMenu = subwindow->add_rollout("Render",false);
-  interface->displayVertsButton = subwindow->add_button_to_panel(interface->renderMenu,"Verts On/Off",1,cb_vertsOnOff);
-  interface->displayEdgesButton = subwindow->add_button_to_panel(interface->renderMenu,"Edges On/Off",1,cb_edgesOnOff);
-  interface->displayFacesButton = subwindow->add_button_to_panel(interface->renderMenu,"Faces On/Off",1,cb_facesOnOff);
-  interface->displayFaceTrimeshButton = subwindow->add_button_to_panel(interface->renderMenu,"Trimesh On/Off",1,cb_trimeshOnOff);
-  // Evolution Menu
-  interface->evolutionMenu = subwindow->add_rollout("Evolution",false);
-  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Random Mutation",1,cb_randomMutation);
+  // no
 }
 
 void display() {
-  //cout << "RUNNING" << endl;
-  glClearColor(0.0f,0.0f,0.0f,1.0f);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  glLineWidth(.5);
-  glBegin(GL_LINES);
-  glColor4f(0.7f,0.7f,0.7f,0.5f);
-  // Draw Grid for Debugging
-  for(float i=-0.5f;i<0.5f;i+=0.1f) {
-    glVertex2f(i,0.5);
-    glVertex2f(i,-0.5);
-    glVertex2f(0.5f,i);
-    glVertex2f(-0.5f,i);
-  }
-
-  glEnd();
-  glColor3f(0.0f,1.0f,0.0f);
-
-  programData->getCurrentFracture()->draw(renderSettings,interfaceData);
-
-  glEnd();
-  glutSwapBuffers();
+  // none
 }
 
 void mouseClick(int button,int state,int x,int y) {
@@ -326,3 +230,4 @@ void cb_createEdge(int id) {
   cout << "Creating Edge has Yet to be implemented" << endl;
   // to be implemented
 }
+*/

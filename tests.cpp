@@ -268,13 +268,13 @@ bool Tests::detectIfConvexTest() { // implement Data
 bool Tests::convexSplitTest() {
   Face* convexFace = new Face();
   //Face* concaveFace = new Face();
-  Point2 one = Point2(0,0);
-  Point2 two = Point2(0,0);
-  Point2 three = Point2(0,0);
-  Point2 four = Point2(0,0);
-  Point2 five = Point2(0,0);
-  Point2 sixOne = Point2(0,0);
-  //Point2 sixTwo();
+  Point2 one = Point2(-.25,.25);
+  Point2 two = Point2(.25,.25);
+  Point2 three = Point2(.5,-.1);
+  Point2 four = Point2(.25,-.3);
+  Point2 five = Point2(-.25,-.3);
+  Point2 sixOne = Point2(-.5,-.1);
+  //Point2 sixTwo = Point2(-.05,-.1);
   Array<Edge*>* oneEdges = new Array<Edge*>();
   //Array<Edge*>* twoEdges = new Array<Edge*>();
   Array<Vertex*>* oneVerts = new Array<Vertex*>();
@@ -316,23 +316,24 @@ bool Tests::convexSplitTest() {
   //concaveFace->setVerts(twoVerts);
   //concaveFace->setEdges(twoEdges);
   convexFace->splitIntoTrimesh();
-  // Create Correct Tris
-  // Do Check
-  // to be implemented
-  return true;
+  for(int i=0;i<convexFace->getTriMesh()->getSize();i++)
+    convexFace->getTriMesh()->get(i)->debug();
+
+  // TODO :: Delete Things
+  return false;
 }
 
 bool Tests::concaveSplitTest() {
   // to be implemented
   //Face* convexFace = new Face();
   Face* concaveFace = new Face();
-  Point2 one = Point2(0,0);
-  Point2 two = Point2(0,0);
-  Point2 three = Point2(0,0);
-  Point2 four = Point2(0,0);
-  Point2 five = Point2(0,0);
-  //Point2 sixOne();
-  Point2 sixTwo = Point2(0,0);
+  Point2 one = Point2(-.25,.25);
+  Point2 two = Point2(.25,.25);
+  Point2 three = Point2(.5,-.1);
+  Point2 four = Point2(.25,-.3);
+  Point2 five = Point2(-.25,-.3);
+  //Point2 sixOne = Point2(-.5,-.1);
+  Point2 sixTwo = Point2(-.05,-.1);
   //Array<Edge*>* oneEdges = new Array<Edge*>();
   Array<Edge*>* twoEdges = new Array<Edge*>();
   //Array<Vertex*>* oneVerts = new Array<Vertex*>();
@@ -376,6 +377,8 @@ bool Tests::concaveSplitTest() {
   //convexFace->detectIfConvex();
   //concaveFace->detectIfConvex();
   concaveFace->splitIntoTrimeshConcave();
+  for(int i=0;i<concaveFace->getTriMesh()->getSize();i++)
+    concaveFace->getTriMesh()->get(i)->debug();
   // Create Correct Tris
   // Do Check
   // to be implemented
