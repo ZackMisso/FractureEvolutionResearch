@@ -142,74 +142,75 @@ bool Tests::vertReverseTest() {
   return false;
 }
 
-bool Tests::edgeIsOnTest() { // implement Data
-  // horizontal test no overlap
-  Edge* oneA = new Edge(0,0,1,0);
-  Edge* twoA = new Edge(1.2,0,2,0);
-  // horizontal test overlap
-  Edge* oneB = new Edge(0,0,1,0);
-  Edge* twoB = new Edge(.5,0,2,0);
-  // vertical test no overlap
-  Edge* oneC = new Edge(0,2,0,3);
-  Edge* twoC = new Edge(0,0,0,1);
-  // vertical test overlap
-  Edge* oneD = new Edge(0,.5,0,1.5);
-  Edge* twoD = new Edge(0,0,0,1);
-  // opposite slopes test
-  Edge* oneE = new Edge(-.5,-.5,.5,.5);
-  Edge* twoE = new Edge(-.5,.5,.5,-.5);
-  // same slopes different b test
-  Edge* oneF = new Edge(0,0,2,6);
-  Edge* twoF = new Edge(0,2,2,8);
-  // same slopes same b test
-  Edge* oneG = new Edge(0,0,2,6);
-  Edge* twoG = new Edge(0,0,2,6);
-  /*if(oneA->isOn(twoA)) {
-    cout << "First Test Failed" << endl;
-    return true;
-  }
-  if(!oneB->isOn(twoB)) {
-    cout << "Second Test Failed" << endl;
-    return true;
-  }
-  if(oneC->isOn(twoC)) {
-    cout << "Third Test Failed" << endl;
-    return true;
-  }
-  if(!oneD->isOn(twoD)) {
-    cout << "Fourth Test Failed" << endl;
-    return true;
-  }
-  if(oneE->isOn(twoE)) {
-    cout << "Fifth Test Failed" << endl;
-    return true;
-  }
-  if(oneF->isOn(twoF)) {
-    cout << "Sixth Test Failed" << endl;
-    return true;
-  }
-  if(!oneG->isOn(twoG)) {
-    cout << "Sevent Test Failed" << endl;
-    return true;
-  }*/
-  return false;
-}
+// NOT NEEDED
+//bool Tests::edgeIsOnTest() { // implement Data
+//  // horizontal test no overlap
+//  Edge* oneA = new Edge(0,0,1,0);
+//  Edge* twoA = new Edge(1.2,0,2,0);
+//  // horizontal test overlap
+//  Edge* oneB = new Edge(0,0,1,0);
+//  Edge* twoB = new Edge(.5,0,2,0);
+//  // vertical test no overlap
+//  Edge* oneC = new Edge(0,2,0,3);
+//  Edge* twoC = new Edge(0,0,0,1);
+//  // vertical test overlap
+//  Edge* oneD = new Edge(0,.5,0,1.5);
+//  Edge* twoD = new Edge(0,0,0,1);
+//  // opposite slopes test
+//  Edge* oneE = new Edge(-.5,-.5,.5,.5);
+//  Edge* twoE = new Edge(-.5,.5,.5,-.5);
+//  // same slopes different b test
+//  Edge* oneF = new Edge(0,0,2,6);
+//  Edge* twoF = new Edge(0,2,2,8);
+//  // same slopes same b test
+//  Edge* oneG = new Edge(0,0,2,6);
+//  Edge* twoG = new Edge(0,0,2,6);
+//  /*if(oneA->isOn(twoA)) {
+//    cout << "First Test Failed" << endl;
+//    return true;
+//  }
+//  if(!oneB->isOn(twoB)) {
+//    cout << "Second Test Failed" << endl;
+//    return true;
+//  }
+//  if(oneC->isOn(twoC)) {
+//    cout << "Third Test Failed" << endl;
+//    return true;
+//  }
+//  if(!oneD->isOn(twoD)) {
+//    cout << "Fourth Test Failed" << endl;
+//    return true;
+//  }
+//  if(oneE->isOn(twoE)) {
+//    cout << "Fifth Test Failed" << endl;
+//    return true;
+//  }
+//  if(oneF->isOn(twoF)) {
+//    cout << "Sixth Test Failed" << endl;
+//    return true;
+//  }
+//  if(!oneG->isOn(twoG)) {
+//    cout << "Sevent Test Failed" << endl;
+//    return true;
+//  }*/
+//  return false;
+//}
 
-bool Tests::adjacentsTest() {
-  // to be implemented
-  return true;
-}
+//bool Tests::adjacentsTest() {
+//  // to be implemented
+//  return true;
+//}
 
 bool Tests::detectIfConvexTest() { // implement Data
   Face* convexFace = new Face();
   Face* concaveFace = new Face();
-  Point2 one = Point2(0,0);
-  Point2 two = Point2(0,0);
-  Point2 three = Point2(0,0);
-  Point2 four = Point2(0,0);
-  Point2 five = Point2(0,0);
-  Point2 sixOne = Point2(0,0);
-  Point2 sixTwo = Point2(0,0);
+  Point2 one = Point2(-.25,.25);
+  Point2 two = Point2(.25,.25);
+  Point2 three = Point2(.5,-.1);
+  Point2 four = Point2(.25,-.3);
+  Point2 five = Point2(-.25,-.3);
+  Point2 sixOne = Point2(-.5,-.1);
+  Point2 sixTwo = Point2(-.05,-.1);
   Array<Edge*>* oneEdges = new Array<Edge*>();
   Array<Edge*>* twoEdges = new Array<Edge*>();
   Array<Vertex*>* oneVerts = new Array<Vertex*>();
