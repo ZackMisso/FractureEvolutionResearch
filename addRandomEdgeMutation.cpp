@@ -2,7 +2,7 @@
 
 AddRandomEdgeMutation::AddRandomEdgeMutation() { }
 
-AddRandomEdgeMutation::AddRandomEdgeMutation(real param) : AddRandomEdgeMutation(param) { }
+AddRandomEdgeMutation::AddRandomEdgeMutation(real param) : MutationFunction(param) { }
 
 AddRandomEdgeMutation::~AddRandomEdgeMutation() { }
 

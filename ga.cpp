@@ -1,5 +1,6 @@
 #include "ga.h"
 #include "addRandomVertMutation.h"
+#include "addRandomEdgeMutation.h"
 #include "edgeCurveCrossover.h"
 #include "edgeCurveMutation.h"
 #include "removeRandomVertMutation.h"
