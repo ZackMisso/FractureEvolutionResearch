@@ -8,10 +8,16 @@
 
 class MutationFunction {
 private:
+  real probability;
 public:
   MutationFunction();
+  MutationFunction(real param);
   ~MutationFunction();
   virtual Individual* mutate(Individual* individual);
+  // getter methods
+  real getProbability();
+  // setter methods
+  void setProbability(real param);
 };
 
 #endif

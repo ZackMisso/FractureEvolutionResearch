@@ -1,7 +1,11 @@
 #include "crossoverFunction.h"
 
 CrossoverFunction::CrossoverFunction() {
-  // does nothing for now
+  probability = 0x0;
+}
+
+CrossoverFunction::CrossoverFunction(real param) {
+  probability = param;
 }
 
 CrossoverFunction::~CrossoverFunction() {
@@ -12,3 +16,7 @@ Individual* CrossoverFunction::crossover(Individual* one,Individual* two) {
   // to be implemented or extended
   return one;
 }
+
+real CrossoverFunction::getProbability() { return probability; }
+
+void CrossoverFunction::setProbability(real param) { probability = param; }

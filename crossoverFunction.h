@@ -6,10 +6,16 @@
 
 class CrossoverFunction {
 private:
+  real probability;
 public:
   CrossoverFunction();
+  CrossoverFunction(real param);
   ~CrossoverFunction();
   virtual Individual* crossover(Individual* one,Individual* two);
+  // getter methods
+  real getProbability();
+  // setter methods
+  void setProbability(real param);
 };
 
 #endif
