@@ -7,7 +7,7 @@
 // #include <OpenGL/glu.h>
 //#include <GLUT/glut.h>
 
-Vertex::Vertex(float x,float y) {
+Vertex::Vertex(real x,real y) {
   edges = new Array<Edge*>();
   location.xpos = x;
   location.ypos = y;

@@ -85,7 +85,7 @@ void Fracture::createTriMesh() { // TODO :: TEST
 	//triMesh->calculateAllAdjacents();
 }
 
-void Fracture::createNewVertex(float x,float y) { // probably do not need
+void Fracture::createNewVertex(real x,real y) { // probably do not need
 	// need to figure out how to connect it with all verts near it...
 	Vertex* newVert = new Vertex(x,y);
 	Point2 p;
@@ -147,14 +147,14 @@ void Fracture::draw(RenderSettings* renderSettings,InterfaceData* interfaceData)
 	//	// maybe draw the faces
 	//}
 	if(renderSettings->getDisplayFaceTrimesh()) {
-		glLineWidth((float)renderSettings->getEdgeSize()*1.2);
+		glLineWidth((real)renderSettings->getEdgeSize()*1.2);
 		glColor3f(0.0f,0.0f,1.0f);
 		glBegin(GL_TRIANGLES);
 		triMesh->draw(interfaceData);
 		glEnd();
 	}
 	if(renderSettings->getDisplayVerts()) {
-		glPointSize((float)renderSettings->getVertSize());
+		glPointSize((real)renderSettings->getVertSize());
 		glBegin(GL_POINTS);
 		//glPointSize((float)renderSettings->getVertSize());
 		//cout << "DRAWING VERTS :: " << (float)renderSettings->getVertSize() << endl;
@@ -164,7 +164,7 @@ void Fracture::draw(RenderSettings* renderSettings,InterfaceData* interfaceData)
 		glEnd();
 	}
 	if(renderSettings->getDisplayEdges()) {
-		glLineWidth((float)renderSettings->getEdgeSize());
+		glLineWidth((real)renderSettings->getEdgeSize());
 		glBegin(GL_LINES);
 		//cout << "NUMBER OF EDGES :: " << edges->getSize() << endl;
 		//glLineWidth((float)renderSettings->getEdgeSize());

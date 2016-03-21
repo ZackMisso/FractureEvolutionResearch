@@ -21,7 +21,7 @@ Edge::Edge(Point2 one,Point2 two) {
   selected = false;
 }
 
-Edge::Edge(float x,float y,float xx,float yy) {
+Edge::Edge(real x,real y,real xx,real yy) {
   first.xpos = x;
   first.ypos = y;
   second.xpos = xx;
@@ -43,17 +43,17 @@ bool Edge::intersects(Edge* other) {
   //cout << "TWO :: " << oFirst.xpos << " " << oFirst.ypos << " " << oSecond.xpos << " " << oSecond.ypos << endl;
   //cout << "ONE :: " << first.xpos << " " << first.ypos << " " << second.xpos << " " << second.ypos << endl;
 
-  float s1x = first.xpos - second.xpos;
-  float s1y = first.ypos - second.ypos;
-  float s2x = oFirst.xpos - oSecond.xpos;
-  float s2y = oFirst.ypos - oSecond.ypos;
+  real s1x = first.xpos - second.xpos;
+  real s1y = first.ypos - second.ypos;
+  real s2x = oFirst.xpos - oSecond.xpos;
+  real s2y = oFirst.ypos - oSecond.ypos;
 
   //cout << "S1X :: " << s1x << endl;
   //cout << "S2X :: " << s2x << endl;
   //cout << "S1Y :: " << s1y << endl;
   //cout << "S2Y :: " << s2y << endl;
 
-  float det = -s2x * s1y + s1x * s2y;
+  real det = -s2x * s1y + s1x * s2y;
 
   //if(det<0)
   //  det*=-1;
@@ -63,11 +63,11 @@ bool Edge::intersects(Edge* other) {
   if(det == 0.0f)
     return false;
 
-  float tmp1 = (first.xpos - oFirst.xpos);
-  float tmp2 = (first.ypos - oFirst.ypos);
+  real tmp1 = (first.xpos - oFirst.xpos);
+  real tmp2 = (first.ypos - oFirst.ypos);
 
-  float s = (-s1y * tmp1 + s1x * tmp2) / det;
-  float t = (-s2y * tmp1 + s2x * tmp2) / det;
+  real s = (-s1y * tmp1 + s1x * tmp2) / det;
+  real t = (-s2y * tmp1 + s2x * tmp2) / det;
 
   //if(s<0)
   //  s*=-1;
@@ -107,15 +107,15 @@ Point2 Edge::getIntersectionPoint(Edge* other) {
   intersection.ypos = -1;
   Point2 oFirst = other->getFirst();
   Point2 oSecond = other->getSecond();
-  float s1x = first.xpos - second.xpos;
-  float s1y = first.ypos - second.ypos;
-  float s2x = oFirst.xpos - oSecond.xpos;
-  float s2y = oFirst.ypos - oSecond.ypos;
-  float det = -s2x * s1y + s1x * s2y;
-  float tmp1 = (first.xpos - oFirst.xpos);
-  float tmp2 = (first.ypos - oFirst.ypos);
-  float s = (-s1y * tmp1 + s1x * tmp2) / det;
-  float t = (-s2y * tmp1 + s2x * tmp2) / det;
+  real s1x = first.xpos - second.xpos;
+  real s1y = first.ypos - second.ypos;
+  real s2x = oFirst.xpos - oSecond.xpos;
+  real s2y = oFirst.ypos - oSecond.ypos;
+  real det = -s2x * s1y + s1x * s2y;
+  real tmp1 = (first.xpos - oFirst.xpos);
+  real tmp2 = (first.ypos - oFirst.ypos);
+  real s = (-s1y * tmp1 + s1x * tmp2) / det;
+  real t = (-s2y * tmp1 + s2x * tmp2) / det;
   s*=-1;
   t*=-1;
   //cout << "s1x :: " << s1x << endl;
@@ -148,7 +148,7 @@ Point2 Edge::getOtherPoint(Point2 point) {
   return first;
 }
 
-Point2 Edge::getPointBetween(float linePos) {
+Point2 Edge::getPointBetween(real linePos) {
   Point2 newPoint;
   newPoint.xpos = ((second.xpos-first.xpos) * linePos) + first.xpos;
   newPoint.ypos = ((second.ypos-first.ypos) * linePos) + first.ypos;
@@ -164,11 +164,11 @@ void Edge::split(Array<Edge*>* cb,Point2 point) {
   cb->add(two);
 }
 
-float Edge::determinant(Edge* other) {
-  float xOne = second.xpos - first.xpos;
-  float yOne = second.ypos - first.ypos;
-  float xTwo = other->getSecond().xpos - other->getFirst().xpos;
-  float yTwo = other->getSecond().ypos - other->getFirst().ypos;
+real Edge::determinant(Edge* other) {
+  real xOne = second.xpos - first.xpos;
+  real yOne = second.ypos - first.ypos;
+  real xTwo = other->getSecond().xpos - other->getFirst().xpos;
+  real yTwo = other->getSecond().ypos - other->getFirst().ypos;
   return xOne*yTwo - yOne*xTwo;
 }
 

@@ -1,6 +1,7 @@
 #ifndef __GA_H__
 #define __GA_H__
 
+#include "globalInclude.h"
 #include "array.h"
 #include "individual.h"
 #include "nn.h"

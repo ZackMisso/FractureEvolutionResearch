@@ -1,6 +1,7 @@
 #ifndef __TRIMESH_H__
 #define __TRIMESH_H__
 
+#include "globalInclude.h"
 #include "array.h"
 #include "tri.h"
 #include "face.h"

@@ -1,6 +1,7 @@
 #ifndef __VERTEX3_H__
 #define __VERTEX3_H__
 
+#include "globalInclude.h"
 #include "array.h"
 #include "point3.h"
 #include "edge3.h"
@@ -12,7 +13,7 @@ private:
   int id;
   bool selected;
 public:
-  Vertex3(float x,float y,float z);
+  Vertex3(real x,real y,real z);
   Vertex3(Point3 point);
   ~Vertex3();
   // getter methods

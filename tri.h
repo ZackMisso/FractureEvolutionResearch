@@ -1,6 +1,7 @@
 #ifndef __TRI_H__
 #define __TRI_H__
 
+#include "globalInclude.h"
 #include "point2.h"
 #include "edge.h"
 

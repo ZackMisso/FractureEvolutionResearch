@@ -6,7 +6,7 @@ Point3::Point3() {
   zpos = 0.0f;
 }
 
-Point3::Point3(float x,float y,float z) {
+Point3::Point3(real x,real y,real z) {
   xpos = x;
   ypos = y;
   zpos = z;

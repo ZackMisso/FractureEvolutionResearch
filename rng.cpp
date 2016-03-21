@@ -1,17 +1,17 @@
 #include "rng.h"
 #include <stdlib.h>
 
-float RNG::RandomFloat() {
-  return static_cast<float>(rand())/static_cast<float>(RAND_MAX);
+real RNG::RandomFloat() {
+  return static_cast<real>(rand())/static_cast<real>(RAND_MAX);
 }
 
-float RNG::RandomFloat(int start,int stop) {
+real RNG::RandomFloat(int start,int stop) {
   int dist = stop-start;
   return RandomFloat()*dist + start;
 }
 
-float RNG::RandomFloat(float start,float stop) {
-  float dist = stop-start;
+real RNG::RandomFloat(real start,real stop) {
+  real dist = stop-start;
   return RandomFloat()*dist + start;
 }
 

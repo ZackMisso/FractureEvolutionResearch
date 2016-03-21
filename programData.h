@@ -1,6 +1,7 @@
 #ifndef __PROGRAMDATA_H__
 #define __PROGRAMDATA_H__
 
+#include "globalInclude.h"
 #include "array.h"
 #include "fracture.h"
 

@@ -1,6 +1,8 @@
 #ifndef __TESTS_H__
 #define __TESTS_H__
 
+#include "globalInclude.h"
+
 class Tests {
 public:
   static bool intersectionTestOne();

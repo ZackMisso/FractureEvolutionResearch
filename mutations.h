@@ -1,6 +1,7 @@
 #ifndef __MUTATIONS_H__
 #define __MUTATIONS_H__
 
+#include "globalInclude.h"
 #include "fracture.h"
 
 class Mutations {

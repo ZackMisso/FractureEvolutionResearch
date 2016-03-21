@@ -8,7 +8,7 @@ Point2::Point2() {
   ypos = 0.0f;
 }
 
-Point2::Point2(float x,float y) {
+Point2::Point2(real x,real y) {
   xpos = x;
   ypos = y;
 }
@@ -29,10 +29,10 @@ void Point2::debug() {
   cout << "(" << xpos << "," << ypos << ")" << endl;
 }
 
-void Point2::setXpos(float param) {
+void Point2::setXpos(real param) {
   xpos = param;
 }
 
-void Point2::setYpos(float param) {
+void Point2::setYpos(real param) {
   ypos = param;
 }

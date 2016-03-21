@@ -1,13 +1,14 @@
 #ifndef __INDIVIDUAL_H__
 #define __INDIVIDUAL_H__
 
+#include "globalInclude.h"
 #include "array.h"
 #include "fracture.h"
 
 class Individual {
 private:
   Fracture* fracture;
-  float fitness;
+  real fitness;
 public:
   Individual();
   ~Individual();
@@ -18,9 +19,9 @@ public:
   Array<Individual*>* sortByLowestFitness(Array<Individual*>* list);
   Array<Individual*>* mergeByLowestFitness(Array<Individual*>* one,Array<Individual*>* two);
   // getter methods
-  float getFitness();
+  real getFitness();
   // setter methods
-  void setFitness(float param);
+  void setFitness(real param);
 };
 
 #endif

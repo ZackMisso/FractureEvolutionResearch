@@ -36,7 +36,7 @@ Face::~Face() {
   delete edges;
 }
 
-bool Face::contains(float x,float y) {
+bool Face::contains(real x,real y) {
   Point2 p;
   p.xpos = x;
   p.ypos = y;
@@ -118,7 +118,7 @@ Array<Face*>* Face::separate(Vertex* newVert) {
   return newFaces;
 }
 
-Array<Face*>* Face::separate(float x,float y) {
+Array<Face*>* Face::separate(real x,real y) {
   Array<Face*>* newFaces = new Array<Face*>();
   int numSeperations = RNG::RandomInt(2,edges->getSize(),4);
   // do the first two seperations
@@ -147,7 +147,7 @@ Array<Face*>* Face::separate(float x,float y) {
     } else
       edgeInd = RNG::RandomIntWithException(edges->getSize(),edgeIndOne);
 
-    float edgeDist = RNG::RandomFloat();
+    real edgeDist = RNG::RandomFloat();
     Edge* edge = edges->get(edgeInd);
     Point2 newPoint = edge->getPointBetween(edgeDist);
     Edge* newEdge = new Edge(x,y,newPoint.xpos,newPoint.ypos);
@@ -321,15 +321,15 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
           if(j != i && j != nextI && j != prevI) {
             Point2 point = points->get(j);
             Point2 v2 = Point2(point.xpos-current.xpos,point.ypos-current.ypos);
-            float v0dotv0 = v0.dot(v0);
-            float v1dotv1 = v1.dot(v1);
-            float v1dotv0 = v1.dot(v0);
-            float v2dotv0 = v2.dot(v0);
-            float v2dotv1 = v2.dot(v1);
-            float div = (v0dotv0 * v1dotv1) - (v1dotv0*v1dotv0);
+            real v0dotv0 = v0.dot(v0);
+            real v1dotv1 = v1.dot(v1);
+            real v1dotv0 = v1.dot(v0);
+            real v2dotv0 = v2.dot(v0);
+            real v2dotv1 = v2.dot(v1);
+            real div = (v0dotv0 * v1dotv1) - (v1dotv0*v1dotv0);
             if(div != 0.0) {
-              float u = (v1dotv1*v2dotv0) - (v1dotv0*v2dotv1) / div;
-              float v = (v0dotv0*v2dotv1) - (v1dotv0*v2dotv0) / div;
+              real u = (v1dotv1*v2dotv0) - (v1dotv0*v2dotv1) / div;
+              real v = (v0dotv0*v2dotv1) - (v1dotv0*v2dotv0) / div;
               if(u<0.0f || v <0.0f || u+v > 1.0f)
                 containsOtherVert = false;
               else {

@@ -75,6 +75,6 @@ Array<Individual*>* Individual::mergeByLowestFitness(Array<Individual*>* one,Arr
   return sorted;
 }
 
-float Individual::getFitness() { return fitness; }
+real Individual::getFitness() { return fitness; }
 
-void Individual::setFitness(float param) { fitness = param; }
+void Individual::setFitness(real param) { fitness = param; }

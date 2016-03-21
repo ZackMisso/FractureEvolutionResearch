@@ -1,6 +1,7 @@
 #ifndef __VERTEX_H__
 #define __VERTEX_H__
 
+#include "globalInclude.h"
 #include "array.h"
 #include "edge.h"
 #include "point2.h"
@@ -12,7 +13,7 @@ private:
   int id;
   bool selected;
 public:
-  Vertex(float x,float y);
+  Vertex(real x,real y);
   Vertex(Point2 point);
   ~Vertex();
 	void draw();

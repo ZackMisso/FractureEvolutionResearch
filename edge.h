@@ -1,6 +1,7 @@
 #ifndef __EDGE_H__
 #define __EDGE_H__
 
+#include "globalInclude.h"
 #include "point2.h"
 #include "array.h"
 
@@ -12,16 +13,16 @@ private:
   bool selected;
 public:
   Edge(Point2 one,Point2 two);
-  Edge(float x,float y,float xx,float yy);
+  Edge(real x,real y,real xx,real yy);
   void draw();
   bool intersects(Edge* other);
   Edge* intersects(Array<Edge*>* edges,Edge* ignore);
   bool eitherMatch(Point2 point);
   Point2 getIntersectionPoint(Edge* other);
   Point2 getOtherPoint(Point2 point);
-  Point2 getPointBetween(float pos);
+  Point2 getPointBetween(real pos);
   void split(Array<Edge*>* cb,Point2 point);
-  float determinant(Edge* other);
+  real determinant(Edge* other);
   //bool isOn(Edge* other);
 	// getters
   Point2 getFirst();

@@ -25,8 +25,8 @@ Face* InterfaceData::getSelectedFace() { return selectedFace; }
 Edge* InterfaceData::getSelectedEdge() { return selectedEdge; }
 Vertex* InterfaceData::getSelectedVertOne() { return selectedVertOne; }
 Vertex* InterfaceData::getSelectedVertTwo() { return selectedVertTwo; }
-float InterfaceData::getMouseX() { return mouseX; }
-float InterfaceData::getMouseY() { return mouseY; }
+real InterfaceData::getMouseX() { return mouseX; }
+real InterfaceData::getMouseY() { return mouseY; }
 bool InterfaceData::getSelectingFaces() { return selectingFaces; }
 bool InterfaceData::getSelectingEdges() { return selectingEdges; }
 bool InterfaceData::getSelectingVerts() { return selectingVerts; }
@@ -36,8 +36,8 @@ void InterfaceData::setSelectedFace(Face* param) { selectedFace = param; }
 void InterfaceData::setSelectedEdge(Edge* param) { selectedEdge = param; }
 void InterfaceData::setSelectedVertOne(Vertex* param) { selectedVertOne = param; }
 void InterfaceData::setSelectedVertTwo(Vertex* param) { selectedVertTwo = param; }
-void InterfaceData::setMouseX(float param) { mouseX = param; }
-void InterfaceData::setMouseY(float param) { mouseY = param; }
+void InterfaceData::setMouseX(real param) { mouseX = param; }
+void InterfaceData::setMouseY(real param) { mouseY = param; }
 void InterfaceData::setSelectingFaces(bool param) { selectingFaces = param; }
 void InterfaceData::setSelectingEdges(bool param) { selectingEdges = param; }
 void InterfaceData::setSelectingVerts(bool param) { selectingVerts = param; }

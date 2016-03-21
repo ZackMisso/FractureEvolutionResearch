@@ -1,20 +1,22 @@
 #ifndef __POINT2_H__
 #define __POINT2_H__
 
+#include "globalInclude.h"
+
 class Point2 {
 public:
-  float xpos;
-  float ypos;
+  real xpos;
+  real ypos;
   Point2();
-  Point2(float x,float y);
+  Point2(real x,real y);
   bool equals(Point2 other);
   float wedgeProduct(Point2 other);
   float dot(Point2 other);
   // debug
   void debug();
   // setter methods
-  void setXpos(float param);
-  void setYpos(float param);
+  void setXpos(real param);
+  void setYpos(real param);
 };
 
 #endif

@@ -1,6 +1,7 @@
 #ifndef __DEBUG_H__
 #define __DEBUG_H__
 
+#include "globalInclude.h"
 #include "array.h"
 #include "vertex.h"
 #include "edge.h"

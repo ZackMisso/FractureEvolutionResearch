@@ -1,6 +1,8 @@
 #ifndef __RENDERSETTINGS_H__
 #define __RENDERSETTINGS_H__
 
+#include "globalInclude.h"
+
 // Causes Linking Errors
 //#include "interfaceData.h"
 

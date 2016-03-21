@@ -1,6 +1,7 @@
 #ifndef __FACE_H__
 #define __FACE_H__
 
+#include "globalInclude.h"
 #include "array.h"
 #include "edge.h"
 #include "vertex.h"
@@ -21,7 +22,7 @@ public:
   Face();
   Face(Array<Vertex*>* verts);
   ~Face();
-  bool contains(float x,float y);
+  bool contains(real x,real y);
   bool contains(Point2 point);
   bool contains(Vertex* vert);
   bool contains(Edge* edge);
@@ -29,7 +30,7 @@ public:
   Array<Point2>* getConvexHull();
   //Array<Face*>* separate(Point2 newPoint);
   //Array<Face*>* separate(Point2 start,Point2 end);
-  Array<Face*>* separate(float x,float y);
+  Array<Face*>* separate(real x,real y);
   Array<Point2>* sortPointsByPath();
   Array<Point2>* reversePath(Array<Point2>* sortedPath);
   bool isClockwise(Array<Point2>* sortedPath);

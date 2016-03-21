@@ -1,6 +1,7 @@
 #ifndef __FRACTUREREADER_H__
 #define __FRACTUREREADER_H__
 
+#include "globalInclude.h"
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -65,7 +66,7 @@ public:
     ifs.close();
   }
 
-  int readFloats(char *tok,float *buf,int bufsz) {
+  int readFloats(char *tok,real *buf,int bufsz) {
     int i=0;
     while((tok=strtok(0,TOK_SEPS))!=0 && i<bufsz)
     buf[i++]=atof(tok);

@@ -1,6 +1,7 @@
 #ifndef __FACE3_H__
 #define __FACE3_H__
 
+#include "globalInclude.h"
 #include "array.h"
 #include "edge3.h"
 #include "vertex3.h"

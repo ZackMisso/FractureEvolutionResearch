@@ -1,6 +1,7 @@
 #ifndef __INTERFACE_H__
 #define __INTERFACE_H__
 
+#include "globalInclude.h"
 #include "src/include/GL/glui.h"
 
 // this class contains all objects in the user interface

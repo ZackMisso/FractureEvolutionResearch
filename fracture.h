@@ -1,6 +1,7 @@
 #ifndef __FRACTURE_H__
 #define __FRACTURE_H__
 
+#include "globalInclude.h"
 #include "array.h"
 #include "vertex.h"
 #include "edge.h"
@@ -20,7 +21,7 @@ public:
   ~Fracture();
   void init(int points);
   void clearAndReloadFaces();
-	void createNewVertex(float x,float y);
+	void createNewVertex(real x,real y);
 	void createNewEdge(Vertex* one,Vertex* two);
   void createTriMesh();
   bool doesSimilarEdgeExists(Edge* edge);

@@ -1,6 +1,7 @@
 #ifndef __DEBUGCONTROLLER_H__
 #define __DEBUGCONTROLLER_H__
 
+#include "globalInclude.h"
 #include "fracture.h"
 #include "vertex.h"
 #include "edge.h"

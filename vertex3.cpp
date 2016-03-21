@@ -1,7 +1,7 @@
 #include "vertex3.h"
 #include "debugController.h"
 
-Vertex3::Vertex3(float x,float y,float z) {
+Vertex3::Vertex3(real x,real y,real z) {
   edges = new Array<Edge3*>();
   location.xpos = x;
   location.ypos = y;

@@ -1,6 +1,7 @@
 #ifndef __EDGE3_H__
 #define __EDGE3_H__
 
+#include "globalInclude.h"
 #include "point3.h"
 
 class Edge3 {
@@ -10,7 +11,7 @@ private:
 public:
   Edge3();
   Edge3(Point3 one,Point3 two);
-  Edge3(float x,float y,float z,float xx,float yy,float zz);
+  Edge3(real x,real y,real z,real xx,real yy,real zz);
   // getter methods
   Point3 getFirst();
   Point3 getSecond();

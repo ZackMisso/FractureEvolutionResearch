@@ -8,8 +8,8 @@
 using namespace std;
 
 void Mutations::AddRandomVertex(Fracture* fracture) {
-  float randX = RNG::RandomFloat(-0.5f,0.5f);
-  float randY = RNG::RandomFloat(-0.5f,0.5f);
+  real randX = RNG::RandomFloat(-0.5f,0.5f);
+  real randY = RNG::RandomFloat(-0.5f,0.5f);
   DebugController::writeCreateSeparationPoint(randX,randY);
   Array<Face*>* faces = fracture->getFaces();
   Face* oldFace = 0x0;

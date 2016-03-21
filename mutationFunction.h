@@ -3,6 +3,7 @@
 
 // Creating this so this project can easily be extendable in the future
 
+#include "globalInclude.h"
 #include "individual.h"
 
 class MutationFunction {

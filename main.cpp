@@ -5,6 +5,7 @@
 // #include <OpenGL/glu.h>
 //#include <GLUT/glut.h>
 
+#include "globalInclude.h"
 #include <iostream>
 #include "src/include/GL/glui.h"
 #include "fracture.h"
@@ -149,7 +150,7 @@ void display() {
   glBegin(GL_LINES);
   glColor4f(0.7f,0.7f,0.7f,0.5f);
   // Draw Grid for Debugging
-  for(float i=-0.5f;i<0.5f;i+=0.1f) {
+  for(real i=-0.5f;i<0.5f;i+=0.1f) {
     glVertex2f(i,0.5);
     glVertex2f(i,-0.5);
     glVertex2f(0.5f,i);

@@ -2,6 +2,7 @@
 #define __INTERFACEDATA_H__
 
 //#include "fracture.h"
+#include "globalInclude.h"
 #include "face.h"
 #include "edge.h"
 #include "vertex.h"
@@ -13,8 +14,8 @@ private:
   Edge* selectedEdge;
   Vertex* selectedVertOne;
   Vertex* selectedVertTwo;
-  float mouseX;
-  float mouseY;
+  real mouseX;
+  real mouseY;
   bool selectingFaces;
   bool selectingEdges;
   bool selectingVerts;
@@ -28,8 +29,8 @@ public:
   Edge* getSelectedEdge();
   Vertex* getSelectedVertOne();
   Vertex* getSelectedVertTwo();
-  float getMouseX();
-  float getMouseY();
+  real getMouseX();
+  real getMouseY();
   bool getSelectingFaces();
   bool getSelectingEdges();
   bool getSelectingVerts();
@@ -39,8 +40,8 @@ public:
   void setSelectedEdge(Edge* param);
   void setSelectedVertOne(Vertex* param);
   void setSelectedVertTwo(Vertex* param);
-  void setMouseX(float param);
-  void setMouseY(float param);
+  void setMouseX(real param);
+  void setMouseY(real param);
   void setSelectingFaces(bool param);
   void setSelectingEdges(bool param);
   void setSelectingVerts(bool param);

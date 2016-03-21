@@ -18,7 +18,7 @@ Edge3::Edge3(Point3 one,Point3 two) {
   second.zpos = two.zpos;
 }
 
-Edge3::Edge3(float x,float y,float z,float xx,float yy,float zz) {
+Edge3::Edge3(real x,real y,real z,real xx,real yy,real zz) {
   first.xpos = x;
   first.ypos = y;
   first.zpos = z;
