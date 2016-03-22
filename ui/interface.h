@@ -16,18 +16,41 @@ public:
   GLUI_Button* saveFracture;
   GLUI_Button* loadFracture;
   GLUI_Button* clearFracture;
-  // interface menu
+  // settings menu
   GLUI_Rollout* interfaceMenu;
   GLUI_Button* selectFacesButton;
   GLUI_Button* selectEdgesButton;
   GLUI_Button* selectVertsButton;
   GLUI_Button* selectNoneButton;
+  // current selection
+  GLUI_Rollout* selectedMenu; // new
+  GLUI_Rollout* faceSelectedMenu; // new
+  GLUI_StaticText* faceID; // new
+  GLUI_Rollout* vertSelectedMenu; // new
+  GLUI_StaticText* vertID; // new
+  GLUI_Rollout* edgeSelectedMenu; // new
+  GLUI_StaticText* edgeID; // new
+  // find menu
+  GLUI_Rollout* findMenu;
+  GLUI_Rollout* findVertMenu;
+  GLUI_EditText* findVertID;
+  GLUI_Button* findVertButton;
+  GLUI_Rollout* findEdgeMenu;
+  GLUI_EditText* findEdgeID;
+  GLUI_Button* findEdgeButton;
+  GLUI_Rollout* findFaceMenu;
+  GLUI_EditText* findFaceID;
+  GLUI_Button* findFaceButton;
+
   // edit fracture
   GLUI_Rollout* editFractureMenu;
   GLUI_Rollout* addVertexMenu;
   GLUI_EditText* vertexXCoord;
   GLUI_EditText* vertexYCoord;
   GLUI_Button* addVertexButton;
+  GLUI_Rollout* addEdgeMenu; // new
+  GLUI_EditText* vertexOneID; // new
+  GLUI_EditText* vertexTwoID; // new
   GLUI_Button* addEdgeButton;
   // camera menu
   GLUI_Rollout* cameraMenu;
@@ -42,6 +65,10 @@ public:
   // evolution menu
   GLUI_Rollout* evolutionMenu;
   GLUI_Button* randomMutation;
+  // test menu
+  GLUI_Rollout* testMenu; // new
+  GLUI_StaticText* mouseXpos; // new
+  GLUI_StaticText* mouseYpos; // new
 
 //public:
   Interface(GLUI* subwindow);

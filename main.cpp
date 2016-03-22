@@ -44,6 +44,9 @@ void cb_selectVerts(int id);
 void cb_selectNone(int id);
 void cb_createVertex(int id);
 void cb_createEdge(int id);
+void cb_findVertex(int id);
+void cb_findEdge(int id);
+void cb_findFace(int id);
 
 // Arguements
 GLUI* subwindow;
@@ -115,19 +118,42 @@ void createInterface() { // TODO :: MOVE THIS TO INTEFACE CLASS
   interface->saveFracture = subwindow->add_button_to_panel(interface->objectDescriptionMenu,"Save Fracture",1,cb_saveFracture);
   interface->loadFracture = subwindow->add_button_to_panel(interface->objectDescriptionMenu,"Load Fracture",1,cb_loadFracture);
   interface->clearFracture = subwindow->add_button_to_panel(interface->objectDescriptionMenu,"Clear Fracture",1,cb_clearFracture);
-  // Interface Menu
+  // Settings Menu
   interface->interfaceMenu = subwindow->add_rollout("Settings",false);
   interface->selectFacesButton = subwindow->add_button_to_panel(interface->interfaceMenu,"Select Faces",1,cb_selectFaces);
   interface->selectEdgesButton = subwindow->add_button_to_panel(interface->interfaceMenu,"Select Edges",1,cb_selectEdges);
   interface->selectVertsButton = subwindow->add_button_to_panel(interface->interfaceMenu,"Select Verts",1,cb_selectVerts);
   interface->selectNoneButton = subwindow->add_button_to_panel(interface->interfaceMenu,"Select None",1,cb_selectNone);
+  // Current Selection Menu
+  interface->selectedMenu = subwindow->add_rollout("Current Selection",false);
+  interface->faceSelectedMenu = subwindow->add_rollout_to_panel(interface->selectedMenu,"Selected Face",false);
+  interface->faceID = subwindow->add_statictext_to_panel(interface->faceSelectedMenu,"not selected");
+  interface->edgeSelectedMenu = subwindow->add_rollout_to_panel(interface->selectedMenu,"Selected Edge",false);
+  interface->edgeID = subwindow->add_statictext_to_panel(interface->faceSelectedMenu,"not selected");
+  interface->vertSelectedMenu = subwindow->add_rollout_to_panel(interface->selectedMenu,"Selected Vertex",false);
+  interface->vertID = subwindow->add_statictext_to_panel(interface->faceSelectedMenu,"not selected");
+  // Find Menu
+  interface->findMenu = subwindow->add_rollout("Find Object",false);
+  interface->findVertMenu = subwindow->add_rollout_to_panel(interface->findMenu,"Find Vertex",false);
+  interface->findVertID = subwindow->add_edittext_to_panel(interface->findVertMenu,"Vertex ID",GLUI_EDITTEXT_INT);
+  interface->findVertButton = subwindow->add_button_to_panel(interface->findVertMenu,"Find Vertex",1,cb_findVertex);
+  interface->findEdgeMenu = subwindow->add_rollout_to_panel(interface->findMenu,"Find Edge",false);
+  interface->findVertID = subwindow->add_edittext_to_panel(interface->findEdgeMenu,"Edge ID",GLUI_EDITTEXT_INT);
+  interface->findVertButton = subwindow->add_button_to_panel(interface->findEdgeMenu,"Find Edge",1,cb_findEdge);
+  interface->findFaceMenu = subwindow->add_rollout_to_panel(interface->findMenu,"Find Face",false);
+  interface->findVertID = subwindow->add_edittext_to_panel(interface->findFaceMenu,"Face ID",GLUI_EDITTEXT_INT);
+  interface->findVertButton = subwindow->add_button_to_panel(interface->findFaceMenu,"Find Face",1,cb_findFace);
   // Edit Fracture Menu
   interface->editFractureMenu = subwindow->add_rollout("Edit Fracture",false);
   interface->addVertexMenu = subwindow->add_rollout_to_panel(interface->editFractureMenu,"Add Vertex",false);
   interface->vertexXCoord = subwindow->add_edittext_to_panel(interface->addVertexMenu,"Add Vertex X",GLUI_EDITTEXT_FLOAT);
   interface->vertexYCoord = subwindow->add_edittext_to_panel(interface->addVertexMenu,"Add Vertex Y",GLUI_EDITTEXT_FLOAT);
   interface->addVertexButton = subwindow->add_button_to_panel(interface->addVertexMenu,"Create Vertex",1,cb_createVertex);
-  interface->addEdgeButton = subwindow->add_button_to_panel(interface->editFractureMenu,"Create Edge",1,cb_createEdge);
+  interface->addEdgeMenu = subwindow->add_rollout_to_panel(interface->editFractureMenu,"Add Edge",false);
+  //interface->vertexOneID = subwindow->add_rollout_to_panel
+  // KEEP IMPLEMENTING
+
+  interface->addEdgeButton = subwindow->add_button_to_panel(interface->addEdgeMenu,"Create Edge",1,cb_createEdge);
   // Camera Menu
   interface->cameraMenu = subwindow->add_rollout("Camera",false);
   // Render Menu
@@ -325,5 +351,20 @@ void cb_createVertex(int id) {
 
 void cb_createEdge(int id) {
   cout << "Creating Edge has Yet to be implemented" << endl;
+  // to be implemented
+}
+
+void cb_findVertex(int id) {
+  cout << "Find Vertex Still Needs to be Implemented" << endl;
+  // to be implemented
+}
+
+void cb_findEdge(int id) {
+  cout << "Find Edge Still Needs to be Implemented" << endl;
+  // to be implemented
+}
+
+void cb_findFace(int id) {
+  cout << "Find Face Still Needs to be Implemented" << endl;
   // to be implemented
 }
