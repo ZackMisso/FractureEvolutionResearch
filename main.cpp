@@ -8,15 +8,15 @@
 #include "globalInclude.h"
 #include <iostream>
 #include "src/include/GL/glui.h"
-#include "fracture.h"
-#include "array.h"
-#include "interface.h"
-#include "interfaceData.h"
-#include "programData.h"
-#include "renderSettings.h"
-#include "mutations.h"
-#include "tests.h"
-#include "debugController.h"
+#include "geometry/fracture.h"
+#include "dataStructures/array.h"
+#include "ui/interface.h"
+#include "ui/interfaceData.h"
+#include "settings/programData.h"
+#include "settings/renderSettings.h"
+#include "evolution/mutations.h"
+#include "test/tests.h"
+#include "test/debugController.h"
 
 using namespace std;
 

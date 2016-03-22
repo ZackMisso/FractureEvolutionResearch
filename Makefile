@@ -10,8 +10,21 @@ LIBS = $(STRINGFIX) $(GLUT2) $(GLUI2)
 
 PROD= Demo
 
-HDRS= $(shell ls *.h)
+#HDRS= $(shell ls *.h)
 SRCS= $(shell ls *.cpp)
+SRCS+= $(shell ls ui/*.cpp)
+SRCS+= $(shell ls settings/*.cpp)
+SRCS+= $(shell ls misc/*.cpp)
+SRCS+= $(shell ls io/*.cpp)
+SRCS+= $(shell ls evolution/*.cpp)
+SRCS+= $(shell ls evolution/crossoverFunctions/*.cpp)
+SRCS+= $(shell ls evolution/mutationFunctions/*.cpp)
+SRCS+= $(shell ls evolution/fitnessFunctions/*.cpp)
+SRCS+= $(shell ls evolution/constraints/*.cpp)
+SRCS+= $(shell ls geometry/*.cpp)
+#SRCS+= $(shell ls dataStructures/*.cpp)
+SRCS+= $(shell ls test/*.cpp)
+
 OBJS= $(patsubst %.cpp, %.o, $(SRCS))
 
 all: $(PROD)
@@ -25,3 +38,14 @@ $(PROD): $(OBJS)
 clean:
 	rm -f $(PROD)
 	rm -f *.o
+	rm -f ui/*.o
+	rm -f settings/*.o
+	rm -f misc/*.o
+	rm -f io/*.o
+	rm -f evolution/*.o
+	rm -f evolution/crossoverFunctions/*.o
+	rm -f evolution/mutationFunctions/*.o
+	rm -f evolution/fitnessFunctions/*.o
+	rm -f evolution/constraints/*.o
+	rm -f geometry/*.o
+	rm -f test/*.o
