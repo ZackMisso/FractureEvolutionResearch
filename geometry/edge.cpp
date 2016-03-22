@@ -17,6 +17,8 @@ Edge::Edge(Point2 one,Point2 two) {
   first.ypos = one.ypos;
   second.xpos = two.xpos;
   second.ypos = two.ypos;
+  firstVertID = -1;
+  secondVertID = -1;
   id = DebugController::getNextEdge();
   selected = false;
 }
@@ -26,6 +28,8 @@ Edge::Edge(real x,real y,real xx,real yy) {
   first.ypos = y;
   second.xpos = xx;
   second.ypos = yy;
+  firstVertID = -1;
+  secondVertID = -1;
   id = DebugController::getNextEdge();
   selected = false;
 }
@@ -193,11 +197,6 @@ real Edge::determinant(Edge* other) {
 //  return false;
 //}
 
-Point2 Edge::getFirst() { return first; }
-Point2 Edge::getSecond() { return second; }
-int Edge::getID() { return id; }
-bool Edge::getSelected() { return selected; }
-
 void Edge::setFirst(Point2 point) {
   first.xpos = point.xpos;
   first.ypos = point.ypos;
@@ -208,5 +207,14 @@ void Edge::setSecond(Point2 point) {
   second.ypos = point.ypos;
 }
 
+Point2 Edge::getFirst() { return first; }
+Point2 Edge::getSecond() { return second; }
+int Edge::getID() { return id; }
+int Edge::getFirstVertID() { return firstVertID; }
+int Edge::getSecondVertID() { return secondVertID; }
+bool Edge::getSelected() { return selected; }
+
 void Edge::setID(int param) { id = param; }
+void Edge::setFirstVertID(int param) { firstVertID = param; }
+void Edge::setSecondVertID(int param) { secondVertID = param; }
 void Edge::setSelected(bool param) { selected = param; }

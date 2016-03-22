@@ -23,13 +23,13 @@ public:
   GLUI_Button* selectVertsButton;
   GLUI_Button* selectNoneButton;
   // current selection
-  GLUI_Rollout* selectedMenu; // new
-  GLUI_Rollout* faceSelectedMenu; // new
-  GLUI_StaticText* faceID; // new
-  GLUI_Rollout* vertSelectedMenu; // new
-  GLUI_StaticText* vertID; // new
-  GLUI_Rollout* edgeSelectedMenu; // new
-  GLUI_StaticText* edgeID; // new
+  GLUI_Rollout* selectedMenu;
+  GLUI_Rollout* faceSelectedMenu;
+  GLUI_StaticText* faceID;
+  GLUI_Rollout* vertSelectedMenu;
+  GLUI_StaticText* vertID;
+  GLUI_Rollout* edgeSelectedMenu;
+  GLUI_StaticText* edgeID;
   // find menu
   GLUI_Rollout* findMenu;
   GLUI_Rollout* findVertMenu;

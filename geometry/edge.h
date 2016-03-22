@@ -10,6 +10,8 @@ private:
   Point2 first;
   Point2 second;
   int id;
+  int firstVertID;
+  int secondVertID;
   bool selected;
 public:
   Edge(Point2 one,Point2 two);
@@ -28,11 +30,15 @@ public:
   Point2 getFirst();
   Point2 getSecond();
   int getID();
+  int getFirstVertID();
+  int getSecondVertID();
   bool getSelected();
   // setters
   void setFirst(Point2 point);
   void setSecond(Point2 point);
   void setID(int param);
+  void setFirstVertID(int param);
+  void setSecondVertID(int param);
   void setSelected(bool param);
 };
 
