@@ -11,6 +11,7 @@ public:
   AddRandomVertMutation(real param);
   ~AddRandomVertMutation();
   virtual Individual* mutate(Individual* individual);
+  virtual Fracture* mutate(Fracture* fracture);
 };
 
 #endif

@@ -11,6 +11,7 @@ public:
   AddRandomEdgeMutation(real param);
   ~AddRandomEdgeMutation();
   virtual Individual* mutate(Individual* individual);
+  virtual Fracture* mutate(Fracture* fracture);
 };
 
 #endif

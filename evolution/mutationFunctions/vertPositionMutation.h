@@ -10,7 +10,8 @@ public:
   VertPositionMutation();
   VertPositionMutation(real param);
   ~VertPositionMutation();
-  Individual* mutate(Individual* individual);
+  virtual Individual* mutate(Individual* individual);
+  virtual Fracture* mutate(Fracture* fracture);
 };
 
 #endif

@@ -14,6 +14,7 @@ public:
   MutationFunction(real param);
   ~MutationFunction();
   virtual Individual* mutate(Individual* individual);
+  virtual Fracture* mutate(Fracture* fracture);
   // getter methods
   real getProbability();
   // setter methods

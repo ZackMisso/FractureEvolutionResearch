@@ -20,8 +20,10 @@ public:
   Array<Individual*>* mergeByLowestFitness(Array<Individual*>* one,Array<Individual*>* two);
   // getter methods
   real getFitness();
+  Fracture* getFracture();
   // setter methods
   void setFitness(real param);
+  void setFracture(Fracture* fracture);
 };
 
 #endif

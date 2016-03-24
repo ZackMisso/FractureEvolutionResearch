@@ -11,6 +11,7 @@ public:
   EdgeCurveMutation(real param);
   ~EdgeCurveMutation();
   virtual Individual* mutate(Individual* individual);
+  virtual Fracture* mutate(Fracture* fracture);
 };
 
 #endif

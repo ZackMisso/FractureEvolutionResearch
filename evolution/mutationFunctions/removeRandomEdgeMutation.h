@@ -11,6 +11,7 @@ public:
   RemoveRandomEdgeMutation(real param);
   ~RemoveRandomEdgeMutation();
   virtual Individual* mutate(Individual* individual);
+  virtual Fracture* mutate(Fracture* fracture);
 };
 
 #endif

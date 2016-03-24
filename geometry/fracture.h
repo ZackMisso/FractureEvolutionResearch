@@ -16,6 +16,9 @@ private:
   Array<Edge*>* edges; // will have multiple references
   Array<Face*>* faces;
   TriMesh* triMesh;
+  int nextVertID;
+  int nextEdgeID;
+  int nextFaceID;
 public:
   Fracture();
   ~Fracture();
@@ -36,6 +39,16 @@ public:
   Array<Edge*>* getEdges();
   Array<Vertex*>* getVerts();
   TriMesh* getTriMesh();
+  int getNextVertID();
+  int getNextEdgeID();
+  int getNextFaceID();
+  // setter methods
+  void setFaces(Array<Face*>* param);
+  void setEdges(Array<Edge*>* param);
+  void setVerts(Array<Vertex*>* param);
+  void setNextVertID(int param);
+  void setNextEdgeID(int param);
+  void setNextFaceID(int param);
 };
 
 #endif

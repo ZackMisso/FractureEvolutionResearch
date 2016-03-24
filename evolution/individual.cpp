@@ -1,6 +1,7 @@
 #include "individual.h"
 
 Individual::Individual() {
+  fracture = new Fracture();
   fitness = 0.0f;
 }
 
@@ -76,5 +77,7 @@ Array<Individual*>* Individual::mergeByLowestFitness(Array<Individual*>* one,Arr
 }
 
 real Individual::getFitness() { return fitness; }
+Fracture* Individual::getFracture() { return fracture; }
 
 void Individual::setFitness(real param) { fitness = param; }
+void Individual::setFracture(Fracture* param) { fracture = param; }

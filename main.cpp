@@ -17,6 +17,13 @@
 #include "evolution/mutations.h"
 #include "test/tests.h"
 #include "test/debugController.h"
+#include "evolution/individual.h"
+#include "evolution/mutationFunctions/addRandomEdgeMutation.h"
+#include "evolution/mutationFunctions/addRandomVertMutation.h"
+#include "evolution/mutationFunctions/edgeCurveMutation.h"
+#include "evolution/mutationFunctions/removeRandomEdgeMutation.h"
+#include "evolution/mutationFunctions/removeRandomVertMutation.h"
+#include "evolution/mutationFunctions/vertPositionMutation.h"
 
 using namespace std;
 
@@ -47,6 +54,12 @@ void cb_createEdge(int id);
 void cb_findVertex(int id);
 void cb_findEdge(int id);
 void cb_findFace(int id);
+void cb_addRandomEdgeM(int id);
+void cb_addRandomVertM(int id);
+void cb_edgeCurveM(int id);
+void cb_removeRandomEdgeM(int id);
+void cb_removeRandomVertM(int id);
+void cb_vertPositionM(int id);
 
 // Arguements
 GLUI* subwindow;
@@ -165,6 +178,12 @@ void createInterface() { // TODO :: MOVE THIS TO INTEFACE CLASS
   // Evolution Menu
   interface->evolutionMenu = subwindow->add_rollout("Evolution",false);
   interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Random Mutation",1,cb_randomMutation);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Add Random Edge",1,cb_addRandomEdgeM);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Add Random Vert",1,cb_addRandomVertM);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Edge Curve",1,cb_edgeCurveM);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Remove Random Edge",1,cb_removeRandomEdgeM);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Remove Random Vert",1,cb_removeRandomVertM);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Vert Position",1,cb_vertPositionM);
 }
 
 void display() {
@@ -367,4 +386,40 @@ void cb_findEdge(int id) {
 void cb_findFace(int id) {
   cout << "Find Face Still Needs to be Implemented" << endl;
   // to be implemented
+}
+
+void cb_addRandomEdgeM(int id) {
+  AddRandomEdgeMutation* mutate = new AddRandomEdgeMutation();
+  mutate->mutate(programData->getCurrentFracture());
+  delete mutate;
+}
+
+void cb_addRandomVertM(int id) {
+  AddRandomVertMutation* mutate = new AddRandomVertMutation();
+  mutate->mutate(programData->getCurrentFracture());
+  delete mutate;
+}
+
+void cb_edgeCurveM(int id) {
+  EdgeCurveMutation* mutate = new EdgeCurveMutation();
+  mutate->mutate(programData->getCurrentFracture());
+  delete mutate;
+}
+
+void cb_removeRandomEdgeM(int id) {
+  RemoveRandomEdgeMutation* mutate = new RemoveRandomEdgeMutation();
+  mutate->mutate(programData->getCurrentFracture());
+  delete mutate;
+}
+
+void cb_removeRandomVertM(int id) {
+  RemoveRandomVertMutation* mutate = new RemoveRandomVertMutation();
+  mutate->mutate(programData->getCurrentFracture());
+  delete mutate;
+}
+
+void cb_vertPositionM(int id) {
+  VertPositionMutation* mutate = new VertPositionMutation();
+  mutate->mutate(programData->getCurrentFracture());
+  delete mutate;
 }

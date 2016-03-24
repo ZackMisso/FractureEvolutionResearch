@@ -15,6 +15,9 @@ Fracture::Fracture() {
 	edges = new Array<Edge*>();
 	faces = new Array<Face*>();
 	triMesh = new TriMesh();
+	nextVertID = 0;
+	nextEdgeID = 0;
+	nextFaceID = 0;
 	init(0);
 }
 
@@ -184,3 +187,13 @@ Array<Vertex*>* Fracture::getVerts() { return verts; }
 Array<Edge*>* Fracture::getEdges() { return edges; }
 Array<Face*>* Fracture::getFaces() { return faces; }
 TriMesh* Fracture::getTriMesh() { return triMesh; }
+int Fracture::getNextVertID() { return nextVertID; }
+int Fracture::getNextEdgeID() { return nextEdgeID; }
+int Fracture::getNextFaceID() { return nextFaceID; }
+
+void Fracture::setVerts(Array<Vertex*>* param) { verts = param; }
+void Fracture::setEdges(Array<Edge*>* param) { edges = param; }
+void Fracture::setFaces(Array<Face*>* param) { faces = param; }
+void Fracture::setNextVertID(int param) { nextVertID = param; }
+void Fracture::setNextEdgeID(int param) { nextEdgeID = param; }
+void Fracture::setNextFaceID(int param) { nextFaceID = param; }

@@ -65,6 +65,12 @@ public:
   // evolution menu
   GLUI_Rollout* evolutionMenu;
   GLUI_Button* randomMutation;
+  GLUI_Button* addRandomEdgeMutation;
+  GLUI_Button* addRandomVertMutation;
+  GLUI_Button* edgeCurveMutation;
+  GLUI_Button* removeRandomEdgeMutation;
+  GLUI_Button* removeRandomVertMutation;
+  GLUI_Button* vertPositionMutation;
   // test menu
   GLUI_Rollout* testMenu; // new
   GLUI_StaticText* mouseXpos; // new

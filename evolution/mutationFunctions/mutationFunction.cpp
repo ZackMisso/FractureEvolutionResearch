@@ -17,6 +17,11 @@ Individual* MutationFunction::mutate(Individual* individual) {
   return individual;
 }
 
+Fracture* MutationFunction::mutate(Fracture* fracture) {
+  // to be implemented or extended
+  return fracture;
+}
+
 real MutationFunction::getProbability() { return probability; }
 
 void MutationFunction::setProbability(real param) { probability = param; }
