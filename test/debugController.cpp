@@ -5,27 +5,27 @@
 
 using namespace std;
 
-int DebugController::nextVertNum = 0;
-int DebugController::nextEdgeNum = 0;
-int DebugController::nextFaceNum = 0;
+//int DebugController::nextVertNum = 0;
+//int DebugController::nextEdgeNum = 0;
+//int DebugController::nextFaceNum = 0;
 
 void DebugController::init() {
-  nextVertNum = 0;
-  nextFaceNum = 0;
-  nextEdgeNum = 0;
+  //nextVertNum = 0;
+  //nextFaceNum = 0;
+  //nextEdgeNum = 0;
 }
 
-int DebugController::getNextVert() {
-  return nextVertNum++;
-}
+//int DebugController::getNextVert() {
+//  return nextVertNum++;
+//}
 
-int DebugController::getNextEdge() {
-  return nextEdgeNum++;
-}
+//int DebugController::getNextEdge() {
+//  return nextEdgeNum++;
+//}
 
-int DebugController::getNextFace() {
-  return nextFaceNum++;
-}
+//int DebugController::getNextFace() {
+//  return nextFaceNum++;
+//}
 
 void DebugController::writeCreateSeparationPoint(float x,float y) {
   cout << "Creating Separation Point X :: " << x << " Y :: " << y << endl;

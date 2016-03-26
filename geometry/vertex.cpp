@@ -11,16 +11,18 @@ Vertex::Vertex(real x,real y) {
   edges = new Array<Edge*>();
   location.xpos = x;
   location.ypos = y;
-  id = DebugController::getNextVert();
+  id = -1;
   selected = false;
+  boundary = false;
 }
 
 Vertex::Vertex(Point2 point) {
   edges = new Array<Edge*>();
   location.xpos = point.xpos;
   location.ypos = point.ypos;
-  id = DebugController::getNextVert();
+  id = -1;
   selected = false;
+  boundary = false;
 }
 
 Vertex::~Vertex() {
@@ -54,8 +56,10 @@ Array<Edge*>* Vertex::getEdges() { return edges; }
 Point2 Vertex::getLocation() { return location; }
 int Vertex::getID() { return id; }
 bool Vertex::getSelected() { return selected; }
+bool Vertex::getBoundary() { return boundary; }
 
 void Vertex::setEdges(Array<Edge*>* param) { edges = param; }
 void Vertex::setLocation(Point2 param) { location = param; }
 void Vertex::setID(int param) { id = param; }
 void Vertex::setSelected(bool param) { selected = param; }
+void Vertex::setBoundary(bool param) { boundary = param; }

@@ -27,6 +27,9 @@ public:
 	void createNewVertex(real x,real y);
 	void createNewEdge(Vertex* one,Vertex* two);
   void createTriMesh();
+  Vertex* giveVertexID(Vertex* vert);
+  Edge* giveEdgeID(Edge* edge);
+  Face* giveFaceID(Face* face);
   bool doesSimilarEdgeExists(Edge* edge);
   void recount();
   //void debug();

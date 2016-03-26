@@ -35,15 +35,20 @@ Fracture::~Fracture() {
 
 void Fracture::init(int points) {
 	//cout << "INITING" << endl;
-	verts->add(new Vertex(-0.5,-0.5));
-	verts->add(new Vertex(-0.5,0.5));
-	verts->add(new Vertex(0.5,0.5));
-	verts->add(new Vertex(0.5,-0.5));
-	edges->add(new Edge(-0.5,-0.5,-0.5,0.5));
-	edges->add(new Edge(-0.5,0.5,0.5,0.5));
-	edges->add(new Edge(0.5,0.5,0.5,-0.5));
-	edges->add(new Edge(0.5,-0.5,-0.5,-0.5));
-	Face* face = new Face();
+	verts->add(giveVertexID(new Vertex(-0.5,-0.5))));
+	verts->add(giveVertexID(new Vertex(-0.5,0.5)));
+	verts->add(giveVertexID(new Vertex(0.5,0.5)));
+	verts->add(giveVertexID(new Vertex(0.5,-0.5)));
+	for(int i=0;i<4;i++)
+		verts->get(i)->setBoundary(true);
+	// fix edge assignment
+	edges->add(giveEdgeID(new Edge(-0.5,-0.5,-0.5,0.5,0,1)));
+	edges->add(giveEdgeID(new Edge(-0.5,0.5,0.5,0.5,1,2)));
+	edges->add(giveEdgeID(new Edge(0.5,0.5,0.5,-0.5,2,3)));
+	edges->add(giveEdgeID(new Edge(0.5,-0.5,-0.5,-0.5,3,0)));
+	for(int i=0;i<4;i++)
+		edges->get(i)->setBoundary(true);
+	Face* face = giveFaceID(new Face());
 	for(int i=0;i<4;i++){
 		face->getVerts()->add(verts->get(i));
 		face->getEdges()->add(edges->get(i));
@@ -175,6 +180,34 @@ void Fracture::draw(RenderSettings* renderSettings,InterfaceData* interfaceData)
 			edges->get(i)->draw();
 		glEnd();
 	}
+}
+
+Vertex* Fracture::giveVertexID(Vertex* vert) {
+	vert->setID(nextVertID++);
+	return vert;
+}
+
+Edge* Fracture::giveEdgeID(Edge* edge) {
+	Vertex* one;
+	Vertex* two;
+	// inefficient
+	if(edge->getFirstVertID() != -1 && edge->getSecondVertID() != -1) {
+		for(int i=0;i<verts->getSize();i++) {
+			if(verts->get(i)->getID() == edge->getFirstVertID())
+				one = verts->get(i);
+			if(verts->get(i)->getID() == edge->getSecondVertID())
+				two = verts->get(i);
+		}
+		one->getEdges()->add(edge);
+		two->getEdges()->add(edge);
+	}
+	edge->setID(nextEdgeID++);
+	return edge;
+}
+
+Face* Fracture::giveFaceID(Face* face) {
+	face->setID(nextFaceID++);
+	return face;
 }
 
 // Brute Force Method

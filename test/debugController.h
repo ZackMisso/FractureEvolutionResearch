@@ -8,14 +8,14 @@
 
 class DebugController {
 public:
-  static int nextVertNum;
-  static int nextEdgeNum;
-  static int nextFaceNum;
+  //static int nextVertNum;
+  //static int nextEdgeNum;
+  //static int nextFaceNum;
   // implement more
   static void init();
-  static int getNextVert();
-  static int getNextEdge();
-  static int getNextFace();
+  //static int getNextVert();
+  //static int getNextEdge();
+  //static int getNextFace();
   static void writeCreateSeparationPoint(float x,float y);
   static void writeCreateEdge(Edge* newEdge);
   static void writeCreateVert(Vertex* newVert);

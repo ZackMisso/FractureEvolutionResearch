@@ -12,6 +12,7 @@ private:
   Point2 location; // [0.0-1.0 , 0.0-1.0]
   int id;
   bool selected;
+  bool boundary;
 public:
   Vertex(real x,real y);
   Vertex(Point2 point);
@@ -24,11 +25,13 @@ public:
 	Point2	getLocation();
   int getID();
   bool getSelected();
+  bool getBoundary();
 	// setters
 	void setEdges(Array<Edge*>* param);
 	void setLocation(Point2 param);
   void setID(int param);
   void setSelected(bool param);
+  bool setBoundary(bool param);
 };
 
 #endif

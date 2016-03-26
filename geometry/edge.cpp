@@ -19,7 +19,18 @@ Edge::Edge(Point2 one,Point2 two) {
   second.ypos = two.ypos;
   firstVertID = -1;
   secondVertID = -1;
-  id = DebugController::getNextEdge();
+  id = -1;
+  selected = false;
+}
+
+Edge::Edge(Point2 one,Point2 two,int idone,int idtwo) {
+  first.xpos = one.xpos;
+  first.ypos = one.ypos;
+  second.xpos = two.xpos;
+  second.ypos = two.ypos;
+  firstVertID = idone;
+  secondVertID = idtwo;
+  id = -1;
   selected = false;
 }
 
@@ -30,7 +41,18 @@ Edge::Edge(real x,real y,real xx,real yy) {
   second.ypos = yy;
   firstVertID = -1;
   secondVertID = -1;
-  id = DebugController::getNextEdge();
+  id = -1
+  selected = false;
+}
+
+Edge::Edge(real x,real y,real xx,real yy,int idone,int idtwo) {
+  first.xpos = x;
+  first.ypos = y;
+  second.xpos = xx;
+  second.ypos = yy;
+  firstVertID = idone;
+  secondVertID = idtwo;
+  id = -1
   selected = false;
 }
 
