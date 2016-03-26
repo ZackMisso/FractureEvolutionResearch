@@ -3,14 +3,17 @@
 Individual::Individual() {
   fracture = new Fracture();
   fitness = 0.0f;
+  id = -1;
+}
+
+Individual::Individual(int param) {
+  fracture = new Fracture();
+  fitness = 0.0;
+  id = param;
 }
 
 Individual::~Individual() {
-  // to be implemented
-}
-
-void Individual::mutate() {
-  // to be implemented
+  delete fracture;
 }
 
 Array<Individual*>* Individual::sortByHighestFitness(Array<Individual*>* list) {
@@ -78,6 +81,8 @@ Array<Individual*>* Individual::mergeByLowestFitness(Array<Individual*>* one,Arr
 
 real Individual::getFitness() { return fitness; }
 Fracture* Individual::getFracture() { return fracture; }
+int Individual::getID() { return id; }
 
 void Individual::setFitness(real param) { fitness = param; }
 void Individual::setFracture(Fracture* param) { fracture = param; }
+void Individual::setID(int param) { id=param; }

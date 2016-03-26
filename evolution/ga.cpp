@@ -15,10 +15,14 @@ GA::GA() {
   edgeConstraints = new Array<EdgeConstraint*>();
   faceConstraints = new Array<FaceConstraint*>();
   fractureConstraints = new Array<FractureConstraint*>();
+  penalties = new Array<Penalty*>();
   individuals = new Array<Individual*>();
   hallOfFame = new Array<Individual*>();
   fitFunction = new FitnessFunction();
+  shape = new Shape();
   numberOfGenerations = 100;
+  numberOfIndividuals = 50;
+  nextIndividualID = 0;
 }
 
 GA::~GA() {
@@ -34,6 +38,8 @@ GA::~GA() {
     delete faceConstraints->removeLast();
   while(fractureConstraints->getSize())
     delete fractureConstraints->removeLast();
+  while(penalties->getSize())
+    delete penalties->removeLast();
   while(individuals->getSize())
     delete individuals->removeLast();
   while(hallOfFame->getSize())
@@ -44,9 +50,11 @@ GA::~GA() {
   delete edgeConstraints;
   delete faceConstraints;
   delete fractureConstraints;
+  delete penalties;
   delete individuals;
   delete hallOfFame;
   delete fitFunction;
+  delete shape;
 }
 
 void GA::initMutations() { // TODO :: Enter in the probabilities
@@ -79,8 +87,30 @@ void GA::initFractureConstraints() {
   // to be implemented
 }
 
-void GA::simulateEvolution() {
+void GA::initPenalties() {
   // to be implemented
+}
+
+void GA::initPopulation() {
+  for(int i=0;i<numberOfIndividuals;i++)
+    individuals->add(new Individual(nextIndividualID++));
+}
+
+void GA::simulateEvolution() {
+  initMutations();
+  initCrossovers();
+  initVertConstraints();
+  initEdgeConstraints();
+  initFaceConstraints();
+  initFractureConstraints();
+  initPenalties();
+  initPopulation();
+  for(int i=0;i<numberOfGenerations;i++) {
+    // pre generation processing
+    simulateGeneration();
+    // post generation processing
+  }
+  // do end stuffs
 }
 
 void GA::simulateGeneration() {
@@ -101,10 +131,14 @@ Array<VertConstraint*>* GA::getVertConstraints() { return vertConstraints; }
 Array<EdgeConstraint*>* GA::getEdgeConstraints() { return edgeConstraints; }
 Array<FaceConstraint*>* GA::getFaceConstraints() { return faceConstraints; }
 Array<FractureConstraint*>* GA::getFractureConstraints() { return fractureConstraints; }
+Array<Penalty*>* GA::getPenalties() { return penalties; }
 Array<Individual*>* GA::getIndividuals() { return individuals; }
 Array<Individual*>* GA::getHallOfFame() { return hallOfFame; }
 FitnessFunction* GA::getFitnessFunction() { return fitFunction; }
+Shape* GA::getShape() { return shape; }
 int GA::getNumberOfGenerations() { return numberOfGenerations; }
+int GA::getNumberOfIndividuals() { return numberOfIndividuals; }
+int GA::getNextIndividualID() { return nextIndividualID; }
 
 void GA::setMutations(Array<MutationFunction*>* param) { mutations = param; }
 void GA::setCrossovers(Array<CrossoverFunction*>* param) { crossovers = param; }
@@ -112,7 +146,11 @@ void GA::setVertConstraints(Array<VertConstraint*>* param) { vertConstraints = p
 void GA::setEdgeConstraints(Array<EdgeConstraint*>* param) { edgeConstraints = param; }
 void GA::setFaceConstraints(Array<FaceConstraint*>* param) { faceConstraints = param; }
 void GA::setFractureConstraints(Array<FractureConstraint*>* param) { fractureConstraints = param; }
+void GA::setPenalties(Array<Penalty*>* param) { penalties = param; }
 void GA::setIndividuals(Array<Individual*>* param) { individuals = param; }
 void GA::setHallOfFame(Array<Individual*>* param) { hallOfFame = param; }
 void GA::setFitnessFunction(FitnessFunction* param) { fitFunction = param; }
+void GA::setShape(Shape* param) { shape = param; }
 void GA::setNumberOfGenerations(int param) { numberOfGenerations = param; }
+void GA::setNumberOfIndividuals(int param) { individuals = param; }
+void GA::setNextIndividualID(int param) { nextIndividualID = param; }
