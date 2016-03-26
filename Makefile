@@ -22,6 +22,7 @@ SRCS+= $(shell ls evolution/mutationFunctions/*.cpp)
 SRCS+= $(shell ls evolution/fitnessFunctions/*.cpp)
 SRCS+= $(shell ls evolution/constraints/*.cpp)
 SRCS+= $(shell ls geometry/*.cpp)
+SRCS+= $(shell ls geometry/shapes/*.cpp)
 #SRCS+= $(shell ls dataStructures/*.cpp)
 SRCS+= $(shell ls test/*.cpp)
 
@@ -48,4 +49,5 @@ clean:
 	rm -f evolution/fitnessFunctions/*.o
 	rm -f evolution/constraints/*.o
 	rm -f geometry/*.o
+	rm -f geometry/shapes/*.o
 	rm -f test/*.o
