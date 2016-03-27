@@ -386,12 +386,25 @@ void cb_selectNone(int id) {
 
 void cb_createVertex(int id) {
   cout << "Creating Vertex has Yet to be implemented" << endl;
-  // to be implemented
+  Vertex* newVert = programData->getCurrentFracture()->giveVertexID(new Vertex(vertexXCoord->get_float_val(),vertexYCoord->get_float_val()));
+  programData->getCurrentFracture()->getVerts()->add(newVert);
 }
 
 void cb_createEdge(int id) {
   cout << "Creating Edge has Yet to be implemented" << endl;
-  // to be implemented
+  Array<Vertex*>* verts = programData->getCurrentFracture()->getVerts();
+  Vertex* one = 0x0;
+  Vertex* two = 0x0;
+  for(int i=0;i<verts->getSize();i++) {
+    if(verts->get(i)->getID() == vertexOneID->get_int_val())
+      one = verts->get(i);
+    if(verts->get(i)->getID() == vertexTwoID->get_int_val())
+      two = verts->get(i);
+  }
+  if(one && two) {
+    Edge* edge = programData->getCurrentFracture()->giveEdgeID(new Edge(one->getLocation(),two->getLocation(),one->getID(),two->getID()));
+    programData->getCurrentFracture()->add(edge);
+  }
 }
 
 void cb_findVertex(int id) {
