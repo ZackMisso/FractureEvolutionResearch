@@ -14,6 +14,7 @@
 #include "ui/interfaceData.h"
 #include "settings/programData.h"
 #include "settings/renderSettings.h"
+#include "settings/selectData.h"
 #include "evolution/mutations.h"
 #include "test/tests.h"
 #include "test/debugController.h"
@@ -67,6 +68,7 @@ Interface* interface;
 InterfaceData* interfaceData;
 ProgramData* programData;
 RenderSettings* renderSettings;
+SelectData* selectData;
 int window;
 
 
@@ -80,6 +82,7 @@ int main(int argc,char** argv) {
   }
 
   programData = new ProgramData();
+  selectData = new SelectData();
 
 	glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
@@ -206,6 +209,24 @@ void display() {
   glColor3f(0.0f,1.0f,0.0f);
 
   programData->getCurrentFracture()->draw(renderSettings,interfaceData);
+
+  glColor3f(1.0f,1.0f,1.0f);
+  if(selectData->getSelectedVert()) {
+    glBegin(GL_POINTS);
+    selectData->getSelectedVert()->draw();
+    glEnd();
+  }
+  if(selectData->getSelectedEdge()) {
+    glBegin(GL_LINES);
+    selectData->getSelectedEdge()->draw();
+    glEnd();
+  }
+  if(selectData->getSelectedFace()) {
+    // NEED TO IMPLEMENT FACE DRAW
+    //glBegin(GL_TRIANGLES);
+    //selectData->getSelectedFace()->draw();
+    //glEnd();
+  }
 
   glEnd();
   glutSwapBuffers();
@@ -374,18 +395,36 @@ void cb_createEdge(int id) {
 }
 
 void cb_findVertex(int id) {
-  cout << "Find Vertex Still Needs to be Implemented" << endl;
-  // to be implemented
+  int vertID = findVertID->get_int_val();
+  Array<Vertex*>* verts = programData->getCurrentFracture()->getVerts();
+  selectData->setSelectedVert(0x0);
+  selectData->setSelectedEdge(0x0);
+  selectData->setSelectedFace(0x0);
+  for(int i=0;i<verts->getSize();i++)
+    if(verts->get(i)->getID() == vertID)
+      selectData->setSelectedVert(verts->get(i));
 }
 
 void cb_findEdge(int id) {
-  cout << "Find Edge Still Needs to be Implemented" << endl;
-  // to be implemented
+  int edgeID = findEdgeID->get_int_val();
+  Array<Edge*>* edges = programData->getCurrentFracture()->getEdges();
+  selectData->setSelectedVert(0x0);
+  selectData->setSelectedEdge(0x0);
+  selectData->setSelectedFace(0x0);
+  for(int i=0;i<edges->getSize();i++)
+    if(edges->get(i)->getID() == edgeID)
+      selectData->setSelectedEdge(edges->get(i));
 }
 
 void cb_findFace(int id) {
-  cout << "Find Face Still Needs to be Implemented" << endl;
-  // to be implemented
+  int faceID = findFaceID->get_int_val();
+  Array<Face*>* faces = programData->getCurrentFracture()->getFaces();
+  selectData->setSelectedVert(0x0);
+  selectData->setSelectedEdge(0x0);
+  selectData->setSelectedFace(0x0);
+  for(int i=0;i<faces->getSize();i++)
+    if(faces->get(i)->getID() == faceID)
+      selectData->setSelectedFace(faces->get(i));
 }
 
 void cb_addRandomEdgeM(int id) {

@@ -40,6 +40,7 @@ public:
   void splitIntoTrimeshConcave();
   void findSeparatePaths(Array<Edge*>* one,Array<Edge*>* two,Point2 oneLoc,Point2 twoLoc);
   Array<Vertex*>* findVertsOnPath(Array<Edge*>* edges);
+  void draw();
   // getter methods
   Array<Tri*>* getTriMesh();
   Array<Vertex*>* getVerts();

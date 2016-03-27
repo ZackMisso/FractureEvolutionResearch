@@ -492,6 +492,10 @@ Array<Vertex*>* Face::findVertsOnPath(Array<Edge*>* edgs) {
   return vp;
 }
 
+void Face::draw() {
+  // to be implemented
+}
+
 Array<Tri*>* Face::getTriMesh() { return triMesh; }
 Array<Vertex*>* Face::getVerts() { return verts; }
 Array<Edge*>* Face::getEdges() { return edges; }
