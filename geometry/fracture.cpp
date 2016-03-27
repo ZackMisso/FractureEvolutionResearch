@@ -133,6 +133,10 @@ void Fracture::createNewEdge(Vertex* one,Vertex* two) {
 	// do face detections stuffs probably
 }
 
+//real Fracture::faceArea() {
+//	real totalArea
+//}
+
 Array<Face*>* Fracture::getFacesWithVertex(Vertex* vertex) {
 	Array<Face*>* tmp = new Array<Face*>();
 	for(int i=0;i<faces->getSize();i++)

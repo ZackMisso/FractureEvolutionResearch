@@ -7,7 +7,7 @@
 //#include <OpenGL/gl.h>
 //#include <OpenGL/glu.h>
 //#include <GLUT/glut.h>
-
+#include <cmath>
 #include <iostream>
 
 using namespace std;
@@ -196,6 +196,12 @@ real Edge::determinant(Edge* other) {
   real xTwo = other->getSecond().xpos - other->getFirst().xpos;
   real yTwo = other->getSecond().ypos - other->getFirst().ypos;
   return xOne*yTwo - yOne*xTwo;
+}
+
+real Edge::length() {
+  real dx = second.xpos - first.xpos;
+  real dy = second.ypos - first.ypos;
+  return sqrt(dx*dx + dy*dy);
 }
 
 //bool Edge::isOn(Edge* other) { // THIS NEEDS TO BE TESTED

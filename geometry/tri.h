@@ -20,6 +20,7 @@ public:
   ~Tri();
   // other methods
   //void findAdjacents(Array<Tri*>* triangles); // implement later
+  real area();
   bool equals(Tri* other);
   void debug();
   void draw();

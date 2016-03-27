@@ -27,6 +27,7 @@ public:
   Point2 getPointBetween(real pos);
   void split(Array<Edge*>* cb,Point2 point);
   real determinant(Edge* other);
+  real length();
   //bool isOn(Edge* other);
 	// getters
   Point2 getFirst();

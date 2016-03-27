@@ -226,6 +226,13 @@ void Face::clearTrimesh() {
   triMesh->clear();
 }
 
+real Face::area() {
+  real area = 0.0;
+  for(int i=0;i<triMesh->getSize();i++)
+    area += triMesh->get(i)->area();
+  return area;
+}
+
 Array<Point2>* Face::sortPointsByPath() {
   Array<Point2>* sortedPoints = new Array<Point2>();
   Edge* edge = edges->get(0);

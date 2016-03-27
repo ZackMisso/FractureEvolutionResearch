@@ -32,6 +32,7 @@ public:
   Face* giveFaceID(Face* face);
   bool doesSimilarEdgeExists(Edge* edge);
   void recount();
+  //real faceArea();
   //void debug();
   Array<Face*>* getFacesWithVertex(Vertex* vert);
   Array<Face*>* getFacesWithEdge(Edge* edge);

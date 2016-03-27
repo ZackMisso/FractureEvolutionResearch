@@ -5,6 +5,7 @@
 //#include <OpenGL/gl.h>
 // #include <OpenGL/glu.h>
 //#include <GLUT/glut.h>
+#include <cmath>
 
 #include <iostream>
 
@@ -110,6 +111,14 @@ void Tri::draw() {
   glVertex2f(points[0].xpos,points[0].ypos);
   glVertex2f(points[1].xpos,points[1].ypos);
   glVertex2f(points[2].xpos,points[2].ypos);
+}
+
+real Tri::area() {
+  real one = edges[0]->length();
+  real two = edges[1]->length();
+  real three = edges[2]->length();
+  real tmp = (one+two+three)/2.0;
+  return sqrt(tmp * (tmp - one) * (tmp - two) * (tmp - three));
 }
 
 Point2 Tri::getPoint(int num) { return points[num]; }
