@@ -18,6 +18,7 @@ public:
   Vertex(Point2 point);
   ~Vertex();
 	void draw();
+  void updateEdges();
   bool isMatch(Point2 point);
   bool isConnected(Vertex* other);
 	// getters

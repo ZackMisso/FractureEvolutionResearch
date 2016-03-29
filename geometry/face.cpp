@@ -72,6 +72,7 @@ bool Face::contains(Edge* edge) {
 }
 
 // THIS METHOD IS PROBABLY INCORRECT
+// TODO :: REWRITE THIS METHOD
 Array<Face*>* Face::separate(Vertex* newVert) {
   Array<Face*>* newFaces = new Array<Face*>();
   verts->add(newVert);
@@ -223,7 +224,8 @@ Array<Face*>* Face::separate(real x,real y) {
 }
 
 void Face::clearTrimesh() {
-  triMesh->clear();
+  while(triMesh->getSize())
+    delete triMesh->removeLast();
 }
 
 real Face::area() {
@@ -275,6 +277,8 @@ void Face::splitIntoTrimesh() {
 }
 
 void Face::splitIntoTrimeshConvex() {
+  while(triMesh->getSize())
+    delete triMesh->removeLast();
   Array<Point2>* points = sortPointsByPath();
   // Garunteed to have at least 3 points
   Point2 one = points->get(0);

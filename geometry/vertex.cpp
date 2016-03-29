@@ -35,6 +35,16 @@ void Vertex::draw() {
 	glVertex2f(location.xpos,location.ypos);
 }
 
+void Vertex::updateEdges() {
+  for(int i=0;i<edges->getSize();i++) {
+    Edge* edge = edges->get(i);
+    if(edge->getFirstVertID() == id)
+      edge->setFirst(location);
+    if(edge->getSecondVertID() == id)
+      edge->setSecond(location);
+  }
+}
+
 bool Vertex::isMatch(Point2 point) {
   return point.xpos == location.xpos && point.ypos == location.ypos;
 }

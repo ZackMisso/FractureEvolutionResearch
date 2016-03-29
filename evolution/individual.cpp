@@ -12,6 +12,18 @@ Individual::Individual(int param) {
   id = param;
 }
 
+Individual::Individual(Fracture* fract) {
+  fracture = fract;
+  fitness = 0x0;
+  id = -1;
+}
+
+Individual::Individual(int param,Fracture* fract) {
+  fracture = fract;
+  fitness = 0x0;
+  id = param;
+}
+
 Individual::~Individual() {
   delete fracture;
 }

@@ -13,6 +13,8 @@ private:
 public:
   Individual();
   Individual(int param);
+  Individual(Fracture* fract);
+  Individual(int param,Fracture* fract);
   ~Individual();
   // sort methods
   static Array<Individual*>* sortByHighestFitness(Array<Individual*>* list);

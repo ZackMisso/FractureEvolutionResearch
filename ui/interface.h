@@ -50,9 +50,9 @@ public:
   GLUI_EditText* vertexXCoord;
   GLUI_EditText* vertexYCoord;
   GLUI_Button* addVertexButton;
-  GLUI_Rollout* addEdgeMenu; // new
-  GLUI_EditText* vertexOneID; // new
-  GLUI_EditText* vertexTwoID; // new
+  GLUI_Rollout* addEdgeMenu;
+  GLUI_EditText* vertexOneID;
+  GLUI_EditText* vertexTwoID;
   GLUI_Button* addEdgeButton;
   // camera menu
   GLUI_Rollout* cameraMenu;
@@ -77,7 +77,6 @@ public:
   GLUI_Rollout* testMenu; // new
   GLUI_StaticText* mouseXpos; // new
   GLUI_StaticText* mouseYpos; // new
-
 //public:
   Interface(GLUI* subwindow);
   ~Interface();
