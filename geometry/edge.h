@@ -24,6 +24,7 @@ public:
   bool intersects(Edge* other);
   Edge* intersects(Array<Edge*>* edges,Edge* ignore);
   bool eitherMatch(Point2 point);
+  bool eitherMatch(int pointID);
   Point2 getIntersectionPoint(Edge* other);
   Point2 getOtherPoint(Point2 point);
   Point2 getPointBetween(real pos);

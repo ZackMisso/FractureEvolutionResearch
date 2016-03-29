@@ -86,7 +86,7 @@ bool Face::contains(Point2 point) {
 
 bool Face::contains(Vertex* vert) {
   for(int i=0;i<verts->getSize();i++)
-    if(vert==verts->get(i))
+    if(vert->getLocation().equals(verts->get(i)->getLocation()))
       return true;
   return false;
 }

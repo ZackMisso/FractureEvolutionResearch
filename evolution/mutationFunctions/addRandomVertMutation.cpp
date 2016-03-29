@@ -18,7 +18,7 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
   Face* faceToMutate = fracture->getFaces()->get(randFace);
   faceToMutate->detectIfConvex();
   if(faceToMutate->getIsConvex()) {
-    // convex case ,utation
+    // convex case mutation
     int numPoints = faceToMutate->getVerts()->getSize();
     float barys[numPoints];
     real baryTotal = 0.0;

@@ -180,6 +180,14 @@ bool Edge::eitherMatch(Point2 point) {
   return false;
 }
 
+bool Edge::eitherMatch(int pointID) {
+  if(firstVertID == pointID)
+    return true;
+  if(secondVertID == pointID)
+    return true;
+  return false;
+}
+
 Point2 Edge::getOtherPoint(Point2 point) {
   if(point.xpos == first.xpos && point.ypos == first.ypos)
     return second;
