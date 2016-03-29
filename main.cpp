@@ -61,6 +61,8 @@ void cb_edgeCurveM(int id);
 void cb_removeRandomEdgeM(int id);
 void cb_removeRandomVertM(int id);
 void cb_vertPositionM(int id);
+void cb_printAllVertIDs(int id);
+void cb_printAllEdgeIDs(int id);
 
 // Arguements
 GLUI* subwindow;
@@ -150,15 +152,17 @@ void createInterface() { // TODO :: MOVE THIS TO INTEFACE CLASS
   interface->vertID = subwindow->add_statictext_to_panel(interface->faceSelectedMenu,"not selected");
   // Find Menu
   interface->findMenu = subwindow->add_rollout("Find Object",false);
+  interface->printAllVertIDs = subwindow->add_button_to_panel(interface->findMenu,"Print Vertex IDs",1,cb_printAllVertIDs);
+  interface->printAllEdgeIDs = subwindow->add_button_to_panel(interface->findMenu,"Print Edge IDs",1,cb_printAllEdgeIDs);
   interface->findVertMenu = subwindow->add_rollout_to_panel(interface->findMenu,"Find Vertex",false);
   interface->findVertID = subwindow->add_edittext_to_panel(interface->findVertMenu,"Vertex ID",GLUI_EDITTEXT_INT);
   interface->findVertButton = subwindow->add_button_to_panel(interface->findVertMenu,"Find Vertex",1,cb_findVertex);
   interface->findEdgeMenu = subwindow->add_rollout_to_panel(interface->findMenu,"Find Edge",false);
-  interface->findVertID = subwindow->add_edittext_to_panel(interface->findEdgeMenu,"Edge ID",GLUI_EDITTEXT_INT);
-  interface->findVertButton = subwindow->add_button_to_panel(interface->findEdgeMenu,"Find Edge",1,cb_findEdge);
+  interface->findEdgeID = subwindow->add_edittext_to_panel(interface->findEdgeMenu,"Edge ID",GLUI_EDITTEXT_INT);
+  interface->findEdgeButton = subwindow->add_button_to_panel(interface->findEdgeMenu,"Find Edge",1,cb_findEdge);
   interface->findFaceMenu = subwindow->add_rollout_to_panel(interface->findMenu,"Find Face",false);
-  interface->findVertID = subwindow->add_edittext_to_panel(interface->findFaceMenu,"Face ID",GLUI_EDITTEXT_INT);
-  interface->findVertButton = subwindow->add_button_to_panel(interface->findFaceMenu,"Find Face",1,cb_findFace);
+  interface->findFaceID = subwindow->add_edittext_to_panel(interface->findFaceMenu,"Face ID",GLUI_EDITTEXT_INT);
+  interface->findFaceButton = subwindow->add_button_to_panel(interface->findFaceMenu,"Find Face",1,cb_findFace);
   // Edit Fracture Menu
   interface->editFractureMenu = subwindow->add_rollout("Edit Fracture",false);
   interface->addVertexMenu = subwindow->add_rollout_to_panel(interface->editFractureMenu,"Add Vertex",false);
@@ -166,9 +170,8 @@ void createInterface() { // TODO :: MOVE THIS TO INTEFACE CLASS
   interface->vertexYCoord = subwindow->add_edittext_to_panel(interface->addVertexMenu,"Add Vertex Y",GLUI_EDITTEXT_FLOAT);
   interface->addVertexButton = subwindow->add_button_to_panel(interface->addVertexMenu,"Create Vertex",1,cb_createVertex);
   interface->addEdgeMenu = subwindow->add_rollout_to_panel(interface->editFractureMenu,"Add Edge",false);
-  //interface->vertexOneID = subwindow->add_rollout_to_panel
-  // KEEP IMPLEMENTING
-
+  interface->vertexOneID = subwindow->add_edittext_to_panel(interface->addEdgeMenu,"Vertex One ID",GLUI_EDITTEXT_INT);
+  interface->vertexTwoID = subwindow->add_edittext_to_panel(interface->addEdgeMenu,"Vertex Two ID",GLUI_EDITTEXT_INT);
   interface->addEdgeButton = subwindow->add_button_to_panel(interface->addEdgeMenu,"Create Edge",1,cb_createEdge);
   // Camera Menu
   interface->cameraMenu = subwindow->add_rollout("Camera",false);
@@ -367,27 +370,37 @@ void cb_randomMutation(int id) {
 void cb_selectFaces(int id) {
   cout << "Selecting Faces has yet to be implemented" << endl;
   // to be implemented
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_selectEdges(int id) {
   cout << "Selecting Edges has yet to be implemented" << endl;
   // to be implemented
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_selectVerts(int id) {
   cout << "Selecting Verts has yet to be implemented" << endl;
   // to be implemented
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_selectNone(int id) {
   cout << "Selecting None has yet to be implemented" << endl;
   // to be implemented
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_createVertex(int id) {
-  cout << "Creating Vertex has Yet to be implemented" << endl;
+  //cout << "Creating Vertex has Yet to be implemented" << endl;
   Vertex* newVert = programData->getCurrentFracture()->giveVertexID(new Vertex(interface->vertexXCoord->get_float_val(),interface->vertexYCoord->get_float_val()));
   programData->getCurrentFracture()->getVerts()->add(newVert);
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_createEdge(int id) {
@@ -405,17 +418,26 @@ void cb_createEdge(int id) {
     Edge* edge = programData->getCurrentFracture()->giveEdgeID(new Edge(one->getLocation(),two->getLocation(),one->getID(),two->getID()));
     programData->getCurrentFracture()->getEdges()->add(edge);
   }
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_findVertex(int id) {
   int vertID = interface->findVertID->get_int_val();
+  const char* text = interface->findVertID->get_text();
+  cout << "Vert ID :: " << vertID << " :: " << text << endl;
   Array<Vertex*>* verts = programData->getCurrentFracture()->getVerts();
   selectData->setSelectedVert(0x0);
   selectData->setSelectedEdge(0x0);
   selectData->setSelectedFace(0x0);
   for(int i=0;i<verts->getSize();i++)
-    if(verts->get(i)->getID() == vertID)
+    if(verts->get(i)->getID() == vertID) {
+      //cout << "Found Selected" << endl;
       selectData->setSelectedVert(verts->get(i));
+    }
+  //cout << "IN HERE" << endl;
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_findEdge(int id) {
@@ -427,6 +449,8 @@ void cb_findEdge(int id) {
   for(int i=0;i<edges->getSize();i++)
     if(edges->get(i)->getID() == edgeID)
       selectData->setSelectedEdge(edges->get(i));
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_findFace(int id) {
@@ -438,40 +462,74 @@ void cb_findFace(int id) {
   for(int i=0;i<faces->getSize();i++)
     if(faces->get(i)->getID() == faceID)
       selectData->setSelectedFace(faces->get(i));
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_addRandomEdgeM(int id) {
   AddRandomEdgeMutation* mutate = new AddRandomEdgeMutation();
   mutate->mutate(programData->getCurrentFracture());
   delete mutate;
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_addRandomVertM(int id) {
   AddRandomVertMutation* mutate = new AddRandomVertMutation();
   mutate->mutate(programData->getCurrentFracture());
   delete mutate;
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_edgeCurveM(int id) {
   EdgeCurveMutation* mutate = new EdgeCurveMutation();
   mutate->mutate(programData->getCurrentFracture());
   delete mutate;
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_removeRandomEdgeM(int id) {
   RemoveRandomEdgeMutation* mutate = new RemoveRandomEdgeMutation();
   mutate->mutate(programData->getCurrentFracture());
   delete mutate;
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_removeRandomVertM(int id) {
   RemoveRandomVertMutation* mutate = new RemoveRandomVertMutation();
   mutate->mutate(programData->getCurrentFracture());
   delete mutate;
+  glutSetWindow(window);
+  glutPostRedisplay();
 }
 
 void cb_vertPositionM(int id) {
   VertPositionMutation* mutate = new VertPositionMutation();
   mutate->mutate(programData->getCurrentFracture());
   delete mutate;
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_printAllVertIDs(int id) {
+  Array<Vertex*>* verts = programData->getCurrentFracture()->getVerts();
+  cout << "Vertex IDs :: " << endl;
+  for(int i=0;i<verts->getSize();i++)
+    cout << "ID :: " << verts->get(i)->getID() << endl;
+  cout << endl;
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_printAllEdgeIDs(int id) {
+  Array<Edge*>* edges = programData->getCurrentFracture()->getEdges();
+  cout << "Edge IDs :: " << endl;
+  for(int i=0;i<edges->getSize();i++)
+    cout << "ID :: " << edges->get(i)->getID() << endl;
+  cout << endl;
+  glutSetWindow(window);
+  glutPostRedisplay();
 }

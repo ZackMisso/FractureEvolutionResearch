@@ -32,6 +32,8 @@ public:
   GLUI_StaticText* edgeID;
   // find menu
   GLUI_Rollout* findMenu;
+  GLUI_Button* printAllVertIDs;
+  GLUI_Button* printAllEdgeIDs;
   GLUI_Rollout* findVertMenu;
   GLUI_EditText* findVertID;
   GLUI_Button* findVertButton;
