@@ -19,6 +19,7 @@ public:
   Edge(Point2 one,Point2 two,int idone,int idtwo);
   Edge(real x,real y,real xx,real yy);
   Edge(real x,real y,real xx,real yy,int idone,int idtwo);
+  Edge* copy();
   void draw();
   bool intersects(Edge* other);
   Edge* intersects(Array<Edge*>* edges,Edge* ignore);

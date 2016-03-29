@@ -60,6 +60,14 @@ Edge::Edge(real x,real y,real xx,real yy,int idone,int idtwo) {
   isBoundary = false;
 }
 
+Edge* Edge::copy() {
+  Edge* edge = new Edge(first,second,firstVertID,secondVertID);
+  edge->setSelected(selected);
+  edge->setIsBoundary(isBoundary);
+  edge->setID(id);
+  return edge;
+}
+
 void Edge::draw() {
 	glVertex2f(first.xpos,first.ypos);
   glVertex2f(second.xpos,second.ypos);

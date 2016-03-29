@@ -36,6 +36,33 @@ Face::~Face() {
   delete edges;
 }
 
+Face* Face::copy(Array<Vertex*>* newVerts,Array<Edge*>* newEdges) {
+  Face* face = new Face();
+  face->setID(id);
+  face->setSelected(selected);
+  for(int i=0;i<verts->getSize();i++) {
+    Vertex* newVert = 0x0;
+    int idd = verts->get(i)->getID();
+    for(int j=0;j<newVerts->getSize();j++)
+      if(idd == newVerts->get(j)->getID()) {
+        newVert = newVerts->get(j);
+        j = newVerts->getSize();
+      }
+    face->getVerts()->add(newVert);
+  }
+  for(int i=0;i<edges->getSize();i++) {
+    Edge* newEdge = 0x0;
+    int idd = edges->get(i)->getID();
+    for(int j=0;j<newEdges->getSize();j++)
+      if(idd == newEdges->get(j)->getID()) {
+        newEdge = newEdges->get(j);
+        j = newEdges->getSize();
+      }
+    face->getEdges()->add(newEdge);
+  }
+  return face;
+}
+
 bool Face::contains(real x,real y) {
   Point2 p;
   p.xpos = x;

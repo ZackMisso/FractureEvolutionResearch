@@ -9,6 +9,7 @@
 class Vertex {
 private:
   Array<Edge*> *edges;
+  //Array<int> *edgeIDs;
   Point2 location; // [0.0-1.0 , 0.0-1.0]
   int id;
   bool selected;
@@ -17,18 +18,21 @@ public:
   Vertex(real x,real y);
   Vertex(Point2 point);
   ~Vertex();
+  Vertex* copy(Array<Edge*>* newEdges);
 	void draw();
   void updateEdges();
   bool isMatch(Point2 point);
   bool isConnected(Vertex* other);
 	// getters
 	Array<Edge*>* getEdges();
+  //Array<int>* getEdgeIDs();
 	Point2	getLocation();
   int getID();
   bool getSelected();
   bool getBoundary();
 	// setters
 	void setEdges(Array<Edge*>* param);
+  //void setEdgeIDs(Array<int>* param);
 	void setLocation(Point2 param);
   void setID(int param);
   void setSelected(bool param);

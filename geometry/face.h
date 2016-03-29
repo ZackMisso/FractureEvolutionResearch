@@ -13,7 +13,9 @@ class Face {
 private:
   Array<Tri*>* triMesh;
   Array<Vertex*>* verts;
+  //Array<int>* vertIDs;
   Array<Edge*>* edges;
+  //Array<int>* edgeIDs;
   int id;
   bool isConvex;
   bool selected;
@@ -22,6 +24,7 @@ public:
   Face();
   Face(Array<Vertex*>* verts);
   ~Face();
+  Face* copy(Array<Vertex*>* newVerts,Array<Edge*>* newEdges);
   bool contains(real x,real y);
   bool contains(Point2 point);
   bool contains(Vertex* vert);

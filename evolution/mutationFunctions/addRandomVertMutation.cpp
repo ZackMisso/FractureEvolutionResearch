@@ -8,7 +8,8 @@ AddRandomVertMutation::AddRandomVertMutation(real param) : MutationFunction(para
 AddRandomVertMutation::~AddRandomVertMutation() { }
 
 Individual* AddRandomVertMutation::mutate(Individual* individual) {
-  Individual* newIndividual = new Individual(mutate(individual->getFracture()));
+  Fracture* copy = individual->getFracture()->copy();
+  Individual* newIndividual = new Individual(mutate(copy));
   return newIndividual;
 }
 

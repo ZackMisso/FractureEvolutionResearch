@@ -21,6 +21,16 @@ Fracture::Fracture() {
 	init(0);
 }
 
+Fracture::Fracture(bool param) {
+	verts = new Array<Vertex*>();
+	edges = new Array<Edge*>();
+	faces = new Array<Face*>();
+	triMesh = new TriMesh();
+	nextVertID = 0;
+	nextEdgeID = 0;
+	nextFaceID = 0;
+}
+
 Fracture::~Fracture() {
 	while(verts->getSize())
 		delete verts->removeLast();
@@ -31,6 +41,20 @@ Fracture::~Fracture() {
 	delete verts;
 	delete edges;
 	delete faces;
+}
+
+Fracture* Fracture::copy() {
+	Fracture* fracture = new Fracture();
+	fracture->setNextVertID(nextVertID);
+	fracture->setNextEdgeID(nextEdgeID);
+	fracture->setNextFaceID(nextFaceID);
+	for(int i=0;i<edges->getSize();i++)
+		fracture->getEdges()->add(edges->get(i)->copy());
+	for(int i=0;i<verts->getSize();i++)
+		fracture->getVerts()->add(verts->get(i)->copy(fracture->getEdges()));
+	for(int i=0;i<faces->getSize();i++)
+		fracture->getFaces()->add(faces->get(i)->copy(fracture->getVerts(),fracture->getEdges()));
+	return fracture;
 }
 
 void Fracture::init(int points) {

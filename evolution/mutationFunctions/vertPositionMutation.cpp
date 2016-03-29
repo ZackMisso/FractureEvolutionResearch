@@ -7,8 +7,9 @@ VertPositionMutation::VertPositionMutation(real param) : MutationFunction(param)
 VertPositionMutation::~VertPositionMutation() { }
 
 Individual* VertPositionMutation::mutate(Individual* individual) {
-  // to be implemented
-  return 0x0;
+  Fracture* copy = individual->getFracture()->copy();
+  Individual* newIndividual = new Individual(mutate(copy));
+  return newIndividual;
 }
 
 Fracture* VertPositionMutation::mutate(Fracture* fracture) {

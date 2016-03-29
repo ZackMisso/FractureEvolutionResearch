@@ -21,7 +21,9 @@ private:
   int nextFaceID;
 public:
   Fracture();
+  Fracture(bool param);
   ~Fracture();
+  Fracture* copy();
   void init(int points);
   void clearAndReloadFaces();
 	void createNewVertex(real x,real y);
