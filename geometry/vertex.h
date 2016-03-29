@@ -31,7 +31,7 @@ public:
 	void setLocation(Point2 param);
   void setID(int param);
   void setSelected(bool param);
-  bool setBoundary(bool param);
+  void setBoundary(bool param);
 };
 
 #endif

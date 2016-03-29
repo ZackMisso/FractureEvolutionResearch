@@ -21,6 +21,7 @@ Edge::Edge(Point2 one,Point2 two) {
   secondVertID = -1;
   id = -1;
   selected = false;
+  isBoundary = false;
 }
 
 Edge::Edge(Point2 one,Point2 two,int idone,int idtwo) {
@@ -32,6 +33,7 @@ Edge::Edge(Point2 one,Point2 two,int idone,int idtwo) {
   secondVertID = idtwo;
   id = -1;
   selected = false;
+  isBoundary = false;
 }
 
 Edge::Edge(real x,real y,real xx,real yy) {
@@ -41,8 +43,9 @@ Edge::Edge(real x,real y,real xx,real yy) {
   second.ypos = yy;
   firstVertID = -1;
   secondVertID = -1;
-  id = -1
+  id = -1;
   selected = false;
+  isBoundary = false;
 }
 
 Edge::Edge(real x,real y,real xx,real yy,int idone,int idtwo) {
@@ -52,8 +55,9 @@ Edge::Edge(real x,real y,real xx,real yy,int idone,int idtwo) {
   second.ypos = yy;
   firstVertID = idone;
   secondVertID = idtwo;
-  id = -1
+  id = -1;
   selected = false;
+  isBoundary = false;
 }
 
 void Edge::draw() {
@@ -241,8 +245,10 @@ int Edge::getID() { return id; }
 int Edge::getFirstVertID() { return firstVertID; }
 int Edge::getSecondVertID() { return secondVertID; }
 bool Edge::getSelected() { return selected; }
+bool Edge::getIsBoundary() { return isBoundary; }
 
 void Edge::setID(int param) { id = param; }
 void Edge::setFirstVertID(int param) { firstVertID = param; }
 void Edge::setSecondVertID(int param) { secondVertID = param; }
 void Edge::setSelected(bool param) { selected = param; }
+void Edge::setIsBoundary(bool param) { isBoundary = param; }

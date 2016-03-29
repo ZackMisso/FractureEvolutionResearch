@@ -8,8 +8,8 @@ class StdDevFitness : public FitnessFunction {
 private:
   //real xbar;
 public:
-  FitnessFunction();
-  ~FitnessFunction();
+  StdDevFitness();
+  ~StdDevFitness();
   virtual void preProcess(Array<Individual*>* individuals);
   virtual real getFitness(Individual* individual);
   // getter methods

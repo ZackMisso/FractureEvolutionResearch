@@ -13,7 +13,7 @@ Face::Face() {
   triMesh = new Array<Tri*>();
   verts = new Array<Vertex*>();
   edges = new Array<Edge*>();
-  id = -1
+  id = -1;
   selected = false;
 }
 

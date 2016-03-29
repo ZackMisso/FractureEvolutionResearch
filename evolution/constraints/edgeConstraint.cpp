@@ -12,3 +12,8 @@ bool EdgeConstraint::meetsConstraint(Edge* edge) {
   // to be implemented or extended
   return false;
 }
+
+bool EdgeConstraint::applyConstraint(Individual* individual) {
+  // to be implemented
+  return false;
+}

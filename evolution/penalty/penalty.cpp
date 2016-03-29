@@ -5,12 +5,12 @@ Penalty::Penalty() {
   multiplier = 0;
 }
 
-Penaly::~Penalty() {
+Penalty::~Penalty() {
   delete constraint;
 }
 
 real Penalty::applyPenalty(Individual* individual,real fitness) {
   if(constraint->applyConstraint(individual))
-    return fitness*penalty;
+    return fitness*multiplier;
   return fitness;
 }

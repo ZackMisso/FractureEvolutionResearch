@@ -13,6 +13,7 @@ private:
   int firstVertID;
   int secondVertID;
   bool selected;
+  bool isBoundary;
 public:
   Edge(Point2 one,Point2 two);
   Edge(Point2 one,Point2 two,int idone,int idtwo);
@@ -36,6 +37,7 @@ public:
   int getFirstVertID();
   int getSecondVertID();
   bool getSelected();
+  bool getIsBoundary();
   // setters
   void setFirst(Point2 point);
   void setSecond(Point2 point);
@@ -43,6 +45,7 @@ public:
   void setFirstVertID(int param);
   void setSecondVertID(int param);
   void setSelected(bool param);
+  void setIsBoundary(bool param);
 };
 
 #endif

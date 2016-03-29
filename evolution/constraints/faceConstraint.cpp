@@ -12,3 +12,8 @@ bool FaceConstraint::meetsConstraint(Face* face) {
   // to be implemented or extended
   return false;
 }
+
+bool FaceConstraint::applyConstraint(Individual* individual) {
+  // to be implemented
+  return false;
+}

@@ -13,27 +13,29 @@ Shape::~Shape() {
     delete edges->removeLast();
   delete verts;
   delete edges;
-  delete box;
+  delete boundingBox;
 }
 
 void Shape::createShape() {
   // create a rectangle for a bracelet
-  Vertex* tr = new Vertex();
-  Vertex* tl = new Vertex();
-  Vertex* br = new Vertex();
-  Vertex* bl = new Vertex();
-  Edge* left = new Edge();
-  Edge* right = new Edge();
-  Edge* top = new Edge();
-  Edge* bottom = new Edge();
-  verts->add(tr);
-  verts->add(tl);
-  verts->add(bl);
-  verts->add(br);
-  edges->add(left);
-  edges->add(right);
-  edges->add(top);
-  edges->add(bottom);
+  // TODO :: FILL IN THE DATA
+
+  //Vertex* tr = new Vertex();
+  //Vertex* tl = new Vertex();
+  //Vertex* br = new Vertex();
+  //Vertex* bl = new Vertex();
+  //Edge* left = new Edge();
+  //Edge* right = new Edge();
+  //Edge* top = new Edge();
+  //Edge* bottom = new Edge();
+  //verts->add(tr);
+  //verts->add(tl);
+  //verts->add(bl);
+  //verts->add(br);
+  //edges->add(left);
+  //edges->add(right);
+  //edges->add(top);
+  //edges->add(bottom);
 }
 
 void Shape::calculateBoundingBox() {
@@ -57,7 +59,7 @@ void Shape::calculateBoundingBox() {
   }
   if(boundingBox)
     delete boundingBox;
-  box = new Box(minX,maxY,maxX-minX,maxY-minY);
+  boundingBox = new Box(minX,maxY,maxX-minX,maxY-minY);
 }
 
 Fracture* Shape::applyFracture(Fracture* fracture) {
@@ -71,5 +73,5 @@ Array<Edge*>* Shape::getEdges() { return edges; }
 Box* Shape::getBoundingBox() { return boundingBox; }
 
 void Shape::setVerts(Array<Vertex*>* param) { verts = param; }
-void Shape::setEdge(Array<Edge*>* param) { edges = param; }
+void Shape::setEdges(Array<Edge*>* param) { edges = param; }
 void Shape::setBoundingBox(Box* param) { boundingBox = param; }

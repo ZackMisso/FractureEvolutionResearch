@@ -27,6 +27,6 @@ public:
   void setVerts(Array<Vertex*>* param);
   void setEdges(Array<Edge*>* param);
   void setBoundingBox(Box* param);
-}
+};
 
 #endif

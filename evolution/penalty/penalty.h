@@ -2,7 +2,8 @@
 #define __PENALTY_H__
 
 #include "../../globalInclude.h"
-#include "../constraints/Constraint.h"
+#include "../individual.h"
+#include "../constraints/constraint.h"
 
 class Penalty {
 private:
@@ -18,6 +19,6 @@ public:
   // setter methods
   void setConstraint(Constraint* param);
   void setMultiplier(real param);
-}
+};
 
 #endif

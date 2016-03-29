@@ -152,5 +152,5 @@ void GA::setHallOfFame(Array<Individual*>* param) { hallOfFame = param; }
 void GA::setFitnessFunction(FitnessFunction* param) { fitFunction = param; }
 void GA::setShape(Shape* param) { shape = param; }
 void GA::setNumberOfGenerations(int param) { numberOfGenerations = param; }
-void GA::setNumberOfIndividuals(int param) { individuals = param; }
+void GA::setNumberOfIndividuals(int param) { numberOfIndividuals = param; }
 void GA::setNextIndividualID(int param) { nextIndividualID = param; }

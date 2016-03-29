@@ -386,7 +386,7 @@ void cb_selectNone(int id) {
 
 void cb_createVertex(int id) {
   cout << "Creating Vertex has Yet to be implemented" << endl;
-  Vertex* newVert = programData->getCurrentFracture()->giveVertexID(new Vertex(vertexXCoord->get_float_val(),vertexYCoord->get_float_val()));
+  Vertex* newVert = programData->getCurrentFracture()->giveVertexID(new Vertex(interface->vertexXCoord->get_float_val(),interface->vertexYCoord->get_float_val()));
   programData->getCurrentFracture()->getVerts()->add(newVert);
 }
 
@@ -396,19 +396,19 @@ void cb_createEdge(int id) {
   Vertex* one = 0x0;
   Vertex* two = 0x0;
   for(int i=0;i<verts->getSize();i++) {
-    if(verts->get(i)->getID() == vertexOneID->get_int_val())
+    if(verts->get(i)->getID() == interface->vertexOneID->get_int_val())
       one = verts->get(i);
-    if(verts->get(i)->getID() == vertexTwoID->get_int_val())
+    if(verts->get(i)->getID() == interface->vertexTwoID->get_int_val())
       two = verts->get(i);
   }
   if(one && two) {
     Edge* edge = programData->getCurrentFracture()->giveEdgeID(new Edge(one->getLocation(),two->getLocation(),one->getID(),two->getID()));
-    programData->getCurrentFracture()->add(edge);
+    programData->getCurrentFracture()->getEdges()->add(edge);
   }
 }
 
 void cb_findVertex(int id) {
-  int vertID = findVertID->get_int_val();
+  int vertID = interface->findVertID->get_int_val();
   Array<Vertex*>* verts = programData->getCurrentFracture()->getVerts();
   selectData->setSelectedVert(0x0);
   selectData->setSelectedEdge(0x0);
@@ -419,7 +419,7 @@ void cb_findVertex(int id) {
 }
 
 void cb_findEdge(int id) {
-  int edgeID = findEdgeID->get_int_val();
+  int edgeID = interface->findEdgeID->get_int_val();
   Array<Edge*>* edges = programData->getCurrentFracture()->getEdges();
   selectData->setSelectedVert(0x0);
   selectData->setSelectedEdge(0x0);
@@ -430,7 +430,7 @@ void cb_findEdge(int id) {
 }
 
 void cb_findFace(int id) {
-  int faceID = findFaceID->get_int_val();
+  int faceID = interface->findFaceID->get_int_val();
   Array<Face*>* faces = programData->getCurrentFracture()->getFaces();
   selectData->setSelectedVert(0x0);
   selectData->setSelectedEdge(0x0);

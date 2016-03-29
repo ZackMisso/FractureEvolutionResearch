@@ -35,7 +35,7 @@ Fracture::~Fracture() {
 
 void Fracture::init(int points) {
 	//cout << "INITING" << endl;
-	verts->add(giveVertexID(new Vertex(-0.5,-0.5))));
+	verts->add(giveVertexID(new Vertex(-0.5,-0.5)));
 	verts->add(giveVertexID(new Vertex(-0.5,0.5)));
 	verts->add(giveVertexID(new Vertex(0.5,0.5)));
 	verts->add(giveVertexID(new Vertex(0.5,-0.5)));
@@ -47,7 +47,7 @@ void Fracture::init(int points) {
 	edges->add(giveEdgeID(new Edge(0.5,0.5,0.5,-0.5,2,3)));
 	edges->add(giveEdgeID(new Edge(0.5,-0.5,-0.5,-0.5,3,0)));
 	for(int i=0;i<4;i++)
-		edges->get(i)->setBoundary(true);
+		edges->get(i)->setIsBoundary(true);
 	Face* face = giveFaceID(new Face());
 	for(int i=0;i<4;i++){
 		face->getVerts()->add(verts->get(i));

@@ -6,7 +6,8 @@ Vertex3::Vertex3(real x,real y,real z) {
   location.xpos = x;
   location.ypos = y;
   location.zpos = z;
-  id = DebugController::getNextVert();
+  //id = DebugController::getNextVert();
+  id = -1;
   selected = false;
 }
 
@@ -15,7 +16,8 @@ Vertex3::Vertex3(Point3 point) {
   location.xpos = point.xpos;
   location.ypos = point.ypos;
   location.zpos = point.zpos;
-  id = DebugController::getNextVert();
+  //id = DebugController::getNextVert();
+  id = -1;
   selected = false;
 }
 
