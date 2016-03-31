@@ -100,50 +100,9 @@ bool Face::contains(Edge* edge) {
 
 // THIS METHOD IS PROBABLY INCORRECT
 // TODO :: REWRITE THIS METHOD
-Array<Face*>* Face::separate(Vertex* newVert) {
-  Array<Face*>* newFaces = new Array<Face*>();
-  verts->add(newVert);
-
-  // verts will always be >= 3 in size
-  int indexOne = rand() % verts->getSize();
-  int indexTwo = rand() % verts->getSize();
-
-  float* tmp = 0x0;
-
-  while(indexOne == indexTwo)
-    indexTwo = rand() % verts->getSize();
-
-  Point2 oneLoc = verts->get(indexOne)->getLocation();
-  Point2 twoLoc = verts->get(indexTwo)->getLocation();
-
-  Edge* edgeOne = new Edge(oneLoc,newVert->getLocation());
-  Edge* edgeTwo = new Edge(newVert->getLocation(),twoLoc);
-
-  Array<Edge*>* oneEdges = new Array<Edge*>();
-  Array<Edge*>* twoEdges = new Array<Edge*>();
-
-  oneEdges->add(edgeOne);
-  oneEdges->add(edgeTwo);
-  twoEdges->add(edgeOne);
-  twoEdges->add(edgeTwo);
-
-  findSeparatePaths(oneEdges,twoEdges,oneLoc,twoLoc);
-
-  Array<Vertex*>* oneVerts = findVertsOnPath(oneEdges);
-  Array<Vertex*>* twoVerts = findVertsOnPath(twoEdges);
-
-  Face* oneFace = new Face();
-  oneFace->setVerts(oneVerts);
-  oneFace->setEdges(oneEdges);
-
-  Face* twoFace = new Face();
-  twoFace->setVerts(twoVerts);
-  twoFace->setEdges(twoEdges);
-
-  newFaces->add(oneFace);
-  newFaces->add(twoFace);
-
-  return newFaces;
+Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
+  // This is the new separate
+  return 0x0;
 }
 
 Array<Face*>* Face::separate(real x,real y) {

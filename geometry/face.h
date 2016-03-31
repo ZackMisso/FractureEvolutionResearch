@@ -3,6 +3,7 @@
 
 #include "../globalInclude.h"
 #include "../dataStructures/array.h"
+#include "../misc/idTracker.h"
 #include "edge.h"
 #include "vertex.h"
 #include "point2.h"
@@ -29,7 +30,7 @@ public:
   bool contains(Point2 point);
   bool contains(Vertex* vert);
   bool contains(Edge* edge);
-  Array<Face*>* separate(Vertex* newVert);
+  Array<Face*>* separate(Vertex* newVert,IDTracker* ids);
   Array<Point2>* getConvexHull();
   //Array<Face*>* separate(Point2 newPoint);
   //Array<Face*>* separate(Point2 start,Point2 end);

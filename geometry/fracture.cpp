@@ -15,9 +15,7 @@ Fracture::Fracture() {
 	edges = new Array<Edge*>();
 	faces = new Array<Face*>();
 	triMesh = new TriMesh();
-	nextVertID = 0;
-	nextEdgeID = 0;
-	nextFaceID = 0;
+	ids = new IDTracker();
 	init(0);
 }
 
@@ -26,9 +24,7 @@ Fracture::Fracture(bool param) {
 	edges = new Array<Edge*>();
 	faces = new Array<Face*>();
 	triMesh = new TriMesh();
-	nextVertID = 0;
-	nextEdgeID = 0;
-	nextFaceID = 0;
+	ids = new IDTracker();
 }
 
 Fracture::~Fracture() {
@@ -41,13 +37,12 @@ Fracture::~Fracture() {
 	delete verts;
 	delete edges;
 	delete faces;
+	delete ids;
 }
 
 Fracture* Fracture::copy() {
 	Fracture* fracture = new Fracture();
-	fracture->setNextVertID(nextVertID);
-	fracture->setNextEdgeID(nextEdgeID);
-	fracture->setNextFaceID(nextFaceID);
+	fracture->setIDs(ids->copy());
 	for(int i=0;i<edges->getSize();i++)
 		fracture->getEdges()->add(edges->get(i)->copy());
 	for(int i=0;i<verts->getSize();i++)
@@ -117,29 +112,29 @@ void Fracture::createTriMesh() { // TODO :: TEST
 	//triMesh->calculateAllAdjacents();
 }
 
-void Fracture::createNewVertex(real x,real y) { // probably do not need
-	// need to figure out how to connect it with all verts near it...
-	Vertex* newVert = new Vertex(x,y);
-	Point2 p;
-	p.xpos = x;
-	p.ypos = y;
-	Face* face = 0x0;
-	for(int i=0;i<faces->getSize();i++)
-		if(faces->get(i)->contains(p))
-			face = faces->get(i);
-	if(!face) {
-		// the point already exists... or it is on an edge (need to add functionality)
-	} else {
-		verts->add(newVert);
-		Array<Face*>* newFaces = face->separate(newVert);
-
-		while(newFaces->getSize())
-			faces->add(newFaces->removeLast());
-		delete newFaces;
-		delete face;
-	}
-	// do face detection stuffs
-}
+//void Fracture::createNewVertex(real x,real y) { // probably do not need
+//	// need to figure out how to connect it with all verts near it...
+//	Vertex* newVert = new Vertex(x,y);
+//	Point2 p;
+//	p.xpos = x;
+//	p.ypos = y;
+//	Face* face = 0x0;
+//	for(int i=0;i<faces->getSize();i++)
+//		if(faces->get(i)->contains(p))
+//			face = faces->get(i);
+//	if(!face) {
+//		// the point already exists... or it is on an edge (need to add functionality)
+//	} else {
+//		verts->add(newVert);
+//		Array<Face*>* newFaces = face->separate(newVert);
+//
+//		while(newFaces->getSize())
+//			faces->add(newFaces->removeLast());
+//		delete newFaces;
+//		delete face;
+//	}
+//	// do face detection stuffs
+//}
 
 void Fracture::createNewEdge(Vertex* one,Vertex* two) {
 	Edge *edge = new Edge(one->getLocation(),two->getLocation());
@@ -211,7 +206,7 @@ void Fracture::draw(RenderSettings* renderSettings,InterfaceData* interfaceData)
 }
 
 Vertex* Fracture::giveVertexID(Vertex* vert) {
-	vert->setID(nextVertID++);
+	vert->setID(ids->incrementNextVert());
 	return vert;
 }
 
@@ -229,12 +224,12 @@ Edge* Fracture::giveEdgeID(Edge* edge) {
 		one->getEdges()->add(edge);
 		two->getEdges()->add(edge);
 	}
-	edge->setID(nextEdgeID++);
+	edge->setID(ids->incrementNextEdge());
 	return edge;
 }
 
 Face* Fracture::giveFaceID(Face* face) {
-	face->setID(nextFaceID++);
+	face->setID(ids->incrementNextFace());
 	return face;
 }
 
@@ -248,13 +243,9 @@ Array<Vertex*>* Fracture::getVerts() { return verts; }
 Array<Edge*>* Fracture::getEdges() { return edges; }
 Array<Face*>* Fracture::getFaces() { return faces; }
 TriMesh* Fracture::getTriMesh() { return triMesh; }
-int Fracture::getNextVertID() { return nextVertID; }
-int Fracture::getNextEdgeID() { return nextEdgeID; }
-int Fracture::getNextFaceID() { return nextFaceID; }
+IDTracker* Fracture::getIDs() { return ids; }
 
 void Fracture::setVerts(Array<Vertex*>* param) { verts = param; }
 void Fracture::setEdges(Array<Edge*>* param) { edges = param; }
 void Fracture::setFaces(Array<Face*>* param) { faces = param; }
-void Fracture::setNextVertID(int param) { nextVertID = param; }
-void Fracture::setNextEdgeID(int param) { nextEdgeID = param; }
-void Fracture::setNextFaceID(int param) { nextFaceID = param; }
+void Fracture::setIDs(IDTracker* param) { ids = param; }

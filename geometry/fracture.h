@@ -8,6 +8,7 @@
 #include "face.h"
 #include "trimesh.h"
 #include "../settings/renderSettings.h"
+#include "../misc/idTracker.h"
 //#include "interfaceData.h"
 
 class Fracture {
@@ -16,9 +17,7 @@ private:
   Array<Edge*>* edges; // will have multiple references
   Array<Face*>* faces;
   TriMesh* triMesh;
-  int nextVertID;
-  int nextEdgeID;
-  int nextFaceID;
+  IDTracker* ids;
 public:
   Fracture();
   Fracture(bool param);
@@ -26,7 +25,7 @@ public:
   Fracture* copy();
   void init(int points);
   void clearAndReloadFaces();
-	void createNewVertex(real x,real y);
+	//void createNewVertex(real x,real y);
 	void createNewEdge(Vertex* one,Vertex* two);
   void createTriMesh();
   Vertex* giveVertexID(Vertex* vert);
@@ -45,16 +44,12 @@ public:
   Array<Edge*>* getEdges();
   Array<Vertex*>* getVerts();
   TriMesh* getTriMesh();
-  int getNextVertID();
-  int getNextEdgeID();
-  int getNextFaceID();
+  IDTracker* getIDs();
   // setter methods
   void setFaces(Array<Face*>* param);
   void setEdges(Array<Edge*>* param);
   void setVerts(Array<Vertex*>* param);
-  void setNextVertID(int param);
-  void setNextEdgeID(int param);
-  void setNextFaceID(int param);
+  void setIDs(IDTracker* param);
 };
 
 #endif

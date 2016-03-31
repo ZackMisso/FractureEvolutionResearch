@@ -74,6 +74,74 @@ void Edge::draw() {
 }
 
 bool Edge::intersects(Edge* other) {
+  Point2 p = first;
+  Point2 q = other->getFirst();
+  Point2 r = second.minus(first);
+  Point2 s = other->getSecond().minus(other->getFirst());
+  Point2 sub = q.minus(p);
+  real rcs = r.wedgeProduct(s);
+  real tnum = sub.wedgeProduct(s);
+  real unum = sub.wedgeProduct(r);
+  // first case
+  if(rcs == 0.0 && unum == 0.0) {
+    // colinier case .. don't need to worry about I think
+    return false;
+  }
+  // second case
+  if(rcs == 0.0 && unum != 0.0) {
+    // parallel and non-intersecting
+    return false;
+  }
+  // third case
+  real t = tnum / rcs;
+  real u = unum / rcs;
+  if(rcs != 0.0 && t < 1.0 && t > 0.0 && u < 1.0 && u > 0.0) {
+    // points meet at ::
+    // p + t*r
+    // q + u*s
+    return true;
+  }
+  // fourth case
+  // not parallel and do not intersect
+  return false;
+}
+
+bool Edge::intersects(Edge* other,Point2* ut) {
+  Point2 p = first;
+  Point2 q = other->getFirst();
+  Point2 r = second.minus(first);
+  Point2 s = other->getSecond().minus(other->getFirst());
+  Point2 sub = q.minus(p);
+  real rcs = r.wedgeProduct(s);
+  real tnum = sub.wedgeProduct(s);
+  real unum = sub.wedgeProduct(r);
+  // first case
+  if(rcs == 0.0 && unum == 0.0) {
+    // colinier case .. don't need to worry about I think
+    return false;
+  }
+  // second case
+  if(rcs == 0.0 && unum != 0.0) {
+    // parallel and non-intersecting
+    return false;
+  }
+  // third case
+  real t = tnum / rcs;
+  real u = unum / rcs;
+  if(rcs == 0.0 && t < 1.0 && t > 0.0 && u < 1.0 && u > 0.0) {
+    // points meet at ::
+    // p + t*r
+    // q + u*s
+    ut->xpos = t;
+    ut->ypos = u;
+    return true;
+  }
+  // fourth case
+  // not parallel and do not intersect
+  return false;
+}
+
+bool Edge::intersectsOld(Edge* other) {
   //cout << "////////////////////////////////////////" << endl;
   Point2 oFirst = other->getFirst();
   Point2 oSecond = other->getSecond();

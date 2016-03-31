@@ -22,6 +22,8 @@ public:
   Edge* copy();
   void draw();
   bool intersects(Edge* other);
+  bool intersects(Edge* other,Point2* ut);
+  bool intersectsOld(Edge* other);
   Edge* intersects(Array<Edge*>* edges,Edge* ignore);
   bool eitherMatch(Point2 point);
   bool eitherMatch(int pointID);

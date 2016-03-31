@@ -10,8 +10,9 @@ public:
   Point2();
   Point2(real x,real y);
   bool equals(Point2 other);
-  float wedgeProduct(Point2 other);
-  float dot(Point2 other);
+  Point2 minus(Point2 other);
+  real wedgeProduct(Point2 other);
+  real dot(Point2 other);
   // debug
   void debug();
   // setter methods

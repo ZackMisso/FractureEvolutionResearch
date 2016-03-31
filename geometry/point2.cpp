@@ -17,11 +17,18 @@ bool Point2::equals(Point2 other) {
   return xpos == other.xpos && ypos == other.ypos;
 }
 
-float Point2::wedgeProduct(Point2 other) {
+Point2 Point2::minus(Point2 other) {
+  Point2 result;
+  result.xpos = xpos - other.xpos;
+  result.ypos = ypos - other.ypos;
+  return result;
+}
+
+real Point2::wedgeProduct(Point2 other) {
   return xpos*other.ypos - ypos*other.xpos;
 }
 
-float Point2::dot(Point2 other) {
+real Point2::dot(Point2 other) {
   return xpos*other.xpos + ypos*other.ypos;
 }
 

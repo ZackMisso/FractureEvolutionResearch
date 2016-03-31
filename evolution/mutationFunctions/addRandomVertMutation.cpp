@@ -39,7 +39,7 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
     }
     Vertex* newVert = fracture->giveVertexID(new Vertex(newVertX,newVertY));
     // now split
-    faceToMutate->separate(newVert);
+    faceToMutate->separate(newVert,fracture->getIDs());
   } else {
     // concave case mutation
     // split and choose trimesh
@@ -68,7 +68,7 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
     newVertY += tri->getPointThree().xpos * barys[2];
     Vertex* newVert = fracture->giveVertexID(new Vertex(newVertX,newVertY));
     // now split
-    faceToMutate->separate(newVert);
+    faceToMutate->separate(newVert,fracture->getIDs());
   }
   return fracture;
 }
