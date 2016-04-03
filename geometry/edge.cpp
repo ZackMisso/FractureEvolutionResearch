@@ -270,11 +270,26 @@ Point2 Edge::getPointBetween(real linePos) {
   return newPoint;
 }
 
-void Edge::split(Array<Edge*>* cb,Point2 point) {
+void Edge::splitOld(Array<Edge*>* cb,Point2 point) {
   Edge* one = new Edge(first,point);
   Edge* two = new Edge(point,second);
   DebugController::writeCreateEdge(one);
   DebugController::writeCreateEdge(two);
+  cb->add(one);
+  cb->add(two);
+}
+
+void Edge::split(Array<Edge*>* cb,Point2 point,int pointID,IDTracker* ids) {
+  Edge* one = new Edge(first,point,firstVertID,pointID);
+  Edge* two = new Edge(point,second,pointID,secondVertID);
+  one->setID(ids->incrementNextEdge());
+  two->setID(ids->incrementNextEdge());
+  for(int i=0;i<faceIDs->getSize();i++) {
+    one->getFaceIDs()->add(faceIDs->get(i));
+    two->getFaceIDs()->add(faceIDs->get(i));
+  }
+  one->setIsBoundary(isBoundary);
+  two->setIsBoundary(isBoundary);
   cb->add(one);
   cb->add(two);
 }

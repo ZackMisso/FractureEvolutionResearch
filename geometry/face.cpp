@@ -99,14 +99,159 @@ bool Face::contains(Edge* edge) {
   return false;
 }
 
-// THIS METHOD IS PROBABLY INCORRECT
-// TODO :: REWRITE THIS METHOD
+// This should only be called from a mutation
+// Assumptions ::
+// Vertex has already been given a consistent id
+// detectIfConvex has already been called
+// TODO :: Make This Cleaner
 Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
-  // This is the new separate
-  return 0x0;
+  // create the list of new faces
+  Array<Face*>* newFaces = new Array<Face*>();
+  // get number of separations
+  int numSeperations = RNG::RandomInt(2,edges->getSize(),4);
+  // create required data structures
+  Array<Edge*>* oneEdges = new Array<Edge*>();
+  Array<Edge*>* twoEdges = new Array<Edge*>();
+  Array<Vertex*>* oneVerts = new Array<Vertex*>();
+  Array<Vertex*>* twoVerts = new Array<Vertex*>();
+  // add new vert to both new adds
+  oneVerts->add(newVert);
+  twoVerts->add(newVert);
+  // create data structures for new edge generation
+  Array<Edge*>* newEdges = new Array<Edge*>();
+  Array<Edge*>* edgesToRemove = new Array<Edge*>();
+  Vertex* newVertOne = 0x0;
+  Vertex* newVertTwo = 0x0;
+  Edge* edgeOne = 0x0;
+  Edge* edgeTwo = 0x0;
+  if(isConvex) {
+    // convex case (easy)
+    // choose two random edges
+    int edgeIndOne = RNG::RandomInt(edges->getSize());
+    int edgeIndTwo = RNG::RandomIntWithException(edges->getSize(),edgeIndOne);
+    edgeOne = edges->get(edgeIndOne);
+    edgeTwo = edges->get(edgeIndTwo);
+    // choose two random locations on those edges
+    real edgeDistOne = RNG::RandomFloat();
+    real edgeDistTwo = RNG::RandomFloat();
+    // get the two points on the edges
+    Point2 newPointOne = edgeOne->getPointBetween(edgeDistOne);
+    Point2 newPointTwo = edgeTwo->getPointBetween(edgeDistTwo);
+    // create the new verts
+    newVertOne = new Vertex(newPointOne);
+    newVertTwo = new Vertex(newPointTwo);
+    newVertOne->setID(ids->incrementNextVert());
+    newVertTwo->setID(ids->incrementNextVert());
+  } else {
+    // concave case (harder)
+    // choose two random edges
+    int edgeIndOne = RNG::RandomInt(edges->getSize());
+    int edgeIndTwo = RNG::RandomIntWithException(edges->getSize(),edgeIndOne);
+    edgeOne = edges->get(edgeIndOne);
+    edgeTwo = edges->get(edgeIndTwo);
+    // choose two random locations on those edges
+    real edgeDistOne = RNG::RandomFloat();
+    real edgeDistTwo = RNG::RandomFloat();
+    // get the two points on the edges
+    Point2 newPointOne = edgeOne->getPointBetween(edgeDistOne);
+    Point2 newPointTwo = edgeTwo->getPointBetween(edgeDistTwo);
+    // create temporary edges to test intersection
+    Edge* tmpEdgeOne = new Edge(newVert->getLocation().xpos,newVert->getLocation().ypos,newPointOne.xpos,newPointOne.ypos);
+    Edge* tmpEdgeTwo = new Edge(newVert->getLocation().xpos,newVert->getLocation().ypos,newPointTwo.xpos,newPointTwo.ypos);
+    // try to find intersectors
+    Edge* intersectorOne = tmpEdgeOne->intersects(edges,edgeOne);
+    Edge* intersectorTwo = tmpEdgeTwo->intersects(edges,edgeTwo);
+    // react if there are intersectors
+    if(intersectorOne) {
+      newPointOne = intersectorOne->getIntersectionPoint(tmpEdgeOne);
+      delete tmpEdgeOne;
+      edgeOne = intersectorOne;
+    }if(intersectorTwo) {
+      newPointTwo = intersectorTwo->getIntersectionPoint(tmpEdgeTwo);
+      delete tmpEdgeTwo;
+      edgeTwo = intersectorTwo;
+    }
+    // create the new verts
+    newVertOne = new Vertex(newPointOne);
+    newVertTwo = new Vertex(newPointTwo);
+    newVertOne->setID(ids->incrementNextVert());
+    newVertTwo->setID(ids->incrementNextVert());
+  }
+  // add edges to remove
+  edgesToRemove->add(edgeOne);
+  edgesToRemove->add(edgeTwo);
+  // split old edges
+  edgeOne->split(newEdges,newVertOne->getLocation(),newVertOne->getID(),ids);
+  edgeTwo->split(newEdges,newVertTwo->getLocation(),newVertTwo->getID(),ids);
+  // remove old edges
+  edges->remove(edgeOne);
+  edges->remove(edgeTwo);
+  delete edgeOne;
+  delete edgeTwo;
+  // create new edges that will be separating
+  Edge* separateEdgeOne = new Edge(newVertOne->getLocation(),newVert->getLocation(),newVertOne->getID(),newVert->getID());
+  Edge* separateEdgeTwo = new Edge(newVert->getLocation(),newVertTwo->getLocation(),newVert->getID(),newVertTwo->getID());
+  separateEdgeOne->setID(ids->incrementNextEdge());
+  separateEdgeTwo->setID(ids->incrementNextEdge());
+  // add new edges to face
+  while(newEdges->getSize())
+    edges->add(newEdges->removeLast());
+  delete newEdges;
+  // find two separate paths
+  findSeparatePaths(oneEdges,twoEdges,newVertOne->getLocation(),newVertTwo->getLocation());
+  oneEdges->add(separateEdgeOne);
+  oneEdges->add(separateEdgeTwo);
+  twoEdges->add(separateEdgeOne);
+  twoEdges->add(separateEdgeTwo);
+  // get the verts on the paths
+  oneVerts = findVertsOnPath(oneEdges);
+  twoVerts = findVertsOnPath(twoEdges);
+  // add new verts to both vert list
+  oneVerts->add(newVert);
+  oneVerts->add(newVertOne);
+  oneVerts->add(newVertTwo);
+  twoVerts->add(newVert);
+  twoVerts->add(newVertOne);
+  twoVerts->add(newVertTwo);
+  // delete the references to the old face
+  for(int i=0;i<oneEdges->getSize();i++)
+    for(int k=0;k<oneEdges->get(i)->getFaceIDs()->getSize();k++)
+      if(oneEdges->get(i)->getFaceIDs()->get(k).val == id)
+        oneEdges->get(i)->getFaceIDs()->remove(k);
+  for(int i=0;i<twoEdges->getSize();i++)
+    for(int k=0;k<twoEdges->get(i)->getFaceIDs()->getSize();k++)
+      if(twoEdges->get(i)->getFaceIDs()->get(k).val == id)
+        twoEdges->get(i)->getFaceIDs()->remove(k);
+  // create the two new faces
+  Face* oneFace = new Face();
+  oneFace->setID(ids->incrementNextFace());
+  oneFace->setVerts(oneVerts);
+  oneFace->setEdges(oneEdges);
+  Face* twoFace = new Face();
+  twoFace->setID(ids->incrementNextFace());
+  twoFace->setVerts(twoVerts);
+  twoFace->setEdges(twoEdges);
+  // add reference to new face to edges
+  for(int i=0;i<oneEdges->getSize();i++)
+    oneEdges->get(i)->getFaceIDs()->add(Integer(oneFace->getID()));
+  for(int i=0;i<twoEdges->getSize();i++)
+    twoEdges->get(i)->getFaceIDs()->add(Integer(twoFace->getID()));
+  // updates face references in verts
+  for(int i=0;i<oneVerts->getSize();i++)
+    oneVerts->get(i)->updateFaceIDs();
+  for(int i=0;i<twoVerts->getSize();i++)
+    twoVerts->get(i)->updateFaceIDs();
+  // add to array of faces
+  newFaces->add(oneFace);
+  newFaces->add(twoFace);
+  // return array of faces
+  return newFaces;
 }
 
 Array<Face*>* Face::separate(real x,real y) {
+  cout << "Using Deprecated Method :: Face::separate" << endl;
+  return 0x0;
+
   Array<Face*>* newFaces = new Array<Face*>();
   int numSeperations = RNG::RandomInt(2,edges->getSize(),4);
   // do the first two seperations
@@ -147,7 +292,7 @@ Array<Face*>* Face::separate(real x,real y) {
       edge = intersector;
     }
     DebugController::writeCreateEdge(newEdge);
-    edge->split(tmpEdges,newPoint);
+    edge->splitOld(tmpEdges,newPoint);
 
     if(i) {
       oneLoc.xpos = newPoint.xpos;

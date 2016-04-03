@@ -13,6 +13,7 @@ Individual* AddRandomVertMutation::mutate(Individual* individual) {
   return newIndividual;
 }
 
+// TODO :: clean up allocations
 Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
   int randFace = RNG::RandomInt(fracture->getFaces()->getSize());
   Face* faceToMutate = fracture->getFaces()->get(randFace);
@@ -39,7 +40,12 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
     }
     Vertex* newVert = fracture->giveVertexID(new Vertex(newVertX,newVertY));
     // now split
-    faceToMutate->separate(newVert,fracture->getIDs());
+    Array<Face*>* newFaces = faceToMutate->separate(newVert,fracture->getIDs());
+    if(newFaces) {
+      fracture->getFaces()->remove(faceToMutate);
+      for(int i=0;newFaces->getSize();i++)
+        fracture->getFaces()->add(newFaces->get(i));
+    }
   } else {
     // concave case mutation
     // split and choose trimesh
@@ -68,7 +74,12 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
     newVertY += tri->getPointThree().xpos * barys[2];
     Vertex* newVert = fracture->giveVertexID(new Vertex(newVertX,newVertY));
     // now split
-    faceToMutate->separate(newVert,fracture->getIDs());
+    Array<Face*>* newFaces = faceToMutate->separate(newVert,fracture->getIDs());
+    if(newFaces) {
+      fracture->getFaces()->remove(faceToMutate);
+      for(int i=0;newFaces->getSize();i++)
+        fracture->getFaces()->add(newFaces->get(i));
+    }
   }
   return fracture;
 }

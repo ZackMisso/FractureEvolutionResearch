@@ -68,6 +68,21 @@ void Vertex::updateEdges() {
   }
 }
 
+void Vertex::updateFaceIDs() {
+  faceIDs->clear();
+  for(int i=0;i<edges->getSize();i++) {
+    Edge* edge = edges->get(i);
+    for(int j=0;j<edge->getFaceIDs()->getSize();j++) {
+      bool toAdd = true;
+      for(int k=0;k<faceIDs->getSize();k++)
+        if(faceIDs->get(k).val == edge->getFaceIDs()->get(j).val)
+          toAdd = false;
+      if(toAdd)
+        faceIDs->add(edge->getFaceIDs()->get(j));
+    }
+  }
+}
+
 bool Vertex::isMatch(Point2 point) {
   return point.xpos == location.xpos && point.ypos == location.ypos;
 }

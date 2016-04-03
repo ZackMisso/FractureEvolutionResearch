@@ -23,6 +23,7 @@ public:
   Vertex* copy(Array<Edge*>* newEdges);
 	void draw();
   void updateEdges();
+  void updateFaceIDs();
   bool isMatch(Point2 point);
   bool isConnected(Vertex* other);
 	// getters

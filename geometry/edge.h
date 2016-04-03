@@ -3,6 +3,7 @@
 
 #include "../globalInclude.h"
 #include "point2.h"
+#include "../misc/idTracker.h"
 #include "../dataStructures/array.h"
 #include "../dataStructures/integer.h"
 
@@ -32,7 +33,8 @@ public:
   Point2 getIntersectionPoint(Edge* other);
   Point2 getOtherPoint(Point2 point);
   Point2 getPointBetween(real pos);
-  void split(Array<Edge*>* cb,Point2 point);
+  void splitOld(Array<Edge*>* cb,Point2 point);
+  void split(Array<Edge*>* cb,Point2 point,int pointID,IDTracker* ids);
   real determinant(Edge* other);
   real length();
   //bool isOn(Edge* other);
