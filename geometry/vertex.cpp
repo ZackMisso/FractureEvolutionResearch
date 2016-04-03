@@ -1,14 +1,10 @@
 #include "vertex.h"
 #include "../test/debugController.h"
-// USE ON LINUX
 #include <GL/glut.h>
-// USE ON MAC
-//#include <OpenGL/gl.h>
-// #include <OpenGL/glu.h>
-//#include <GLUT/glut.h>
 
 Vertex::Vertex(real x,real y) {
   edges = new Array<Edge*>();
+  faceIDs = new Array<Integer>();
   //edgeIDs = new Array<int>();
   location.xpos = x;
   location.ypos = y;
@@ -19,6 +15,7 @@ Vertex::Vertex(real x,real y) {
 
 Vertex::Vertex(Point2 point) {
   edges = new Array<Edge*>();
+  faceIDs = new Array<Integer>();
   //edgeIDs = new Array<int>();
   location.xpos = point.xpos;
   location.ypos = point.ypos;
@@ -52,6 +49,8 @@ Vertex* Vertex::copy(Array<Edge*>* newEdges) {
     newVert->getEdges()->add(edge);
     //newVert->getEdgeIDs()->add(idd);
   }
+  for(int i=0;i<faceIDs->getSize();i++)
+    newVert->getFaceIDs()->add(faceIDs->get(i));
   return newVert;
 }
 
@@ -87,6 +86,7 @@ bool Vertex::isConnected(Vertex* other) {
 }
 
 Array<Edge*>* Vertex::getEdges() { return edges; }
+Array<Integer>* Vertex::getFaceIDs() { return faceIDs; }
 //Array<int>* Vertex::getEdgeIDs() { return edgeIDs; }
 Point2 Vertex::getLocation() { return location; }
 int Vertex::getID() { return id; }
@@ -94,6 +94,7 @@ bool Vertex::getSelected() { return selected; }
 bool Vertex::getBoundary() { return boundary; }
 
 void Vertex::setEdges(Array<Edge*>* param) { edges = param; }
+void Vertex::setFaceIDs(Array<Integer>* param) { faceIDs = param ;}
 //void Vertex::setEdgeIDs(Array<int>* param) { edgeIDs = param; }
 void Vertex::setLocation(Point2 param) { location = param; }
 void Vertex::setID(int param) { id = param; }

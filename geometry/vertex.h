@@ -3,12 +3,14 @@
 
 #include "../globalInclude.h"
 #include "../dataStructures/array.h"
+#include "../dataStructures/integer.h"
 #include "edge.h"
 #include "point2.h"
 
 class Vertex {
 private:
   Array<Edge*> *edges;
+  Array<Integer>* faceIDs;
   //Array<int> *edgeIDs;
   Point2 location; // [0.0-1.0 , 0.0-1.0]
   int id;
@@ -25,6 +27,7 @@ public:
   bool isConnected(Vertex* other);
 	// getters
 	Array<Edge*>* getEdges();
+  Array<Integer>* getFaceIDs();
   //Array<int>* getEdgeIDs();
 	Point2	getLocation();
   int getID();
@@ -32,6 +35,7 @@ public:
   bool getBoundary();
 	// setters
 	void setEdges(Array<Edge*>* param);
+  void setFaceIDs(Array<Integer>* param);
   //void setEdgeIDs(Array<int>* param);
 	void setLocation(Point2 param);
   void setID(int param);

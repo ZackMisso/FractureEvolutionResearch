@@ -46,6 +46,8 @@ public:
   Array<Vertex*>* findVertsOnPath(Array<Edge*>* edges);
   void draw();
   real area();
+  void addVert(Vertex* vert);
+  void addEdge(Edge* edge);
   // getter methods
   Array<Tri*>* getTriMesh();
   Array<Vertex*>* getVerts();

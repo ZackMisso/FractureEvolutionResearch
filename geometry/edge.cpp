@@ -1,18 +1,14 @@
 #include "edge.h"
 #include "../test/debug.h"
 #include "../test/debugController.h"
-// USE ON LINUX
 #include <GL/glut.h>
-// USE ON MAC
-//#include <OpenGL/gl.h>
-//#include <OpenGL/glu.h>
-//#include <GLUT/glut.h>
 #include <cmath>
 #include <iostream>
 
 using namespace std;
 
 Edge::Edge(Point2 one,Point2 two) {
+  faceIDs = new Array<Integer>();
   first.xpos = one.xpos;
   first.ypos = one.ypos;
   second.xpos = two.xpos;
@@ -25,6 +21,7 @@ Edge::Edge(Point2 one,Point2 two) {
 }
 
 Edge::Edge(Point2 one,Point2 two,int idone,int idtwo) {
+  faceIDs = new Array<Integer>();
   first.xpos = one.xpos;
   first.ypos = one.ypos;
   second.xpos = two.xpos;
@@ -37,6 +34,7 @@ Edge::Edge(Point2 one,Point2 two,int idone,int idtwo) {
 }
 
 Edge::Edge(real x,real y,real xx,real yy) {
+  faceIDs = new Array<Integer>();
   first.xpos = x;
   first.ypos = y;
   second.xpos = xx;
@@ -49,6 +47,7 @@ Edge::Edge(real x,real y,real xx,real yy) {
 }
 
 Edge::Edge(real x,real y,real xx,real yy,int idone,int idtwo) {
+  faceIDs = new Array<Integer>();
   first.xpos = x;
   first.ypos = y;
   second.xpos = xx;
@@ -65,6 +64,8 @@ Edge* Edge::copy() {
   edge->setSelected(selected);
   edge->setIsBoundary(isBoundary);
   edge->setID(id);
+  for(int i=0;i<faceIDs->getSize();i++)
+    edge->getFaceIDs()->add(faceIDs->get(i));
   return edge;
 }
 
@@ -323,6 +324,7 @@ void Edge::setSecond(Point2 point) {
   second.ypos = point.ypos;
 }
 
+Array<Integer>* Edge::getFaceIDs() { return faceIDs; }
 Point2 Edge::getFirst() { return first; }
 Point2 Edge::getSecond() { return second; }
 int Edge::getID() { return id; }
@@ -331,6 +333,7 @@ int Edge::getSecondVertID() { return secondVertID; }
 bool Edge::getSelected() { return selected; }
 bool Edge::getIsBoundary() { return isBoundary; }
 
+void Edge::setFaceIDs(Array<Integer>* param) { faceIDs = param; }
 void Edge::setID(int param) { id = param; }
 void Edge::setFirstVertID(int param) { firstVertID = param; }
 void Edge::setSecondVertID(int param) { secondVertID = param; }

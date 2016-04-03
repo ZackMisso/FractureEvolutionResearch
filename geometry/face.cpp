@@ -2,6 +2,7 @@
 #include "../misc/rng.h"
 #include "../test/debug.h"
 #include "../test/debugController.h"
+#include "../dataStructures/integer.h"
 
 #include <cstdlib>
 
@@ -491,6 +492,16 @@ Array<Vertex*>* Face::findVertsOnPath(Array<Edge*>* edgs) {
 
 void Face::draw() {
   // to be implemented
+}
+
+void Face::addVert(Vertex* vert) {
+  vert->getFaceIDs()->add(Integer(id));
+  verts->add(vert);
+}
+
+void Face::addEdge(Edge* edge) {
+  edge->getFaceIDs()->add(Integer(id));
+  edges->add(edge);
 }
 
 Array<Tri*>* Face::getTriMesh() { return triMesh; }

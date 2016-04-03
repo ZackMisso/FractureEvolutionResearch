@@ -4,9 +4,11 @@
 #include "../globalInclude.h"
 #include "point2.h"
 #include "../dataStructures/array.h"
+#include "../dataStructures/integer.h"
 
 class Edge {
 private:
+  Array<Integer>* faceIDs;
   Point2 first;
   Point2 second;
   int id;
@@ -35,6 +37,7 @@ public:
   real length();
   //bool isOn(Edge* other);
 	// getters
+  Array<Integer>* getFaceIDs();
   Point2 getFirst();
   Point2 getSecond();
   int getID();
@@ -43,6 +46,7 @@ public:
   bool getSelected();
   bool getIsBoundary();
   // setters
+  void setFaceIDs(Array<Integer>* param);
   void setFirst(Point2 point);
   void setSecond(Point2 point);
   void setID(int param);

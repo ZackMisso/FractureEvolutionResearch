@@ -1,10 +1,5 @@
 #include "fracture.h"
-// USE ON LINUX
 #include <GL/glut.h>
-// USE ON MAC
-//#include <OpenGL/gl.h>
-// #include <OpenGL/glu.h>
-//#include <GLUT/glut.h>
 
 #include <iostream>
 
@@ -69,8 +64,8 @@ void Fracture::init(int points) {
 		edges->get(i)->setIsBoundary(true);
 	Face* face = giveFaceID(new Face());
 	for(int i=0;i<4;i++){
-		face->getVerts()->add(verts->get(i));
-		face->getEdges()->add(edges->get(i));
+		face->addVert(verts->get(i));
+		face->addEdge(edges->get(i));
 	}
 	faces->add(face);
 	for(int i=0;i<points;i++) { /* implement later */ }
