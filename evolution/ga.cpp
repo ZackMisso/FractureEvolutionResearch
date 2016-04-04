@@ -20,6 +20,7 @@ GA::GA() {
   nextGeneration = new Array<Individual*>();
   hallOfFame = new Array<Individual*>();
   fitFunction = new FitnessFunction();
+  io = new FileIOController();
   shape = new Shape();
   numberOfGenerations = 100;
   numberOfIndividuals = 50;
@@ -58,6 +59,7 @@ GA::~GA() {
   delete nextGeneration;
   delete hallOfFame;
   delete fitFunction;
+  delete io;
   delete shape;
 }
 
@@ -185,6 +187,7 @@ Array<Individual*>* GA::getIndividuals() { return individuals; }
 Array<Individual*>* GA::getNextGeneration() { return nextGeneration; }
 Array<Individual*>* GA::getHallOfFame() { return hallOfFame; }
 FitnessFunction* GA::getFitnessFunction() { return fitFunction; }
+FileIOController* GA::getIO() { return io; }
 Shape* GA::getShape() { return shape; }
 int GA::getNumberOfGenerations() { return numberOfGenerations; }
 int GA::getNumberOfIndividuals() { return numberOfIndividuals; }
@@ -201,6 +204,7 @@ void GA::setIndividuals(Array<Individual*>* param) { individuals = param; }
 void GA::setNextGeneration(Array<Individual*>* param) { nextGeneration = param; }
 void GA::setHallOfFame(Array<Individual*>* param) { hallOfFame = param; }
 void GA::setFitnessFunction(FitnessFunction* param) { fitFunction = param; }
+void GA::setIO(FileIOController* param) { io = param; }
 void GA::setShape(Shape* param) { shape = param; }
 void GA::setNumberOfGenerations(int param) { numberOfGenerations = param; }
 void GA::setNumberOfIndividuals(int param) { numberOfIndividuals = param; }

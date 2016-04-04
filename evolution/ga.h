@@ -13,6 +13,7 @@
 #include "constraints/faceConstraint.h"
 #include "constraints/fractureConstraint.h"
 #include "penalty/penalty.h"
+#include "../io/fileIOController.h"
 #include "../geometry/shapes/shape.h"
 #include <string>
 
@@ -31,6 +32,7 @@ private:
   Array<Individual*>* nextGeneration;
   Array<Individual*>* hallOfFame;
   FitnessFunction* fitFunction;
+  FileIOController* io;
   Shape* shape;
   int numberOfGenerations;
   int numberOfIndividuals;
@@ -65,6 +67,7 @@ public:
   Array<Individual*>* getNextGeneration();
   Array<Individual*>* getHallOfFame();
   FitnessFunction* getFitnessFunction();
+  FileIOController* getIO();
   Shape* getShape();
   int getNumberOfGenerations();
   int getNumberOfIndividuals();
@@ -81,6 +84,7 @@ public:
   void setNextGeneration(Array<Individual*>* param);
   void setHallOfFame(Array<Individual*>* param);
   void setFitnessFunction(FitnessFunction* param);
+  void setIO(FileIOController* param);
   void setShape(Shape* param);
   void setNumberOfGenerations(int param);
   void setNumberOfIndividuals(int param);

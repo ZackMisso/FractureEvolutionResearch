@@ -14,6 +14,7 @@ private:
 public:
   static void writeFractureToFile(string path,Fracture* fracture);
   static int getIndexForVert(int id,Array<IntVoidMap*>* verts);
+  static int getIndexForEdge(int id,Array<IntVoidMap*>* edges);
 };
 
 #endif
