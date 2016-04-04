@@ -24,6 +24,7 @@ SRCS+= $(shell ls evolution/constraints/*.cpp)
 SRCS+= $(shell ls evolution/penalty/*.cpp)
 SRCS+= $(shell ls geometry/*.cpp)
 SRCS+= $(shell ls geometry/shapes/*.cpp)
+SRCS+= $(shell ls dataStructures/*.cpp)
 #SRCS+= $(shell ls dataStructures/*.cpp)
 SRCS+= $(shell ls test/*.cpp)
 
@@ -52,4 +53,5 @@ clean:
 	rm -f evolution/penalty/*.o
 	rm -f geometry/*.o
 	rm -f geometry/shapes/*.o
+	rm -f dataStructures/*.o
 	rm -f test/*.o
