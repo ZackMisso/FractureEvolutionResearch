@@ -28,27 +28,31 @@ private:
   Array<FractureConstraint*>* fractureConstraints;
   Array<Penalty*>* penalties;
   Array<Individual*>* individuals;
+  Array<Individual*>* nextGeneration;
   Array<Individual*>* hallOfFame;
   FitnessFunction* fitFunction;
   Shape* shape;
   int numberOfGenerations;
   int numberOfIndividuals;
   int nextIndividualID;
-  void initMutations();
-  void initCrossovers();
-  void initVertConstraints();
-  void initEdgeConstraints();
-  void initFaceConstraints();
-  void initFractureConstraints();
-  void initPenalties();
-  void initPopulation();
 public:
   GA();
   ~GA();
   void simulateEvolution();
-  void simulateGeneration();
+  void simulateGeneration(int generation);
   void writeEvolutionState(string file);
   void readEvolutionState(string file);
+  // extendable methods
+  virtual void initMutations();
+  virtual void initCrossovers();
+  virtual void initVertConstraints();
+  virtual void initEdgeConstraints();
+  virtual void initFaceConstraints();
+  virtual void initFractureConstraints();
+  virtual void initPenalties();
+  virtual void initPopulation();
+  virtual void preGenerationProcessing();
+  virtual void postGenerationProcessing();
   // getter methods
   Array<MutationFunction*>* getMutations();
   Array<CrossoverFunction*>* getCrossovers();
@@ -58,6 +62,7 @@ public:
   Array<FractureConstraint*>* getFractureConstraints();
   Array<Penalty*>* getPenalties();
   Array<Individual*>* getIndividuals();
+  Array<Individual*>* getNextGeneration();
   Array<Individual*>* getHallOfFame();
   FitnessFunction* getFitnessFunction();
   Shape* getShape();
@@ -73,6 +78,7 @@ public:
   void setFractureConstraints(Array<FractureConstraint*>* param);
   void setPenalties(Array<Penalty*>* param);
   void setIndividuals(Array<Individual*>* param);
+  void setNextGeneration(Array<Individual*>* param);
   void setHallOfFame(Array<Individual*>* param);
   void setFitnessFunction(FitnessFunction* param);
   void setShape(Shape* param);

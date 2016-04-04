@@ -17,6 +17,7 @@ GA::GA() {
   fractureConstraints = new Array<FractureConstraint*>();
   penalties = new Array<Penalty*>();
   individuals = new Array<Individual*>();
+  nextGeneration = new Array<Individual*>();
   hallOfFame = new Array<Individual*>();
   fitFunction = new FitnessFunction();
   shape = new Shape();
@@ -42,6 +43,8 @@ GA::~GA() {
     delete penalties->removeLast();
   while(individuals->getSize())
     delete individuals->removeLast();
+  while(nextGeneration->getSize())
+    delete nextGeneration->removeLast();
   while(hallOfFame->getSize())
     delete individuals->removeLast();
   delete mutations;
@@ -52,6 +55,7 @@ GA::~GA() {
   delete fractureConstraints;
   delete penalties;
   delete individuals;
+  delete nextGeneration;
   delete hallOfFame;
   delete fitFunction;
   delete shape;
@@ -96,6 +100,14 @@ void GA::initPopulation() {
     individuals->add(new Individual(nextIndividualID++));
 }
 
+void GA::preGenerationProcessing() {
+  // to be implemented
+}
+
+void GA::postGenerationProcessing() {
+  // to be implemented
+}
+
 void GA::simulateEvolution() {
   initMutations();
   initCrossovers();
@@ -107,14 +119,51 @@ void GA::simulateEvolution() {
   initPopulation();
   for(int i=0;i<numberOfGenerations;i++) {
     // pre generation processing
-    simulateGeneration();
+    preGenerationProcessing();
+    // simulateGeneration
+    simulateGeneration(i);
     // post generation processing
+    postGenerationProcessing();
   }
   // do end stuffs
 }
 
-void GA::simulateGeneration() {
+void GA::simulateGeneration(int generation) {
   // to be implemented
+  fitFunction->preProcess(individuals);
+  /////// THE BELOW CODE SHOULD BE PARALLELIZED //////
+  // evaluate fitnesses
+  for(int i=0;i<individuals->getSize();i++) {
+    Individual* individual = individuals->get(i);
+    real initialFitness = fitFunction->getFitness(individual);
+    fitFunction->getFitness(individuals->get(i));
+    // check constraints
+    for(int i=0;i<vertConstraints->getSize();i++)
+      if(vertConstraints->get(i)->applyConstraint(individual))
+        initialFitness = -1;
+    for(int i=0;i<edgeConstraints->getSize();i++)
+      if(edgeConstraints->get(i)->applyConstraint(individual))
+        initialFitness = -1;
+    for(int i=0;i<faceConstraints->getSize();i++)
+      if(faceConstraints->get(i)->applyConstraint(individual))
+        initialFitness = -1;
+    for(int i=0;i<fractureConstraints->getSize();i++)
+      if(fractureConstraints->get(i)->applyConstraint(individual))
+        initialFitness = -1;
+    // apply penalties
+    if(initialFitness != -1)
+      for(int i=0;i<penalties->getSize();i++)
+        initialFitness = penalties->get(i)->applyPenalty(individual,initialFitness);
+    // set the individual's fitness
+    individual->setFitness(initialFitness);
+  }
+  // sort the individuals based on fitness
+  individuals = Individual::sortByHighestFitness(individuals);
+  // generate new population as long as its not the last generation
+  if(generation != numberOfGenerations-1) {
+    // to be implemented
+  }
+  ////////////////////////////////////////////////////
 }
 
 void GA::writeEvolutionState(string file) {
@@ -133,6 +182,7 @@ Array<FaceConstraint*>* GA::getFaceConstraints() { return faceConstraints; }
 Array<FractureConstraint*>* GA::getFractureConstraints() { return fractureConstraints; }
 Array<Penalty*>* GA::getPenalties() { return penalties; }
 Array<Individual*>* GA::getIndividuals() { return individuals; }
+Array<Individual*>* GA::getNextGeneration() { return nextGeneration; }
 Array<Individual*>* GA::getHallOfFame() { return hallOfFame; }
 FitnessFunction* GA::getFitnessFunction() { return fitFunction; }
 Shape* GA::getShape() { return shape; }
@@ -148,6 +198,7 @@ void GA::setFaceConstraints(Array<FaceConstraint*>* param) { faceConstraints = p
 void GA::setFractureConstraints(Array<FractureConstraint*>* param) { fractureConstraints = param; }
 void GA::setPenalties(Array<Penalty*>* param) { penalties = param; }
 void GA::setIndividuals(Array<Individual*>* param) { individuals = param; }
+void GA::setNextGeneration(Array<Individual*>* param) { nextGeneration = param; }
 void GA::setHallOfFame(Array<Individual*>* param) { hallOfFame = param; }
 void GA::setFitnessFunction(FitnessFunction* param) { fitFunction = param; }
 void GA::setShape(Shape* param) { shape = param; }
