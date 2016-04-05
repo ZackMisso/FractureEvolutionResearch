@@ -92,6 +92,19 @@ void DebugController::writeFaceState(Face* face) {
   cout << "Face :: " << face->getID() << endl;
 }
 
+void DebugController::writeFaceContentsState(Face* face) {
+    writeFaceState(face);
+    Array<Edge*>* edges = face->getEdges();
+    Array<Vertex*>* verts = face->getVerts();
+    cout << endl;
+    for(int i=0;i<verts->getSize();i++)
+      writeVertState(verts->get(i));
+    cout << endl;
+    for(int i=0;i<edges->getSize();i++)
+      writeEdgeState(edges->get(i));
+    cout << endl;
+}
+
 void DebugController::writeSingleStates(Fracture* fracture) {
   cout << endl;
   for(int i=0;i<fracture->getVerts()->getSize();i++)

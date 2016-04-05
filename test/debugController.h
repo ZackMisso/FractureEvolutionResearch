@@ -28,6 +28,7 @@ public:
   static void writeVertState(Vertex* vert);
   static void writePointState(Point2 point);
   static void writeFaceState(Face* face);
+  static void writeFaceContentsState(Face* face);
   static void writeSingleStates(Fracture* fracture);
   static void writeRelationalStates(Fracture* fracture);
 

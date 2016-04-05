@@ -85,7 +85,11 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
   } else {
     // concave case mutation
     cout << "Is Concave" << endl;
+    cout << "Face Contents: ";
+    cout << endl;
+    //DebugController::writeFaceContentsState(faceToMutate);
     // split and choose trimesh
+    DebugController::writeFaceContentsState(faceToMutate);
     faceToMutate->splitIntoTrimeshConcave();
     int numTris = faceToMutate->getTriMesh()->getSize();
     cout << "Num Tris: " << numTris << endl;

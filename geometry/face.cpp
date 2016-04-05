@@ -391,6 +391,7 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
     cout << "Point :: " << i << " ";
     DebugController::writePointState(points->get(i));
   }
+  cout << "Correct up to here" << endl;
   bool separating = true;
   while(separating) {
     cout << "Is Separating TriMesh" << endl;
