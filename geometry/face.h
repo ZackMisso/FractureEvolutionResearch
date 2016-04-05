@@ -3,6 +3,7 @@
 
 #include "../globalInclude.h"
 #include "../dataStructures/array.h"
+#include "../dataStructures/integer.h"
 #include "../misc/idTracker.h"
 #include "edge.h"
 #include "vertex.h"
@@ -36,6 +37,7 @@ public:
   //Array<Face*>* separate(Point2 start,Point2 end);
   Array<Face*>* separate(real x,real y);
   Array<Point2>* sortPointsByPath();
+  Array<Integer>* sortVertIDsByPath();
   Array<Point2>* reversePath(Array<Point2>* sortedPath);
   bool isClockwise(Array<Point2>* sortedPath);
   void detectIfConvex();

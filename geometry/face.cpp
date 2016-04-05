@@ -295,6 +295,20 @@ Array<Point2>* Face::sortPointsByPath() {
   return sortedPoints;
 }
 
+Array<Integer>* Face::sortVertIDsByPath() {
+  Array<Integer>* ids = new Array<Integer>();
+  Array<Point2>* points = sortPointsByPath();
+  for(int i=0;i<points->getSize();i++)
+    for(int j=0;j<verts->getSize();j++)
+      if(verts->get(j)->isMatch(points->get(i))) {
+        ids->add(Integer(verts->get(j)->getID()));
+        j = verts->getSize();
+      }
+  points->clear();
+  delete points;
+  return ids;
+}
+
 void Face::splitIntoTrimesh() {
   detectIfConvex();
   // clear previous triMesh if it exists

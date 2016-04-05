@@ -65,6 +65,18 @@ Tri::Tri(Tri* one,Tri* two,Tri* trhee) {
   // to be implemented
 }
 
+Tri::Tri(Edge* one,Point2 point,int pointID) {
+  points[0] = one->getFirst();
+  points[1] = one->getSecond();
+  points[2] = point;
+  pointIDs[0] = one->getFirstVertID();
+  pointIDs[1] = one->getSecondVertID();
+  pointIDs[2] = pointID;
+  edges[0] = one->copy();
+  edges[1] = new Edge(points[0],points[2],pointIDs[0],pointIDs[2]);
+  edges[2] = new Edge(points[1],points[2],pointIDs[1],pointIDs[2]);
+}
+
 Tri::~Tri() {
   delete edges[2];
   delete edges[1];
@@ -103,6 +115,28 @@ void Tri::debug() {
   cout << endl;
 }
 
+void Tri::updatePosition(int id,Point2 newPos) {
+  if(pointIDs[2] == id)
+    points[2] = newPos;
+  else if(pointIDs[1] == id)
+    points[1] = newPos;
+  else if(pointIDs[0] == id)
+    points[0] = newPos;
+}
+
+Point2 Tri::interpolatePosition(real baryOne,real baryTwo,real baryThree) {
+  Point2 interpolated;
+  interpolated.xpos = 0.0;
+  interpolated.ypos = 0.0;
+  interpolated.xpos += points[0].xpos * baryOne;
+  interpolated.xpos += points[1].xpos * baryTwo;
+  interpolated.xpos += points[2].xpos * baryThree;
+  interpolated.ypos += points[0].ypos * baryOne;
+  interpolated.ypos += points[1].ypos * baryTwo;
+  interpolated.ypos += points[2].ypos * baryThree;
+  return interpolated;
+}
+
 //bool Tri::equals(Point2 one,Point2 two,Point2 three) {
 //  if()
 //}
@@ -125,6 +159,9 @@ Point2 Tri::getPoint(int num) { return points[num]; }
 Point2 Tri::getPointOne() { return points[0]; }
 Point2 Tri::getPointTwo() { return points[1]; }
 Point2 Tri::getPointThree() { return points[2]; }
+int Tri::getPointIDOne() { return pointIDs[0]; }
+int Tri::getPointIDTwo() { return pointIDs[1]; }
+int Tri::getPointIDThree() { return pointIDs[2]; }
 Edge* Tri::getEdge(int num) { return edges[num]; }
 Edge* Tri::getEdgeOne() { return edges[0]; }
 Edge* Tri::getEdgeTwo() { return edges[1]; }
@@ -139,6 +176,9 @@ void Tri::setPoint(int num,Point2 param) { points[num] = param; }
 void Tri::setPointOne(Point2 param) { points[0] = param; }
 void Tri::setPointTwo(Point2 param) { points[1] = param; }
 void Tri::setPointThree(Point2 param) { points[2] = param; }
+void Tri::setPointIDOne(int param) { pointIDs[0] = param; }
+void Tri::setPointIDTwo(int param) { pointIDs[1] = param; }
+void Tri::setPointIDThree(int param) { pointIDs[2] = param; }
 void Tri::setEdge(int num,Edge* param) { edges[num] = param; }
 void Tri::setEdgeOne(Edge* param) { edges[0] = param; }
 void Tri::setEdgeTwo(Edge* param) { edges[1] = param; }

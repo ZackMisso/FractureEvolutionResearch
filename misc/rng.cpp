@@ -5,6 +5,10 @@ real RNG::RandomFloat() {
   return static_cast<real>(rand())/static_cast<real>(RAND_MAX);
 }
 
+real RNG::RandomFloat(real max) {
+  return RandomFloat() * max;
+}
+
 real RNG::RandomFloat(int start,int stop) {
   int dist = stop-start;
   return RandomFloat()*dist + start;

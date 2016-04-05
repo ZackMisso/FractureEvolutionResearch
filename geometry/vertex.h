@@ -11,11 +11,11 @@ class Vertex {
 private:
   Array<Edge*> *edges;
   Array<Integer>* faceIDs;
-  //Array<int> *edgeIDs;
   Point2 location; // [0.0-1.0 , 0.0-1.0]
   int id;
   bool selected;
   bool boundary;
+  bool isCorner;
 public:
   Vertex(real x,real y);
   Vertex(Point2 point);
@@ -29,19 +29,19 @@ public:
 	// getters
 	Array<Edge*>* getEdges();
   Array<Integer>* getFaceIDs();
-  //Array<int>* getEdgeIDs();
 	Point2	getLocation();
   int getID();
   bool getSelected();
   bool getBoundary();
+  bool getIsCorner();
 	// setters
 	void setEdges(Array<Edge*>* param);
   void setFaceIDs(Array<Integer>* param);
-  //void setEdgeIDs(Array<int>* param);
 	void setLocation(Point2 param);
   void setID(int param);
   void setSelected(bool param);
   void setBoundary(bool param);
+  void setIsCorner(bool param);
 };
 
 #endif

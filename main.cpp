@@ -15,6 +15,7 @@
 #include "settings/programData.h"
 #include "settings/renderSettings.h"
 #include "settings/selectData.h"
+#include "settings/evolutionSettings.h"
 #include "evolution/mutations.h"
 #include "test/tests.h"
 #include "test/debugController.h"
@@ -78,6 +79,7 @@ int main(int argc,char** argv) {
   cout << "Beginning Initialization" << endl;
   DebugController::init();
   cout << "Running Unit Tests" << endl;
+  EvolutionSettings::initialize();
   if(unitTests()) {
     cout << "Exiting Because of Failed Unit Test" << endl;
     return 2;

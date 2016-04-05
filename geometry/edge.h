@@ -32,6 +32,7 @@ public:
   bool eitherMatch(int pointID);
   Point2 getIntersectionPoint(Edge* other);
   Point2 getOtherPoint(Point2 point);
+  Point2 getOtherPoint(int pointID);
   Point2 getPointBetween(real pos);
   void splitOld(Array<Edge*>* cb,Point2 point);
   void split(Array<Edge*>* cb,Point2 point,int pointID,IDTracker* ids);

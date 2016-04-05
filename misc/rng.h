@@ -6,6 +6,7 @@
 class RNG {
 public:
   static real RandomFloat();
+  static real RandomFloat(real max);
   static real RandomFloat(int start,int stop);
   static real RandomFloat(real start,real stop);
   static int RandomInt();

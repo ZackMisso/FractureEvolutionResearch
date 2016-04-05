@@ -263,6 +263,12 @@ Point2 Edge::getOtherPoint(Point2 point) {
   return first;
 }
 
+Point2 Edge::getOtherPoint(int pointID) {
+  if(firstVertID == pointID)
+    return first;
+  return second;
+}
+
 Point2 Edge::getPointBetween(real linePos) {
   Point2 newPoint;
   newPoint.xpos = ((second.xpos-first.xpos) * linePos) + first.xpos;

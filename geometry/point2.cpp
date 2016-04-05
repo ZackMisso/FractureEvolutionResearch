@@ -24,12 +24,24 @@ Point2 Point2::minus(Point2 other) {
   return result;
 }
 
+Point2 Point2::add(Point2 other) {
+  Point2 result;
+  result.xpos = xpos + other.xpos;
+  result.ypos = ypos + other.ypos;
+  return result;
+}
+
 real Point2::wedgeProduct(Point2 other) {
   return xpos*other.ypos - ypos*other.xpos;
 }
 
 real Point2::dot(Point2 other) {
   return xpos*other.xpos + ypos*other.ypos;
+}
+
+void Point2::scale(real scalar) {
+  xpos *= scalar;
+  ypos *= scalar;
 }
 
 void Point2::debug() {

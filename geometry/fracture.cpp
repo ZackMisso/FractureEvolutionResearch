@@ -53,8 +53,10 @@ void Fracture::init(int points) {
 	verts->add(giveVertexID(new Vertex(-0.5,0.5)));
 	verts->add(giveVertexID(new Vertex(0.5,0.5)));
 	verts->add(giveVertexID(new Vertex(0.5,-0.5)));
-	for(int i=0;i<4;i++)
+	for(int i=0;i<4;i++) {
 		verts->get(i)->setBoundary(true);
+		verts->get(i)->setIsCorner(true);
+	}
 	// fix edge assignment
 	edges->add(giveEdgeID(new Edge(-0.5,-0.5,-0.5,0.5,0,1)));
 	edges->add(giveEdgeID(new Edge(-0.5,0.5,0.5,0.5,1,2)));
@@ -153,17 +155,23 @@ void Fracture::createNewEdge(Vertex* one,Vertex* two) {
 
 Array<Face*>* Fracture::getFacesWithVertex(Vertex* vertex) {
 	Array<Face*>* tmp = new Array<Face*>();
-	for(int i=0;i<faces->getSize();i++)
-		if(faces->get(i)->contains(vertex))
-			tmp->add(faces->get(i));
+	for(int i=0;i<vertex->getFaceIDs()->getSize();i++)
+		for(int j=0;j<faces->getSize();j++)
+			if(faces->get(j)->getID() == vertex->getFaceIDs()->get(i).val) {
+				tmp->add(faces->get(j));
+				j = faces->getSize();
+			}
 	return tmp;
 }
 
 Array<Face*>* Fracture::getFacesWithEdge(Edge* edge) {
 	Array<Face*>* tmp = new Array<Face*>();
-	for(int i=0;i<faces->getSize();i++)
-		if(faces->get(i)->contains(edge))
-			tmp->add(faces->get(i));
+	for(int i=0;i<edge->getFaceIDs()->getSize();i++)
+		for(int j=0;j<faces->getSize();j++)
+			if(faces->get(j)->getID() == edge->getFaceIDs()->get(i).val) {
+				tmp->add(faces->get(j));
+				j = faces->getSize();
+			}
 	return tmp;
 }
 
