@@ -88,6 +88,7 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
     // split and choose trimesh
     faceToMutate->splitIntoTrimeshConcave();
     int numTris = faceToMutate->getTriMesh()->getSize();
+    cout << "Num Tris: " << numTris << endl;
     int randTri = RNG::RandomInt(numTris);
     Tri* tri = faceToMutate->getTriMesh()->get(randTri);
     // create barys

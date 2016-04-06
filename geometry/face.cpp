@@ -377,16 +377,31 @@ void Face::splitIntoTrimeshConvex() {
 // THIS BECOMES AN ISSUE WHEN SPLITTING A POLYGON WITH HOLES
 void Face::splitIntoTrimeshConcave() { // REWRITE
   clearTrimesh();
+  cout << "Num Verts: " << verts->getSize() << endl;
   Array<Point2>* points = sortPointsByPath();
+  cout << "Points Size: " << points->getSize() << endl;
+  for(int i=0;i<points->getSize();i++) {
+    cout << "Point Pre Reverse :: " << i << " ";
+    DebugController::writePointState(points->get(i));
+  }
   if(isClockwise(points))
     points = reversePath(points);
+  cout << "Points Size After Reverse: " << points->getSize() << endl;
+  for(int i=0;i<points->getSize();i++) {
+    cout << "Point :: " << i << " ";
+    DebugController::writePointState(points->get(i));
+  }
   bool separating = true;
   while(separating) {
+    cout << "Is Separating TriMesh" << endl;
+    // set the loop to terminate
     separating = false;
     for(int i=0;i<points->getSize();i++) {
+      // get the current point
       Point2 current = points->get(i);
       Point2 next,prev;
       int nextI,prevI;
+       // get the next and previous points
       if(i==0) {
         prev = points->get(points->getSize()-1);
         prevI = points->getSize()-1;
@@ -405,7 +420,9 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
       Point2 wedgeTwo = Point2(next.xpos-current.xpos,next.ypos-current.ypos);
       if(wedgeOne.wedgeProduct(wedgeTwo) > 0) {
         // the point is an interior angle
+        cout << "Is An Interior Angle" << endl;
         bool containsOtherVert = false;
+        // these are the same as wedgeOne and wedgeTwo ??
         Point2 v0 = Point2(next.xpos-current.xpos,next.ypos-current.ypos);
         Point2 v1 = Point2(prev.xpos-current.xpos,prev.ypos-current.ypos);
         for(int j=0;j<points->getSize();j++) {
@@ -419,8 +436,8 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
             real v2dotv1 = v2.dot(v1);
             real div = (v0dotv0 * v1dotv1) - (v1dotv0*v1dotv0);
             if(div != 0.0) {
-              real u = (v1dotv1*v2dotv0) - (v1dotv0*v2dotv1) / div;
-              real v = (v0dotv0*v2dotv1) - (v1dotv0*v2dotv0) / div;
+              real u = ((v1dotv1*v2dotv0) - (v1dotv0*v2dotv1)) / div;
+              real v = ((v0dotv0*v2dotv1) - (v1dotv0*v2dotv0)) / div;
               if(u<0.0f || v <0.0f || u+v > 1.0f)
                 containsOtherVert = false;
               else {
@@ -434,7 +451,7 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
           // add triangle
           triMesh->add(new Tri(current,prev,next));
           points->remove(i);
-          i--;
+          i=points->getSize();
           separating = true;
         }
       }

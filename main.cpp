@@ -367,6 +367,22 @@ void cb_randomMutation(int id) {
   //cout << "NUM FACES :: " << programData->getCurrentFracture()->getFaces()->getSize() << endl;
   //cout << "NUM Edges :: " << programData->getCurrentFracture()->getEdges()->getSize() << endl;
   //cout << "NUM Verts :: " << programData->getCurrentFracture()->getVerts()->getSize() << endl;
+
+  // Debug Code ::
+  Fracture* fracture = programData->getCurrentFracture();
+  Array<Face*>* faces = fracture->getFaces();
+  for(int i=0;i<faces->getSize();i++) {
+    DebugController::writeFaceState(faces->get(i));
+    cout << endl;
+    for(int j=0;j<faces->get(i)->getVerts()->getSize();j++)
+      DebugController::writeVertState(faces->get(i)->getVerts()->get(j));
+    cout << endl;
+    for(int j=0;j<faces->get(i)->getEdges()->getSize();j++)
+      DebugController::writeEdgeState(faces->get(i)->getEdges()->get(j));
+    cout << endl;
+  }
+
+
   glutSetWindow(window);
   glutPostRedisplay();
 }
