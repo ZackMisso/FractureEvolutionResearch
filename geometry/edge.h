@@ -26,7 +26,6 @@ public:
   void draw();
   bool intersects(Edge* other);
   bool intersects(Edge* other,Point2* ut);
-  bool intersectsOld(Edge* other);
   Edge* intersects(Array<Edge*>* edges,Edge* ignore);
   bool eitherMatch(Point2 point);
   bool eitherMatch(int pointID);
@@ -40,7 +39,6 @@ public:
   real length();
   real dot(Edge* other);
   real interiorAngle(Edge* other);
-  //bool isOn(Edge* other);
 	// getters
   Array<Integer>* getFaceIDs();
   Point2 getFirst();

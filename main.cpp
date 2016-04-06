@@ -19,6 +19,7 @@
 #include "evolution/mutations.h"
 #include "test/tests.h"
 #include "test/debugController.h"
+#include "io/fileIOController.h"
 #include "evolution/individual.h"
 #include "evolution/mutationFunctions/addRandomEdgeMutation.h"
 #include "evolution/mutationFunctions/addRandomVertMutation.h"
@@ -72,6 +73,7 @@ InterfaceData* interfaceData;
 ProgramData* programData;
 RenderSettings* renderSettings;
 SelectData* selectData;
+FileIOController* fileIO;
 int window;
 
 
@@ -87,6 +89,7 @@ int main(int argc,char** argv) {
 
   programData = new ProgramData();
   selectData = new SelectData();
+  fileIO = new FileIOController();
 
 	glutInit(&argc,argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);

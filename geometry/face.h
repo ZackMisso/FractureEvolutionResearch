@@ -15,9 +15,7 @@ class Face {
 private:
   Array<Tri*>* triMesh;
   Array<Vertex*>* verts;
-  //Array<int>* vertIDs;
   Array<Edge*>* edges;
-  //Array<int>* edgeIDs;
   int id;
   bool isConvex;
   bool selected;
@@ -34,9 +32,6 @@ public:
   bool contains(Edge* edge);
   Array<Face*>* separate(Vertex* newVert,IDTracker* ids);
   Array<Point2>* getConvexHull();
-  Array<Point2>* getConvexHullOld();
-  //Array<Face*>* separate(Point2 newPoint);
-  //Array<Face*>* separate(Point2 start,Point2 end);
   Array<Face*>* separate(real x,real y);
   Array<Point2>* sortPointsByPath();
   Array<Integer>* sortVertIDsByPath();

@@ -142,58 +142,6 @@ bool Edge::intersects(Edge* other,Point2* ut) {
   return false;
 }
 
-bool Edge::intersectsOld(Edge* other) {
-  //cout << "////////////////////////////////////////" << endl;
-  Point2 oFirst = other->getFirst();
-  Point2 oSecond = other->getSecond();
-
-  //cout << "TWO :: " << oFirst.xpos << " " << oFirst.ypos << " " << oSecond.xpos << " " << oSecond.ypos << endl;
-  //cout << "ONE :: " << first.xpos << " " << first.ypos << " " << second.xpos << " " << second.ypos << endl;
-
-  real s1x = first.xpos - second.xpos;
-  real s1y = first.ypos - second.ypos;
-  real s2x = oFirst.xpos - oSecond.xpos;
-  real s2y = oFirst.ypos - oSecond.ypos;
-
-  //cout << "S1X :: " << s1x << endl;
-  //cout << "S2X :: " << s2x << endl;
-  //cout << "S1Y :: " << s1y << endl;
-  //cout << "S2Y :: " << s2y << endl;
-
-  real det = -s2x * s1y + s1x * s2y;
-
-  //if(det<0)
-  //  det*=-1;
-
-  //cout << "Det :: " << det << endl;
-
-  if(det == 0.0f)
-    return false;
-
-  real tmp1 = (first.xpos - oFirst.xpos);
-  real tmp2 = (first.ypos - oFirst.ypos);
-
-  real s = (-s1y * tmp1 + s1x * tmp2) / det;
-  real t = (-s2y * tmp1 + s2x * tmp2) / det;
-
-  //if(s<0)
-  //  s*=-1;
-  //if(t<0)
-  //  t*=-1;
-
-  //cout << "S :: " << s << endl;
-  //cout << "T :: " << t << endl;
-
-  //cout << "////////////////////////////////////////" << endl;
-
-  if(s < 0 && s > -1 && t < 0 && t > -1)
-    return true;
-
-
-
-  return false;
-}
-
 Edge* Edge::intersects(Array<Edge*>* edges,Edge* ignore) {
   for(int i=0;i<edges->getSize();i++)
     if(edges->get(i)!=ignore)
@@ -326,27 +274,6 @@ real Edge::dot(Edge* other) {
 real Edge::interiorAngle(Edge* other) {
   return PI + atan2(determinant(other),dot(other));
 }
-
-//bool Edge::isOn(Edge* other) { // THIS NEEDS TO BE TESTED
-//  float dxOne = second.xpos - first.xpos;
-//  float dyOne = second.ypos - first.ypos;
-//  float dxTwo = other->getSecond().xpos - other->getFirst().xpos;
-//  float dyTwo = other->getSecond().ypos - other->getSecond().ypos;
-//  bool vert = dxOne==0 && dxTwo==0;
-//  if(!vert && (dxOne==0 || dxTwo==0))
-//    return false;
-//  float slOne = dyOne/dxOne;
-//  float slTwo = dyTwo/dxTwo;
-//  if(slOne==-slTwo)
-//    slOne*=-1;
-//  if(vert || slOne == slTwo || slOne == -slTwo) {
-//    float bOne = second.ypos - second.xpos * slOne;
-//    float bTwo = other->getSecond().ypos - other->getSecond().xpos * slTwo;
-//    if(bOne == bTwo)
-//      return true;
-//  }
-//  return false;
-//}
 
 void Edge::setFirst(Point2 point) {
   first.xpos = point.xpos;

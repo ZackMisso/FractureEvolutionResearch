@@ -73,10 +73,6 @@ void Fracture::init(int points) {
 	for(int i=0;i<points;i++) { /* implement later */ }
 }
 
-void Fracture::clearAndReloadFaces() {
-	// we may not want to do this
-}
-
 bool Fracture::doesSimilarEdgeExists(Edge* edge) {
 	for(int i=0;i<edges->getSize();i++)
 		if(edge->getFirst().equals(edges->get(i)->getFirst()))
@@ -105,34 +101,7 @@ void Fracture::createTriMesh() { // TODO :: TEST
 		faces->get(i)->splitIntoTrimesh();
 		triMesh->addTriangles(faces->get(i)->getTriMesh());
 	}
-	// WHY IS THIS NEEDED DONT NEED ADJACENTCIES
-	//triMesh->addBoundaryTriangles();
-	//triMesh->calculateAllAdjacents();
 }
-
-//void Fracture::createNewVertex(real x,real y) { // probably do not need
-//	// need to figure out how to connect it with all verts near it...
-//	Vertex* newVert = new Vertex(x,y);
-//	Point2 p;
-//	p.xpos = x;
-//	p.ypos = y;
-//	Face* face = 0x0;
-//	for(int i=0;i<faces->getSize();i++)
-//		if(faces->get(i)->contains(p))
-//			face = faces->get(i);
-//	if(!face) {
-//		// the point already exists... or it is on an edge (need to add functionality)
-//	} else {
-//		verts->add(newVert);
-//		Array<Face*>* newFaces = face->separate(newVert);
-//
-//		while(newFaces->getSize())
-//			faces->add(newFaces->removeLast());
-//		delete newFaces;
-//		delete face;
-//	}
-//	// do face detection stuffs
-//}
 
 void Fracture::createNewEdge(Vertex* one,Vertex* two) {
 	Edge *edge = new Edge(one->getLocation(),two->getLocation());
@@ -149,10 +118,6 @@ void Fracture::createNewEdge(Vertex* one,Vertex* two) {
 	// keep implementing
 	// do face detections stuffs probably
 }
-
-//real Fracture::faceArea() {
-//	real totalArea
-//}
 
 Array<Face*>* Fracture::getFacesWithVertex(Vertex* vertex) {
 	Array<Face*>* tmp = new Array<Face*>();
@@ -235,12 +200,6 @@ Edge* Fracture::giveEdgeID(Edge* edge) {
 Face* Fracture::giveFaceID(Face* face) {
 	face->setID(ids->incrementNextFace());
 	return face;
-}
-
-// Brute Force Method
-Array<Face*>* Fracture::calculateAllFaces() {
-	// to be implemented
-	return 0x0;
 }
 
 Array<Vertex*>* Fracture::getVerts() { return verts; }

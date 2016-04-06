@@ -24,8 +24,6 @@ public:
   ~Fracture();
   Fracture* copy();
   void init(int points);
-  void clearAndReloadFaces();
-	//void createNewVertex(real x,real y);
 	void createNewEdge(Vertex* one,Vertex* two);
   void createTriMesh();
   Vertex* giveVertexID(Vertex* vert);
@@ -33,12 +31,10 @@ public:
   Face* giveFaceID(Face* face);
   bool doesSimilarEdgeExists(Edge* edge);
   void recount();
-  //real faceArea();
   //void debug();
   Array<Face*>* getFacesWithVertex(Vertex* vert);
   Array<Face*>* getFacesWithEdge(Edge* edge);
 	void draw(RenderSettings* renderSettings,InterfaceData* interfaceData);
-  Array<Face*>* calculateAllFaces();
   // getter methods
   Array<Face*>* getFaces();
   Array<Edge*>* getEdges();
