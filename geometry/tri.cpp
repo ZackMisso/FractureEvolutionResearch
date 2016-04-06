@@ -105,6 +105,12 @@ bool Tri::equals(Tri* other) {
   return equals;
 }
 
+// Implement Moller-Trumbore triangle intersection algorithm
+bool Tri::isInside(Point2 point) {
+  // to be implemented
+  return false;
+}
+
 void Tri::debug() {
   cout << "First :: ";
   points[0].debug();

@@ -26,6 +26,7 @@ public:
   bool equals(Tri* other);
   void updatePosition(int id,Point2 newPos);
   Point2 interpolatePosition(real baryOne,real baryTwo,real baryThree);
+  bool isInside(Point2 point);
   void debug();
   void draw();
   // getter methods

@@ -375,6 +375,7 @@ void Face::splitIntoTrimeshConvex() {
 }
 
 // THIS BECOMES AN ISSUE WHEN SPLITTING A POLYGON WITH HOLES
+// Triangulation by Ear Clipping
 void Face::splitIntoTrimeshConcave() { // REWRITE
   clearTrimesh();
   cout << "Num Verts: " << verts->getSize() << endl;
@@ -384,7 +385,7 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
     cout << "Point Pre Reverse :: " << i << " ";
     DebugController::writePointState(points->get(i));
   }
-  if(isClockwise(points))
+  if(!isClockwise(points))
     points = reversePath(points);
   cout << "Points Size After Reverse: " << points->getSize() << endl;
   for(int i=0;i<points->getSize();i++) {
@@ -392,72 +393,42 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
     DebugController::writePointState(points->get(i));
   }
   cout << "Correct up to here" << endl;
-  bool separating = true;
-  while(separating) {
-    cout << "Is Separating TriMesh" << endl;
-    // set the loop to terminate
-    separating = false;
+
+  while(points->getSize()>3) {
     for(int i=0;i<points->getSize();i++) {
-      // get the current point
-      Point2 current = points->get(i);
-      Point2 next,prev;
-      int nextI,prevI;
-       // get the next and previous points
-      if(i==0) {
-        prev = points->get(points->getSize()-1);
-        prevI = points->getSize()-1;
-      } else {
-        prev = points->get(i-1);
-        prevI = i-1;
-      } if(i==points->getSize()-1) {
-        next = points->get(0);
-        nextI = 0;
-      } else {
-        next = points->get(i+1);
-        nextI = i+1;
-      }
-      // bary logic that will be used for mutations
-      Point2 wedgeOne = Point2(prev.xpos-current.xpos,prev.ypos-current.ypos);
-      Point2 wedgeTwo = Point2(next.xpos-current.xpos,next.ypos-current.ypos);
-      if(wedgeOne.wedgeProduct(wedgeTwo) > 0) {
-        // the point is an interior angle
-        cout << "Is An Interior Angle" << endl;
-        bool containsOtherVert = false;
-        // these are the same as wedgeOne and wedgeTwo ??
-        Point2 v0 = Point2(next.xpos-current.xpos,next.ypos-current.ypos);
-        Point2 v1 = Point2(prev.xpos-current.xpos,prev.ypos-current.ypos);
-        for(int j=0;j<points->getSize();j++) {
-          if(j != i && j != nextI && j != prevI) {
-            Point2 point = points->get(j);
-            Point2 v2 = Point2(point.xpos-current.xpos,point.ypos-current.ypos);
-            real v0dotv0 = v0.dot(v0);
-            real v1dotv1 = v1.dot(v1);
-            real v1dotv0 = v1.dot(v0);
-            real v2dotv0 = v2.dot(v0);
-            real v2dotv1 = v2.dot(v1);
-            real div = (v0dotv0 * v1dotv1) - (v1dotv0*v1dotv0);
-            if(div != 0.0) {
-              real u = ((v1dotv1*v2dotv0) - (v1dotv0*v2dotv1)) / div;
-              real v = ((v0dotv0*v2dotv1) - (v1dotv0*v2dotv0)) / div;
-              if(u<0.0f || v <0.0f || u+v > 1.0f)
-                containsOtherVert = false;
-              else {
-                containsOtherVert = true;
+      // get next and previous point
+      int prev = i==0 ? points->getSize()-1 : i-1;
+      int next = i==points->getSize()-1 ? 0 : i+1;
+      // create two edges going from current point
+      Edge* one = new Edge(points->get(i),points->get(next));
+      Edge* two = new Edge(points->get(i),points->get(prev));
+      // get their interiorAngle
+      real interiorAngle = one->interiorAngle(two);
+      // make sure it is not a reflex angle.
+      if(interiorAngle < PI) {
+          // create the triangle
+          Tri* tri = new Tri(points->get(prev),points->get(i),points->get(next));
+          bool isEar = true;
+          for(int j=0;j<points->getSize();j++)
+            if(j != i && j != prev && j != next)
+              // test if the triangle is valid by making sure no verts are within it
+              if(tri->isInside(points->get(j))) {
+                isEar = false;
                 j = points->getSize();
               }
-            }
+          if(isEar) {
+            triMesh->add(tri);
+            points->remove(i);
+            i = points->getSize();
+          } else {
+            delete tri;
           }
-        }
-        if(!containsOtherVert) {
-          // add triangle
-          triMesh->add(new Tri(current,prev,next));
-          points->remove(i);
-          i=points->getSize();
-          separating = true;
-        }
       }
+      delete two;
+      delete one;
     }
   }
+  triMesh->add(new Tri(points->get(0),points->get(1),points->get(2)));
   points->clear();
   delete points;
 }

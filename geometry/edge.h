@@ -38,6 +38,8 @@ public:
   void split(Array<Edge*>* cb,Point2 point,int pointID,IDTracker* ids);
   real determinant(Edge* other);
   real length();
+  real dot(Edge* other);
+  real interiorAngle(Edge* other);
   //bool isOn(Edge* other);
 	// getters
   Array<Integer>* getFaceIDs();

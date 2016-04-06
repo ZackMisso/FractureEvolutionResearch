@@ -314,6 +314,19 @@ real Edge::length() {
   return sqrt(dx*dx + dy*dy);
 }
 
+real Edge::dot(Edge* other) {
+  real dxOne = second.xpos - first.xpos;
+  real dyOne = second.ypos - first.ypos;
+  real dxTwo = getSecond().xpos - getFirst().xpos;
+  real dyTwo = getSecond().ypos - getFirst().ypos;
+  return dxOne*dxTwo + dyOne*dyTwo;
+}
+
+// Minus for anti-clockwise, plus for clockwise
+real Edge::interiorAngle(Edge* other) {
+  return PI + atan2(determinant(other),dot(other));
+}
+
 //bool Edge::isOn(Edge* other) { // THIS NEEDS TO BE TESTED
 //  float dxOne = second.xpos - first.xpos;
 //  float dyOne = second.ypos - first.ypos;
