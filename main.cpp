@@ -482,6 +482,9 @@ void cb_addRandomVertM(int id) {
   AddRandomVertMutation* mutate = new AddRandomVertMutation();
   mutate->mutate(programData->getCurrentFracture());
   delete mutate;
+  Fracture* fracture = programData->getCurrentFracture();
+  cout << "Num Faces: " << fracture->getFaces()->getSize() << endl;
+  fracture->recount();
   glutSetWindow(window);
   glutPostRedisplay();
 }

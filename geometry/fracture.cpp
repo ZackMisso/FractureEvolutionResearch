@@ -86,6 +86,7 @@ bool Fracture::doesSimilarEdgeExists(Edge* edge) {
 }
 
 void Fracture::recount() {
+	cout << "Called Recount" << endl;
 	edges->clear();
 	verts->clear();
 	for(int i=0;i<faces->getSize();i++){

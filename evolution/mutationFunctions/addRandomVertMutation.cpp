@@ -1,5 +1,6 @@
 #include "addRandomVertMutation.h"
 #include "../../misc/rng.h"
+#include "../../test/debugController.h"
 #include <iostream>
 
 using namespace std;
@@ -55,10 +56,31 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
     cout << "Calling Separate" << endl;
     Array<Face*>* newFaces = faceToMutate->separate(newVert,fracture->getIDs());
     cout << "Left Separate" << endl;
+    //cout << "Number of New Faces: " << newFaces->getSize() << endl;
     if(newFaces) {
+      cout << "Number of New Faces: " << newFaces->getSize() << endl;
       fracture->getFaces()->remove(faceToMutate);
-      for(int i=0;newFaces->getSize();i++)
+      cout << "Removed Old Face" << endl;
+      for(int i=0;i<newFaces->getSize();i++) {
+        cout << "Adding Face: " << i << endl;
+        cout << "Number of Edges: " << newFaces->get(i)->getEdges()->getSize() << endl;
+        for(int j=0;j<newFaces->get(i)->getEdges()->getSize();j++) {
+          //cout << "Before Face" << endl;
+          Face* face = newFaces->get(i);
+          //cout << "Before Array" << endl;
+          Array<Edge*>* edgs = face->getEdges();
+          //cout << "Before Edge" << endl;
+          Edge* ed = edgs->get(j);
+          //cout << "Before DebugController" << endl;
+          DebugController::writeEdgeState(ed);
+          //cout << "WHATTTTT" << endl;
+        }
+        cout << "Number of Verts: " << newFaces->get(i)->getVerts()->getSize() << endl;
+        for(int j=0;j<newFaces->get(i)->getVerts()->getSize();j++)
+          DebugController::writeVertState(newFaces->get(i)->getVerts()->get(j));
         fracture->getFaces()->add(newFaces->get(i));
+      }
+      cout << "Added New Faces" << endl;
     }
   } else {
     // concave case mutation
@@ -96,5 +118,6 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
         fracture->getFaces()->add(newFaces->get(i));
     }
   }
+  cout << "Returning Fracture" << endl;
   return fracture;
 }

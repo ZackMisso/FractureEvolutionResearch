@@ -65,17 +65,26 @@ void DebugController::writeDebugState(Fracture* fracture) {
 }
 
 void DebugController::writeEdgeState(Edge* edge) {
+  //cout << "Before Mem" << endl;
+  //cout << "Mem :: " << edge << endl;
   cout << "Edge :: " << edge->getID();
   cout << " :: (" << edge->getFirst().xpos;
   cout << "," << edge->getFirst().ypos << ")->(";
   cout << edge->getSecond().xpos << ",";
   cout << edge->getSecond().ypos << ")" << endl;
+  //cout << "End WRITE" << endl;
 }
 
 void DebugController::writeVertState(Vertex* vert) {
   cout << "Vert :: " << vert->getID();
   cout << " :: (" << vert->getLocation().xpos;
   cout << "," << vert->getLocation().ypos;
+  cout << ")" << endl;
+}
+
+void DebugController::writePointState(Point2 point) {
+  cout << "(" << point.xpos;
+  cout << "," << point.ypos;
   cout << ")" << endl;
 }
 

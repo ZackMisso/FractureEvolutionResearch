@@ -109,13 +109,16 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
   // create the list of new faces
   Array<Face*>* newFaces = new Array<Face*>();
   // get number of separations
-  int numSeperations = RNG::RandomInt(2,edges->getSize(),4);
+  //int numSeperations = RNG::RandomInt(2,edges->getSize(),4);
+  int numSeparations = 1;
   // create required data structures
   Array<Edge*>* oneEdges = new Array<Edge*>();
   Array<Edge*>* twoEdges = new Array<Edge*>();
   Array<Vertex*>* oneVerts = new Array<Vertex*>();
   Array<Vertex*>* twoVerts = new Array<Vertex*>();
   // add new vert to both new adds
+  cout << "Adding New Vertex to Verts: ";
+  DebugController::writeVertState(newVert);
   oneVerts->add(newVert);
   twoVerts->add(newVert);
   // create data structures for new edge generation
@@ -127,6 +130,7 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
   Edge* edgeTwo = 0x0;
   if(isConvex) {
     // convex case (easy)
+    cout << "Inside Convex Case In Face Split" << endl;
     // choose two random edges
     int edgeIndOne = RNG::RandomInt(edges->getSize());
     int edgeIndTwo = RNG::RandomIntWithException(edges->getSize(),edgeIndOne);
@@ -135,14 +139,23 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     // choose two random locations on those edges
     real edgeDistOne = RNG::RandomFloat();
     real edgeDistTwo = RNG::RandomFloat();
+    cout << "Chose Random Locations: " << edgeDistOne << " and " << edgeDistTwo << endl;
     // get the two points on the edges
     Point2 newPointOne = edgeOne->getPointBetween(edgeDistOne);
+    cout << "New Point One: ";
+    DebugController::writePointState(newPointOne);
     Point2 newPointTwo = edgeTwo->getPointBetween(edgeDistTwo);
+    cout << "New Point Two: ";
+    DebugController::writePointState(newPointTwo);
     // create the new verts
     newVertOne = new Vertex(newPointOne);
     newVertTwo = new Vertex(newPointTwo);
     newVertOne->setID(ids->incrementNextVert());
     newVertTwo->setID(ids->incrementNextVert());
+    cout << "Creating New Edge Vert One: ";
+    DebugController::writeVertState(newVertOne);
+    cout << "Creating New Edge Vert Two: ";
+    DebugController::writeVertState(newVertTwo);
   } else {
     // concave case (harder)
     // choose two random edges
@@ -184,7 +197,9 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
   // split old edges
   edgeOne->split(newEdges,newVertOne->getLocation(),newVertOne->getID(),ids);
   edgeTwo->split(newEdges,newVertTwo->getLocation(),newVertTwo->getID(),ids);
+  cout << "Number Of New Edges: " << newEdges->getSize() << endl;
   // remove old edges
+  cout << "Removing Old Edges" << endl;
   edges->remove(edgeOne);
   edges->remove(edgeTwo);
   delete edgeOne;
@@ -194,10 +209,16 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
   Edge* separateEdgeTwo = new Edge(newVert->getLocation(),newVertTwo->getLocation(),newVert->getID(),newVertTwo->getID());
   separateEdgeOne->setID(ids->incrementNextEdge());
   separateEdgeTwo->setID(ids->incrementNextEdge());
+  cout << "Creating The First New Separating Edge" << endl;
+  DebugController::writeEdgeState(separateEdgeOne);
+  cout << "Creating The Second New Separating Edge" << endl;
+  DebugController::writeEdgeState(separateEdgeTwo);
   // add new edges to face
+  cout << "Adding New Edges" << endl;
   while(newEdges->getSize())
     edges->add(newEdges->removeLast());
   delete newEdges;
+  cout << "Finding The Separate Paths" << endl;
   // find two separate paths
   findSeparatePaths(oneEdges,twoEdges,newVertOne->getLocation(),newVertTwo->getLocation());
   oneEdges->add(separateEdgeOne);
@@ -245,6 +266,20 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
   // add to array of faces
   newFaces->add(oneFace);
   newFaces->add(twoFace);
+  cout << "First Face ::" << endl;
+  cout << "Number of Edges: " << oneFace->getEdges()->getSize() << endl;
+  for(int i=0;i<oneFace->getEdges()->getSize();i++)
+    DebugController::writeEdgeState(oneFace->getEdges()->get(i));
+  cout << "Number of Verts: " << oneFace->getVerts()->getSize() << endl;
+  for(int i=0;i<oneFace->getVerts()->getSize();i++)
+    DebugController::writeVertState(oneFace->getVerts()->get(i));
+  cout << "Second Face ::" << endl;
+  cout << "Number of Edges: " << twoFace->getEdges()->getSize() << endl;
+  for(int i=0;i<twoFace->getEdges()->getSize();i++)
+    DebugController::writeEdgeState(twoFace->getEdges()->get(i));
+  cout << "Number of Verts: " << twoFace->getVerts()->getSize() << endl;
+  for(int i=0;i<twoFace->getVerts()->getSize();i++)
+    DebugController::writeVertState(twoFace->getVerts()->get(i));
   // return array of faces
   return newFaces;
 }
@@ -450,6 +485,8 @@ real Face::cross(const Point2& o,const Point2& a,const Point2& b) {
 }
 
 // Andrew's monotone chain 2D convex hull Algorithm
+// code is a modified version of what was provided here ::
+// https://en.wikibooks.org/wiki/Algorithm_Implementation/Geometry/Convex_hull/Monotone_chain
 Array<Point2>* Face::getConvexHull() {
   //Array<Point2>* contents = new Array<Point2>(verts->getSize()*2+1);
   int n = verts->getSize();
