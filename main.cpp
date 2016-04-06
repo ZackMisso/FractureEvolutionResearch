@@ -185,13 +185,13 @@ void createInterface() { // TODO :: MOVE THIS TO INTEFACE CLASS
   interface->displayFaceTrimeshButton = subwindow->add_button_to_panel(interface->renderMenu,"Trimesh On/Off",1,cb_trimeshOnOff);
   // Evolution Menu
   interface->evolutionMenu = subwindow->add_rollout("Evolution",false);
-  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Random Mutation",1,cb_randomMutation);
-  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Add Random Edge",1,cb_addRandomEdgeM);
-  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Add Random Vert",1,cb_addRandomVertM);
-  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Edge Curve",1,cb_edgeCurveM);
-  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Remove Random Edge",1,cb_removeRandomEdgeM);
-  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Remove Random Vert",1,cb_removeRandomVertM);
-  interface->randomMutation = subwindow->add_button_to_panel(interface->renderMenu,"Vert Position",1,cb_vertPositionM);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->evolutionMenu,"Random Mutation",1,cb_randomMutation);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->evolutionMenu,"Add Random Edge",1,cb_addRandomEdgeM);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->evolutionMenu,"Add Random Vert",1,cb_addRandomVertM);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->evolutionMenu,"Edge Curve",1,cb_edgeCurveM);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->evolutionMenu,"Remove Random Edge",1,cb_removeRandomEdgeM);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->evolutionMenu,"Remove Random Vert",1,cb_removeRandomVertM);
+  interface->randomMutation = subwindow->add_button_to_panel(interface->evolutionMenu,"Vert Position",1,cb_vertPositionM);
 }
 
 void display() {
@@ -361,7 +361,9 @@ void cb_randomMutation(int id) {
   //cout << "Random Mutation Needs to be implemented" << endl;
   //DebugController::writeDebugState(programData->getCurrentFracture());
   //cout << endl;
-  Mutations::AddRandomVertex(programData->getCurrentFracture());
+
+  //Mutations::AddRandomVertex(programData->getCurrentFracture());
+
   //cout << "NUM FACES :: " << programData->getCurrentFracture()->getFaces()->getSize() << endl;
   //cout << "NUM Edges :: " << programData->getCurrentFracture()->getEdges()->getSize() << endl;
   //cout << "NUM Verts :: " << programData->getCurrentFracture()->getVerts()->getSize() << endl;

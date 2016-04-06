@@ -3,8 +3,9 @@
 #include "../test/debug.h"
 #include "../test/debugController.h"
 #include "../dataStructures/integer.h"
-
 #include <cstdlib>
+#include <vector>
+#include <algorithm>
 
 #include <iostream>
 
@@ -426,8 +427,11 @@ Array<Point2>* Face::reversePath(Array<Point2>* sortedPath) {
 
 void Face::detectIfConvex() {
   Array<Point2>* hull = getConvexHull();
-  if(hull->getSize() != verts->getSize())
+  if(hull->getSize() != verts->getSize()) {
+    cout << "Size MisMatch" << endl;
+    cout << "Hull Size: " << hull->getSize() << endl;
     isConvex = false;
+  }
   else {
     // O(N^2) This can be Faster
     int counter=0;
@@ -436,13 +440,59 @@ void Face::detectIfConvex() {
         if(verts->get(i)->getLocation().xpos == hull->get(j).xpos)
           if(verts->get(i)->getLocation().ypos == hull->get(j).ypos)
             counter++;
+    cout << "Counter: " << counter << endl;
     isConvex=counter==verts->getSize();
   }
 }
 
-// Simple Gift Wrapping Algorithm
+real Face::cross(const Point2& o,const Point2& a,const Point2& b) {
+  return (a.xpos-o.xpos)*(b.ypos-o.ypos)-(a.ypos-o.ypos)*(b.xpos-o.xpos);
+}
+
+// Andrew's monotone chain 2D convex hull Algorithm
 Array<Point2>* Face::getConvexHull() {
+  //Array<Point2>* contents = new Array<Point2>(verts->getSize()*2+1);
+  int n = verts->getSize();
+  int k = 0;
+  vector<Point2> hull(2*n);
+  vector<Point2> tmpVerts(n);
+  for(int i=0;i<verts->getSize();i++) {
+    tmpVerts[i] = verts->get(i)->getLocation();
+    verts->get(i)->getLocation().debug();
+  }
+  cout << "DONE" << endl;
+  for(int i=0;i<tmpVerts.size();i++)
+    tmpVerts[i].debug();
+  cout << "DoneToo" << endl;
+  // sort points lexicographically
+  sort(tmpVerts.begin(),tmpVerts.end());
+  // build lower hull
+  for(int i=0;i<n;i++) {
+    while(k>=2 && cross(hull[k-2],hull[k-1],tmpVerts[i]) <= 0)
+      k--;
+    hull[k++] = tmpVerts[i];
+  }
+  // build upper hull
+  for(int i=n-2,t=k+1;i>=0;i--) {
+    while(k>=t && cross(hull[k-2],hull[k-1],tmpVerts[i]) <= 0)
+      k--;
+    hull[k++] = tmpVerts[i];
+  }
+  hull.resize(k-1);
+  // convert hull vector to array
+  Array<Point2>* points = new Array<Point2>();
+  for(int i=0;i<hull.size();i++) {
+    points->add(hull[i]);
+    points->get(i).debug();
+  }
+  return points;
+}
+
+// Simple Gift Wrapping Algorithm
+Array<Point2>* Face::getConvexHullOld() {
+
   // Set Up Variables
+  cout << "Verts Size: " << verts->getSize() << endl;
   Array<Point2>* hull = new Array<Point2>(verts->getSize()+1);
   Array<Point2>* contents = new Array<Point2>(verts->getSize()+1);
   for(int i=0;i<verts->getSize();i++)
@@ -451,27 +501,58 @@ Array<Point2>* Face::getConvexHull() {
   Point2 lastPoint;
   Point2 endpoint = contents->get(0);
   // Get LeftMost Point
-  for(int i=1;i<contents->getSize();i++)
-    if(endpoint.xpos > contents->get(i).xpos)
+  int firstInd = 0;
+  for(int i=1;i<contents->getSize();i++) {
+    if(endpoint.xpos > contents->get(i).xpos) {
       endpoint = contents->get(i);
+      firstInd = i;
+    }
+    if(endpoint.xpos == contents->get(i).xpos && endpoint.ypos > contents->get(i).ypos) {
+      firstInd = i;
+      endpoint = contents->get(i);
+    }
+  }
+  for(int i=0;i<4;i++) {
+    cout << "Point " << i << ": ";
+    contents->get(i).debug();
+  }
   lastPoint = endpoint;
+  cout << "got last and end point: ";
+  lastPoint.debug();
+  //hull->add(lastPoint);
+  //contents->remove(firstInd);
   // Find the Leftmost point then add until found convex hull
-  while(!lastPoint.equals(endpoint)||!hull->getSize()) {
+
+  while((!lastPoint.equals(endpoint)||!hull->getSize()) && contents->getSize()) {
+    cout << "In While Loop" << endl;
     int ind = 0;
-    pointOnHull = contents->get(0);
-    for(int i=1;i<contents->getSize();i++) {
-      Edge* edgeOne = new Edge(lastPoint,pointOnHull);
-      Edge* edgeTwo = new Edge(lastPoint,contents->get(i));
-      if(edgeOne->determinant(edgeTwo) > 0) {
-        ind = i;
-        pointOnHull = contents->get(i);
-      }
-      delete edgeOne;
-      delete edgeTwo;
+    cout << "Hull Size Wh: " << hull->getSize() << endl;
+    cout << "Contents Size: " << contents->getSize() << endl;
+    //pointOnHull = contents->getSize()==verts->getSize() ? firstInd==0 ?
+    //  contents->get(1) : contents->get(0) : contents->get(0);
+    //pointOnHull = contents->get(0);
+    //int i = contents->getSize()==verts->getSize() ? firstInd==0 ? 0 : 1 : 1;
+    //for(;i<contents->getSize();i++) {
+    for(int i=0;i<contents->getSize();i++) {
+      //if(i != lastInd) {
+        Edge* edgeOne = new Edge(pointOnHull,lastPoint);
+        Edge* edgeTwo = new Edge(contents->get(i),lastPoint);
+        if(edgeOne->determinant(edgeTwo) > 0) {
+          ind = i;
+          //lastInd = ind;
+          pointOnHull = contents->get(i);
+        }
+        delete edgeOne;
+        delete edgeTwo;
+      //}
     }
     lastPoint = pointOnHull;
     hull->add(pointOnHull);
     contents->remove(ind);
+  }
+  for(int i=0;i<hull->getSize();i++) {
+    cout << "Hull: " << i << " ";
+    hull->get(i).debug();
   }
   return hull;
 }

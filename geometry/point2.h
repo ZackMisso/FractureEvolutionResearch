@@ -17,6 +17,8 @@ public:
   real wedgeProduct(Point2 other);
   real dot(Point2 other);
   void scale(real scaler);
+  // operators
+  bool operator < (const Point2& other) const;
   // debug
   void debug();
   // setter methods

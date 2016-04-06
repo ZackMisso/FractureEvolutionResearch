@@ -44,6 +44,10 @@ void Point2::scale(real scalar) {
   ypos *= scalar;
 }
 
+bool Point2::operator<(const Point2& other) const {
+  return xpos < other.xpos || (xpos == other.xpos && ypos < other.ypos);
+}
+
 void Point2::debug() {
   cout << "(" << xpos << "," << ypos << ")" << endl;
 }

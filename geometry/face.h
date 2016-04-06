@@ -22,6 +22,7 @@ private:
   bool isConvex;
   bool selected;
   void clearTrimesh();
+  real cross(const Point2& o,const Point2& a,const Point2& b);
 public:
   Face();
   Face(Array<Vertex*>* verts);
@@ -33,6 +34,7 @@ public:
   bool contains(Edge* edge);
   Array<Face*>* separate(Vertex* newVert,IDTracker* ids);
   Array<Point2>* getConvexHull();
+  Array<Point2>* getConvexHullOld();
   //Array<Face*>* separate(Point2 newPoint);
   //Array<Face*>* separate(Point2 start,Point2 end);
   Array<Face*>* separate(real x,real y);
