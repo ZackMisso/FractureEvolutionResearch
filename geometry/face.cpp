@@ -137,8 +137,8 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     edgeOne = edges->get(edgeIndOne);
     edgeTwo = edges->get(edgeIndTwo);
     // choose two random locations on those edges
-    real edgeDistOne = RNG::RandomFloat();
-    real edgeDistTwo = RNG::RandomFloat();
+    real edgeDistOne = RNG::RandomFloatMin(0.1);
+    real edgeDistTwo = RNG::RandomFloatMin(0.1);
     cout << "Chose Random Locations: " << edgeDistOne << " and " << edgeDistTwo << endl;
     // get the two points on the edges
     Point2 newPointOne = edgeOne->getPointBetween(edgeDistOne);
@@ -165,8 +165,8 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     edgeOne = edges->get(edgeIndOne);
     edgeTwo = edges->get(edgeIndTwo);
     // choose two random locations on those edges
-    real edgeDistOne = RNG::RandomFloat();
-    real edgeDistTwo = RNG::RandomFloat();
+    real edgeDistOne = RNG::RandomFloatMin(0.1);
+    real edgeDistTwo = RNG::RandomFloatMin(0.1);
     cout << "EdgeDistOne: " << edgeDistOne << endl;
     cout << "EdgeDistTwo: " << edgeDistTwo << endl;
     // get the two points on the edges

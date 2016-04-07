@@ -98,13 +98,13 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
     cout << "Chosen Tri:" << endl;
     tri->debug();
     // create barys
-    float barys[2];
+    float barys[3];
     real baryTotal = 0.0;
-    for(int i=0;i<2;i++) {
-      barys[i] = RNG::RandomFloat();
+    for(int i=0;i<3;i++) {
+      barys[i] = RNG::RandomFloatMinMax(0.1,0.9);
       baryTotal += barys[i];
     }
-    // normalize barys
+    // normalize barys (third bary is not really needed)
     for(int i=0;i<2;i++)
       barys[i] /= baryTotal;
     // calculate new point based on barys

@@ -9,6 +9,8 @@ public:
   static real RandomFloat(real max);
   static real RandomFloat(int start,int stop);
   static real RandomFloat(real start,real stop);
+  static real RandomFloatMin(real min);
+  static real RandomFloatMinMax(real min,real max);
   static int RandomInt();
   static int RandomInt(int max);
   static int RandomInt(int min,int max);

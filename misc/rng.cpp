@@ -19,6 +19,18 @@ real RNG::RandomFloat(real start,real stop) {
   return RandomFloat()*dist + start;
 }
 
+real RNG::RandomFloatMin(real min) {
+  real ran;
+  while((ran=RandomFloat())<min) { }
+  return ran;
+}
+
+real RNG::RandomFloatMinMax(real min,real max) {
+  real ran;
+  while((ran=RandomFloat())<min || ran > max) { }
+  return ran;
+}
+
 int RNG::RandomInt() {
   return rand();
 }
