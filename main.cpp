@@ -285,6 +285,10 @@ bool unitTests() {
     cout << "Vert Reverse Test Failed" << endl;
     return true;
   }
+  if(Tests::angleTests()) {
+    cout << "Angle Test Failed" << endl;
+    return true;
+  }
   // Not Needed
   //if(Tests::edgeIsOnTest()) {
   //  cout << "Edge Is On Test Failed" << endl;

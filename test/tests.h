@@ -17,6 +17,7 @@ public:
   static bool convexSplitTest();
   static bool concaveSplitTest();
   static bool trimeshCreationTest();
+  static bool angleTests();
 };
 
 #endif

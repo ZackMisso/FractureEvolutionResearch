@@ -165,8 +165,8 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     edgeOne = edges->get(edgeIndOne);
     edgeTwo = edges->get(edgeIndTwo);
     // choose two random locations on those edges
-    real edgeDistOne = RNG::RandomFloatMin(0.1);
-    real edgeDistTwo = RNG::RandomFloatMin(0.1);
+    real edgeDistOne = RNG::RandomFloatMinMax(0.1,0.9);
+    real edgeDistTwo = RNG::RandomFloatMinMax(0.1,0.9);
     cout << "EdgeDistOne: " << edgeDistOne << endl;
     cout << "EdgeDistTwo: " << edgeDistTwo << endl;
     // get the two points on the edges
@@ -191,6 +191,14 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     utTwo->xpos = 0.0;
     utTwo->ypos = 0.0;
     cout << "Calling intersects" << endl;
+    cout << "All Edges ::" << endl;
+    for(int i=0;i<edges->getSize();i++) {
+      DebugController::writeEdgeState(edges->get(i));
+    }
+    cout << "Tmp Edge One: ";
+    DebugController::writeEdgeState(tmpEdgeOne);
+    cout << "Tmp Edge Two: ";
+    DebugController::writeEdgeState(tmpEdgeTwo);
     Edge* intersectorOne = tmpEdgeOne->intersects(edges,edgeOne,utOne);
     Edge* intersectorTwo = tmpEdgeTwo->intersects(edges,edgeTwo,utTwo);
     cout << "UT One: ";
@@ -202,6 +210,7 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     if(intersectorOne) {
       newPointOne = intersectorOne->getIntersectionPoint(tmpEdgeOne);
       cout << "New Point One After Intersection: ";
+      cout << "Intersector One" << endl;
       newPointOne.debug();
       delete tmpEdgeOne;
       edgeOne = intersectorOne;
@@ -210,6 +219,7 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     }if(intersectorTwo) {
       newPointTwo = intersectorTwo->getIntersectionPoint(tmpEdgeTwo);
       cout << "New Point Two After Intersection: ";
+      cout << "Intersector Two" << endl;
       newPointTwo.debug();
       delete tmpEdgeTwo;
       edgeTwo = intersectorTwo;
@@ -443,6 +453,7 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
   cout << "Correct up to here" << endl;
 
   while(points->getSize()>3) {
+    //cout << "WHAT" << endl;
     //cout << "While:: " << points->getSize() << endl;
     for(int i=0;i<points->getSize();i++) {
       // get next and previous point
@@ -451,12 +462,17 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
       // create two edges going from current point
       Edge* one = new Edge(points->get(i),points->get(next));
       Edge* two = new Edge(points->get(i),points->get(prev));
+      cout << "For Point: " << i << endl;
+      cout << "Edge One: ";
+      DebugController::writeEdgeState(one);
+      cout << "Edge Two: ";
+      DebugController::writeEdgeState(two);
       // get their interiorAngle
       real interiorAngle = one->interiorAngle(two);
-      //cout << "Int Angle: " << interiorAngle << endl;
+      cout << "Int Angle: " << interiorAngle << endl;
       // make sure it is not a reflex angle.
       if(interiorAngle < PI) {
-        //cout << "Starting Ear Test" << endl;
+        cout << "Starting Ear Test" << endl;
         // create the triangle
         Tri* tri = new Tri(points->get(prev),points->get(i),points->get(next));
         bool isEar = true;

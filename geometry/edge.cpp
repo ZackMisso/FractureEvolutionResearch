@@ -301,14 +301,30 @@ real Edge::length() {
 real Edge::dot(Edge* other) {
   real dxOne = second.xpos - first.xpos;
   real dyOne = second.ypos - first.ypos;
-  real dxTwo = getSecond().xpos - getFirst().xpos;
-  real dyTwo = getSecond().ypos - getFirst().ypos;
+  real dxTwo = other->getSecond().xpos - other->getFirst().xpos;
+  real dyTwo = other->getSecond().ypos - other->getFirst().ypos;
+  cout << "DOT" << dxOne << "*" << dxTwo << "-" << dyOne << "*" << dyTwo << endl;
   return dxOne*dxTwo + dyOne*dyTwo;
 }
 
 // Minus for anti-clockwise, plus for clockwise
 real Edge::interiorAngle(Edge* other) {
-  return PI + atan2(determinant(other),dot(other));
+  cout << endl;
+  cout << "One Det Two Pre: " << determinant(other) << endl;
+  cout << "One Dot Two Pre: " << dot(other) << endl;
+  if(other->getSecond().equals(second))
+    return PI + atan2(determinant(other),dot(other));
+  cout << "Not same second" << endl;
+  Edge* one = new Edge(second,first);
+  Edge* two = new Edge(other->getSecond(),other->getFirst());
+  real answ = PI + atan2(one->determinant(two),one->dot(two));
+  cout << "One Det Two: " << one->determinant(two) << endl;
+  cout << "One Dot Two: " << one->dot(two) << endl;
+  cout << "Wrong Answer: " << answ / PI * 180 << endl;
+  answ = ((PI + atan2(1,0)) / PI) * 180;
+  delete one;
+  delete two;
+  return answ;
 }
 
 void Edge::setFirst(Point2 point) {

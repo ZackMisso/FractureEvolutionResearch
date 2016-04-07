@@ -389,3 +389,13 @@ bool Tests::trimeshCreationTest() {
   // This is probably not even needed
   return false;
 }
+
+bool Tests::angleTests() {
+  Edge* one = new Edge(0,0,0,1);
+  Edge* two = new Edge(0,0,1,0);
+  cout << "Angle Should be PI: " << one->interiorAngle(two) << endl;
+  Edge* three = new Edge(0,0,0,1);
+  Edge* four = new Edge(0,0,-1,0);
+  cout << "Angle Should be 3/2PI: " << one->interiorAngle(two) << endl;
+  return true;
+}
