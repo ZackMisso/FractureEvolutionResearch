@@ -108,6 +108,7 @@ bool Edge::intersects(Edge* other) {
 }
 
 bool Edge::intersects(Edge* other,Point2* ut) {
+  cout << "Inside Intersects" << endl;
   Point2 p = first;
   Point2 q = other->getFirst();
   Point2 r = second.minus(first);
@@ -133,6 +134,7 @@ bool Edge::intersects(Edge* other,Point2* ut) {
     // points meet at ::
     // p + t*r
     // q + u*s
+    cout << "WITHIN THE INTERSECTION" << endl;
     ut->xpos = t;
     ut->ypos = u;
     return true;
@@ -148,6 +150,18 @@ Edge* Edge::intersects(Array<Edge*>* edges,Edge* ignore) {
       //cout << "Calling Intersects" << endl;
       if(intersects(edges->get(i)))
         return edges->get(i);
+  return 0x0;
+}
+
+Edge* Edge::intersects(Array<Edge*>* edges,Edge* ignore,Point2* ut) {
+  cout << "UGHGHGHG" << endl;
+  cout << "Edges Size: " << edges->getSize() << endl;
+  for(int i=0;i<edges->getSize();i++)
+    if(edges->get(i)!=ignore) {
+      cout << "Calling Intersects" << endl;
+      if(intersects(edges->get(i),ut))
+        return edges->get(i);
+    }
   return 0x0;
 }
 
@@ -231,6 +245,28 @@ void Edge::splitOld(Array<Edge*>* cb,Point2 point) {
   DebugController::writeCreateEdge(two);
   cb->add(one);
   cb->add(two);
+}
+
+bool Edge::isOn(Point2 point) {
+  cout << "first: ";
+  first.debug();
+  cout << "second: ";
+  second.debug();
+  cout << "point: ";
+  point.debug();
+  cout << endl;
+  real dx = second.xpos - first.xpos;
+  real dy = second.ypos - first.ypos;
+  real pDx = point.xpos - first.xpos;
+  real pDy = point.ypos - first.ypos;
+  cout << "dx: " << dx << " dy: " << dy << endl;
+  cout << "pDx: " << pDx << " pDy: " << pDy << endl;
+  real slope = dy/dx;
+  real pslope = pDy/pDx;
+  cout << endl;
+  if(slope == pslope && pDx / dx < 1.0 && pDx / dx > 0.0)
+    return true;
+  return false;
 }
 
 void Edge::split(Array<Edge*>* cb,Point2 point,int pointID,IDTracker* ids) {

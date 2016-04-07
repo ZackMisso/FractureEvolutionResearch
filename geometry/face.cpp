@@ -123,7 +123,7 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
   twoVerts->add(newVert);
   // create data structures for new edge generation
   Array<Edge*>* newEdges = new Array<Edge*>();
-  Array<Edge*>* edgesToRemove = new Array<Edge*>();
+  //Array<Edge*>* edgesToRemove = new Array<Edge*>();
   Vertex* newVertOne = 0x0;
   Vertex* newVertTwo = 0x0;
   Edge* edgeOne = 0x0;
@@ -158,6 +158,7 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     DebugController::writeVertState(newVertTwo);
   } else {
     // concave case (harder)
+    cout << "Concave Separate" << endl;
     // choose two random edges
     int edgeIndOne = RNG::RandomInt(edges->getSize());
     int edgeIndTwo = RNG::RandomIntWithException(edges->getSize(),edgeIndOne);
@@ -166,25 +167,56 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     // choose two random locations on those edges
     real edgeDistOne = RNG::RandomFloat();
     real edgeDistTwo = RNG::RandomFloat();
+    cout << "EdgeDistOne: " << edgeDistOne << endl;
+    cout << "EdgeDistTwo: " << edgeDistTwo << endl;
     // get the two points on the edges
     Point2 newPointOne = edgeOne->getPointBetween(edgeDistOne);
     Point2 newPointTwo = edgeTwo->getPointBetween(edgeDistTwo);
+    cout << "New Point One: ";
+    newPointOne.debug();
+    cout << "New Point Two: ";
+    newPointTwo.debug();
     // create temporary edges to test intersection
     Edge* tmpEdgeOne = new Edge(newVert->getLocation().xpos,newVert->getLocation().ypos,newPointOne.xpos,newPointOne.ypos);
     Edge* tmpEdgeTwo = new Edge(newVert->getLocation().xpos,newVert->getLocation().ypos,newPointTwo.xpos,newPointTwo.ypos);
+    cout << "TmpEdgeOne: ";
+    DebugController::writeEdgeState(tmpEdgeOne);
+    cout << "TmpEdgeTwo: ";
+    DebugController::writeEdgeState(tmpEdgeTwo);
     // try to find intersectors
-    Edge* intersectorOne = tmpEdgeOne->intersects(edges,edgeOne);
-    Edge* intersectorTwo = tmpEdgeTwo->intersects(edges,edgeTwo);
+    Point2* utOne = new Point2();
+    Point2* utTwo = new Point2();
+    utOne->xpos = 0.0;
+    utOne->ypos = 0.0;
+    utTwo->xpos = 0.0;
+    utTwo->ypos = 0.0;
+    cout << "Calling intersects" << endl;
+    Edge* intersectorOne = tmpEdgeOne->intersects(edges,edgeOne,utOne);
+    Edge* intersectorTwo = tmpEdgeTwo->intersects(edges,edgeTwo,utTwo);
+    cout << "UT One: ";
+    utOne->debug();
+    cout << "UT Two: ";
+    utTwo->debug();
     // react if there are intersectors
+    cout << "Reacting to InterSectors" << endl;
     if(intersectorOne) {
       newPointOne = intersectorOne->getIntersectionPoint(tmpEdgeOne);
+      cout << "New Point One After Intersection: ";
+      newPointOne.debug();
       delete tmpEdgeOne;
       edgeOne = intersectorOne;
+      cout << "Intersector One: ";
+      DebugController::writeEdgeState(intersectorOne);
     }if(intersectorTwo) {
       newPointTwo = intersectorTwo->getIntersectionPoint(tmpEdgeTwo);
+      cout << "New Point Two After Intersection: ";
+      newPointTwo.debug();
       delete tmpEdgeTwo;
       edgeTwo = intersectorTwo;
+      cout << "Intersector Two: ";
+      DebugController::writeEdgeState(intersectorTwo);
     }
+    cout << "Finished Reacting to InterSectors" << endl;
     // create the new verts
     newVertOne = new Vertex(newPointOne);
     newVertTwo = new Vertex(newPointTwo);
@@ -192,18 +224,34 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     newVertTwo->setID(ids->incrementNextVert());
   }
   // add edges to remove
-  edgesToRemove->add(edgeOne);
-  edgesToRemove->add(edgeTwo);
+  //edgesToRemove->add(edgeOne);
+  //edgesToRemove->add(edgeTwo);
   // split old edges
+  cout << "New Vert One: ";
+  newVertOne->getLocation().debug();
+  cout << "New Vert Two: ";
+  newVertTwo->getLocation().debug();
   edgeOne->split(newEdges,newVertOne->getLocation(),newVertOne->getID(),ids);
+  // check to make sure the edge wasn't the same
+  if(edgeOne == edgeTwo) {
+    cout << "They are the same" << endl;
+    for(int i=0;i<newEdges->getSize();i++)
+      if(newEdges->get(i)->isOn(newVertTwo->getLocation())) {
+        cout << "Found Is On" << endl;
+        edgeTwo = newEdges->remove(i);
+        i = newEdges->getSize();
+      }
+  }
   edgeTwo->split(newEdges,newVertTwo->getLocation(),newVertTwo->getID(),ids);
   cout << "Number Of New Edges: " << newEdges->getSize() << endl;
   // remove old edges
   cout << "Removing Old Edges" << endl;
   edges->remove(edgeOne);
   edges->remove(edgeTwo);
+  cout << "Removed Old Edges" << endl;
   delete edgeOne;
   delete edgeTwo;
+  cout << "Deleted Edges" << endl;
   // create new edges that will be separating
   Edge* separateEdgeOne = new Edge(newVertOne->getLocation(),newVert->getLocation(),newVertOne->getID(),newVert->getID());
   Edge* separateEdgeTwo = new Edge(newVert->getLocation(),newVertTwo->getLocation(),newVert->getID(),newVertTwo->getID());

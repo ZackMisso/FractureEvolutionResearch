@@ -95,32 +95,55 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
     cout << "Num Tris: " << numTris << endl;
     int randTri = RNG::RandomInt(numTris);
     Tri* tri = faceToMutate->getTriMesh()->get(randTri);
+    cout << "Chosen Tri:" << endl;
+    tri->debug();
     // create barys
-    float barys[3];
+    float barys[2];
     real baryTotal = 0.0;
-    for(int i=0;i<3;i++) {
+    for(int i=0;i<2;i++) {
       barys[i] = RNG::RandomFloat();
       baryTotal += barys[i];
     }
     // normalize barys
-    for(int i=0;i<3;i++)
+    for(int i=0;i<2;i++)
       barys[i] /= baryTotal;
     // calculate new point based on barys
     real newVertX = 0.0;
     real newVertY = 0.0;
-    newVertX += tri->getPointOne().xpos * barys[0];
-    newVertX += tri->getPointTwo().xpos * barys[1];
-    newVertX += tri->getPointThree().xpos * barys[2];
-    newVertY += tri->getPointOne().ypos * barys[0];
-    newVertY += tri->getPointTwo().ypos * barys[1];
-    newVertY += tri->getPointThree().ypos * barys[2];
+    cout << "first bary: " << barys[0] << endl;
+    cout << "second bary: " << barys[1] << endl;
+    //cout << "third bary: " << barys[2] << endl;
+    //cout << "bary Total: " << barys[0] + barys[1] + barys[2] << endl;
+    cout << "bary Total: " << barys[0] + barys[1] << endl;
+    newVertX = tri->getPointOne().xpos;
+    newVertX += barys[0] * (tri->getPointTwo().xpos - tri->getPointOne().xpos);
+    newVertX += barys[1] * (tri->getPointThree().xpos - tri->getPointOne().xpos);
+    newVertY = tri->getPointOne().ypos;
+    newVertY += barys[0] * (tri->getPointTwo().ypos - tri->getPointOne().ypos);
+    newVertY += barys[1] * (tri->getPointThree().ypos - tri->getPointOne().ypos);
+    //newVertX += tri->getPointOne().xpos * barys[0];
+    //newVertX += tri->getPointTwo().xpos * barys[1];
+    //newVertX += tri->getPointThree().xpos * barys[2];
+    //newVertY += tri->getPointOne().ypos * barys[0];
+    //newVertY += tri->getPointTwo().ypos * barys[1];
+    //newVertY += tri->getPointThree().ypos * barys[2];
+    cout << "New Vert: " << newVertX << " " << newVertY << endl;
     Vertex* newVert = fracture->giveVertexID(new Vertex(newVertX,newVertY));
     // now split
+    cout << "Beginning Split" << endl;
     Array<Face*>* newFaces = faceToMutate->separate(newVert,fracture->getIDs());
+    cout << "Finished Split" << endl;
+    cout << "Number of New Faces: " << newFaces->getSize() << endl;
     if(newFaces) {
+      cout << "Removing Old Face" << endl;
       fracture->getFaces()->remove(faceToMutate);
-      for(int i=0;newFaces->getSize();i++)
+      cout << "Adding New Faces" << endl;
+      for(int i=0;i<newFaces->getSize();i++) {
+        cout << "Adding Face" << endl;
         fracture->getFaces()->add(newFaces->get(i));
+        cout << "Added Face" << endl;
+      }
+      cout << "Finished Adding new Faces" << endl;
     }
   }
   cout << "Returning Fracture" << endl;

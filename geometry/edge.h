@@ -27,6 +27,7 @@ public:
   bool intersects(Edge* other);
   bool intersects(Edge* other,Point2* ut);
   Edge* intersects(Array<Edge*>* edges,Edge* ignore);
+  Edge* intersects(Array<Edge*>* edges,Edge* ignore,Point2* ut);
   bool eitherMatch(Point2 point);
   bool eitherMatch(int pointID);
   Point2 getIntersectionPoint(Edge* other);
@@ -35,6 +36,7 @@ public:
   Point2 getPointBetween(real pos);
   void splitOld(Array<Edge*>* cb,Point2 point);
   void split(Array<Edge*>* cb,Point2 point,int pointID,IDTracker* ids);
+  bool isOn(Point2 point);
   real determinant(Edge* other);
   real length();
   real dot(Edge* other);
