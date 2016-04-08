@@ -111,9 +111,9 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
     newVertX += tri->getPointOne().xpos * barys[0];
     newVertX += tri->getPointTwo().xpos * barys[1];
     newVertX += tri->getPointThree().xpos * barys[2];
-    newVertY += tri->getPointOne().xpos * barys[0];
-    newVertY += tri->getPointTwo().xpos * barys[1];
-    newVertY += tri->getPointThree().xpos * barys[2];
+    newVertY += tri->getPointOne().ypos * barys[0];
+    newVertY += tri->getPointTwo().ypos * barys[1];
+    newVertY += tri->getPointThree().ypos * barys[2];
     Vertex* newVert = fracture->giveVertexID(new Vertex(newVertX,newVertY));
     // now split
     Array<Face*>* newFaces = faceToMutate->separate(newVert,fracture->getIDs());
