@@ -395,6 +395,7 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
   cout << "Correct up to here" << endl;
 
   while(points->getSize()>3) {
+    cout << "While:: " << points->getSize() << endl;
     for(int i=0;i<points->getSize();i++) {
       // get next and previous point
       int prev = i==0 ? points->getSize()-1 : i-1;
@@ -404,19 +405,27 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
       Edge* two = new Edge(points->get(i),points->get(prev));
       // get their interiorAngle
       real interiorAngle = one->interiorAngle(two);
+      cout << "Int Angle: " << interiorAngle << endl;
       // make sure it is not a reflex angle.
       if(interiorAngle < PI) {
+        cout << "Starting Ear Test" << endl;
           // create the triangle
           Tri* tri = new Tri(points->get(prev),points->get(i),points->get(next));
           bool isEar = true;
-          for(int j=0;j<points->getSize();j++)
-            if(j != i && j != prev && j != next)
+          for(int j=0;j<points->getSize();j++) {
+            cout << "WHAT" << endl;
+            if(j != i && j != prev && j != next) {
               // test if the triangle is valid by making sure no verts are within it
+              cout << "Testing Point: " << j << endl;
+              points->get(j).debug();
               if(tri->isInside(points->get(j))) {
                 isEar = false;
                 j = points->getSize();
               }
+            }
+          }
           if(isEar) {
+            cout << "Found The Ear" << endl;
             triMesh->add(tri);
             points->remove(i);
             i = points->getSize();
@@ -430,6 +439,10 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
   }
   triMesh->add(new Tri(points->get(0),points->get(1),points->get(2)));
   points->clear();
+  cout << "TRIMESH DEBUG :: " << endl;
+  
+  cout << " ///////////////////////// " << endl;
+  for(int i=0;)
   delete points;
 }
 

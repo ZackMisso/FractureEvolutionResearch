@@ -27,6 +27,8 @@ public:
   void updatePosition(int id,Point2 newPos);
   Point2 interpolatePosition(real baryOne,real baryTwo,real baryThree);
   bool isInside(Point2 point);
+  bool isInsideOld(Point2 point);
+  real sign(Point2 one,Point2 two,Point2 three);
   void debug();
   void draw();
   // getter methods

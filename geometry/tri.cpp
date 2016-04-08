@@ -105,10 +105,45 @@ bool Tri::equals(Tri* other) {
   return equals;
 }
 
-// Implement Moller-Trumbore triangle intersection algorithm
+// Implement (later) Moller-Trumbore triangle intersection algorithm
+bool Tri::isInsideOld(Point2 point) {
+  bool b1 = false;
+  bool b2 = false;
+  bool b3 = false;
+  b1 = sign(point,points[0],points[1]) < 0.0;
+  b2 = sign(point,points[1],points[2]) < 0.0;
+  b3 = sign(point,points[2],points[0]) < 0.0;
+  cout << b1 << " " << b2 << " " << b3 << endl;
+  bool ret = (b1==b2 && b2==b3);
+  cout << "Returning From IsInside: " << ret << endl;
+  return (b1==b2 && b2==b3);
+}
+
 bool Tri::isInside(Point2 point) {
-  // to be implemented
-  return false;
+  Point2 v0;
+  Point2 v1;
+  Point2 v2;
+  v0.xpos = points[2].xpos - points[1].xpos;
+  v0.ypos = points[2].ypos - points[1].ypos;
+  v1.xpos = points[0].xpos - points[1].xpos;
+  v1.ypos = points[0].ypos - points[1].ypos;
+  v2.xpos = point.xpos - points[1].xpos;
+  v2.ypos = point.ypos - points[1].ypos;
+  real dot00 = v0.dot(v0);
+  real dot01 = v0.dot(v1);
+  real dot02 = v0.dot(v2);
+  real dot11 = v1.dot(v1);
+  real dot12 = v1.dot(v2);
+  real invDen = 1 / (dot00 * dot02 - dot01 * dot01);
+  real u = (dot11 * dot02 - dot01 * dot12) * invDen;
+  real v = (dot00 * dot12 - dot01 * dot02) * invDen;
+  return (u >=0.0) && (v >= 0.0) && (u + v < 1.0);
+}
+
+real Tri::sign(Point2 one,Point2 two,Point2 three) {
+  real sign = (one.xpos - three.xpos) * (two.ypos - three.ypos) * (two.xpos - three.xpos) - (one.ypos - three.ypos);
+  cout << "Sign: " << sign << endl;
+  return sign;
 }
 
 void Tri::debug() {
