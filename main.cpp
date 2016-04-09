@@ -65,6 +65,7 @@ void cb_removeRandomVertM(int id);
 void cb_vertPositionM(int id);
 void cb_printAllVertIDs(int id);
 void cb_printAllEdgeIDs(int id);
+void cb_printAllFaceIDs(int id);
 
 // Arguements
 GLUI* subwindow;
@@ -159,6 +160,7 @@ void createInterface() { // TODO :: MOVE THIS TO INTEFACE CLASS
   interface->findMenu = subwindow->add_rollout("Find Object",false);
   interface->printAllVertIDs = subwindow->add_button_to_panel(interface->findMenu,"Print Vertex IDs",1,cb_printAllVertIDs);
   interface->printAllEdgeIDs = subwindow->add_button_to_panel(interface->findMenu,"Print Edge IDs",1,cb_printAllEdgeIDs);
+  interface->printAllFaceIDs = subwindow->add_button_to_panel(interface->findMenu,"Print Face IDs",1,cb_printAllFaceIDs);
   interface->findVertMenu = subwindow->add_rollout_to_panel(interface->findMenu,"Find Vertex",false);
   interface->findVertID = subwindow->add_edittext_to_panel(interface->findVertMenu,"Vertex ID",GLUI_EDITTEXT_INT);
   interface->findVertButton = subwindow->add_button_to_panel(interface->findVertMenu,"Find Vertex",1,cb_findVertex);
@@ -230,13 +232,18 @@ void display() {
     glEnd();
   }
   if(selectData->getSelectedFace()) {
-    // NEED TO IMPLEMENT FACE DRAW
-    //glBegin(GL_TRIANGLES);
-    //selectData->getSelectedFace()->draw();
-    //glEnd();
+    glBegin(GL_POINTS);
+    Array<Vertex*>* verts = selectData->getSelectedFace()->getVerts();
+    for(int i=0;i<verts->getSize();i++)
+      verts->get(i)->draw();
+    glEnd();
+    glBegin(GL_LINES);
+    Array<Edge*>* edges = selectData->getSelectedFace()->getEdges();
+    for(int i=0;i<edges->getSize();i++)
+      edges->get(i)->draw();
+    glEnd();
   }
 
-  glEnd();
   glutSwapBuffers();
 }
 
@@ -559,6 +566,16 @@ void cb_printAllEdgeIDs(int id) {
   cout << "Edge IDs :: " << endl;
   for(int i=0;i<edges->getSize();i++)
     cout << "ID :: " << edges->get(i)->getID() << endl;
+  cout << endl;
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_printAllFaceIDs(int id) {
+  Array<Face*>* faces = programData->getCurrentFracture()->getFaces();
+  cout << "Face IDs :: " << endl;
+  for(int i=0;i<faces->getSize();i++)
+    cout << "ID :: " << faces->get(i)->getID() << endl;
   cout << endl;
   glutSetWindow(window);
   glutPostRedisplay();

@@ -34,6 +34,7 @@ public:
   GLUI_Rollout* findMenu;
   GLUI_Button* printAllVertIDs;
   GLUI_Button* printAllEdgeIDs;
+  GLUI_Button* printAllFaceIDs;
   GLUI_Rollout* findVertMenu;
   GLUI_EditText* findVertID;
   GLUI_Button* findVertButton;

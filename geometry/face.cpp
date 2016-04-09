@@ -469,7 +469,7 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
       DebugController::writeEdgeState(two);
       // get their interiorAngle
       real interiorAngle = one->interiorAngle(two);
-      cout << "Int Angle: " << interiorAngle << endl;
+      cout << "Int Angle: " << interiorAngle / PI * 180 << endl;
       // make sure it is not a reflex angle.
       if(interiorAngle < PI) {
         cout << "Starting Ear Test" << endl;
