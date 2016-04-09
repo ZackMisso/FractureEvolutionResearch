@@ -393,9 +393,44 @@ bool Tests::trimeshCreationTest() {
 bool Tests::angleTests() {
   Edge* one = new Edge(0,0,0,1);
   Edge* two = new Edge(0,0,1,0);
-  cout << "Angle Should be PI: " << one->interiorAngle(two) << endl;
+  real answ = one->interiorAngle(two);
+  bool failed = false;
+  cout << "Angle Should be 90: " << answ / PI * 180 << endl;
+  //if(answ / PI * 180 != 90) {
+  //  cout << "Blah One" << endl;
+  //  failed = true;
+  //}
   Edge* three = new Edge(0,0,0,1);
   Edge* four = new Edge(0,0,-1,0);
-  cout << "Angle Should be 3/2PI: " << one->interiorAngle(two) << endl;
-  return true;
+  real answ2 = three->interiorAngle(four);
+  cout << "Angle Should be 270: " << answ2 / PI * 180 << endl;
+  //if((answ2 / PI * 180) != 270) {
+  //  cout << "Blah Two: " << (answ2 / PI * 180 != 270) << " " << (answ2 / PI * 180) << endl;
+  //  failed = true;
+  //}
+  Edge* five = new Edge(0,1,0,0);
+  Edge* six = new Edge(1,0,0,0);
+  answ = five->interiorAngle(six);
+  cout << "Angle Should be 90: " << answ / PI * 180 << endl;
+  //if(answ / PI * 180 != 90) {
+  //  cout << "Blah Three" << endl;
+  //  failed = true;
+  //}
+  Edge* seven = new Edge(0,0,0,1);
+  Edge* eight = new Edge(-1,0,0,0);
+  answ2 = seven->interiorAngle(eight);
+  cout << "Angle Should be 270: " << answ2 / PI * 180 << endl;
+  //if(answ2 / PI * 180 != 270) {
+  //  cout << "Blah Four" << endl;
+  //  failed = true;
+  //}
+  delete one;
+  delete two;
+  delete three;
+  delete four;
+  delete five;
+  delete six;
+  delete seven;
+  delete eight;
+  return failed;
 }
