@@ -425,57 +425,87 @@ Array<Vertex*>* Face::getVertsInEdge(Edge* edge) {
 
 // THIS BECOMES AN ISSUE WHEN SPLITTING A POLYGON WITH HOLES
 // Triangulation by Ear Clipping
-void Face::splitIntoTrimeshConcave() { // REWRITE
+// Very Inefficient... Optimize later
+void Face::splitIntoTrimeshConcave() {
+  // clear the old trimesh
   clearTrimesh();
+  // sort the verts by path
   Array<Point2>* points = sortPointsByPath();
+  // make sure they are in counter clock-wise order
   if(isClockwise(points))
     points = reversePath(points);
+  // Debug Code
   cout << "Writing Points" << endl;
   for(int i=0;i<points->getSize();i++)
     DebugController::writePointState(points->get(i));
   cout << "Finished Writing Points" << endl;
+  // While the points make a shape other than a triangle
   while(points->getSize()>3) {
-    //cout << "While:: " << points->getSize() << endl;
-    //cout << "Face ID: " << id << endl;
-    for(int i=0;i<points->getSize();i++) {
-      // get next and previous point
-      int prev = i==0 ? points->getSize()-1 : i-1;
-      int next = i==points->getSize()-1 ? 0 : i+1;
-      //cout << "Cur: " << i << " Nex: " << next << " Prev: " << prev << endl;
-      // create two edges going from current point
-      Edge* one = new Edge(points->get(i),points->get(next));
-      Edge* two = new Edge(points->get(i),points->get(prev));
-      // get their interiorAngle
+    // create a temporary list of edges with the current points
+    Array<Edge*>* tmpEdges = new Array<Edge*>();
+    for(int i=1;i<points->getSize();i++)
+      tmpEdges->add(new Edge(points->get(i),points->get(i-1),i,i-1));
+    tmpEdges->add(new Edge(points->get(0),points->get(points->getSize()-1),0,points->getSize()-1));
+    bool foundOne = false;
+    Tri* newTri = 0x0;
+    // for each edge intersection
+    for(int i=0;i<tmpEdges->getSize() && !foundOne;i++) {
+      Edge* one = i==0 ? tmpEdges->get(tmpEdges->getSize()-1) : tmpEdges->get(i);
+      Edge* two = i==0 ? tmpEdges->get(0) : tmpEdges->get(i-1);
+      // test the interior angle
       real interiorAngle = one->interiorAngle(two);
-      //cout << "Int Angle: " << interiorAngle << endl;
-      // make sure it is not a reflex angle.
+      // if it is non-reflexive keep going
       if(interiorAngle < PI) {
-        // create the triangle
-        Tri* tri = new Tri(points->get(prev),points->get(i),points->get(next));
+        // get the different points and their locations in the list
+        Point2 oneP = one->getFirst();
+        Point2 twoP = one->getSecond();
+        Point2 threeP;
+        int same;
+        int diffOne;
+        int diffTwo;
+        if(two->getFirst().equals(oneP) || two->getFirst().equals(twoP)) {
+          threeP = two->getSecond();
+          same = two->getFirstVertID();
+        }
+        else {
+          threeP = two->getFirst();
+          same = two->getSecondVertID();
+        }
+        diffOne = one->getOtherPointID(same);
+        diffTwo = two->getOtherPointID(same);
+        // create a triangle with those points
+        newTri = new Tri(oneP,twoP,threeP);
         bool isEar = true;
+        // test if the triangle is valid by making sure no verts are within it
         for(int j=0;j<points->getSize();j++) {
-          if(j != i && j != prev && j != next) {
-            // test if the triangle is valid by making sure no verts are within it
+          if(j != same && j != diffOne && j != diffTwo) {
             points->get(j).debug();
-            if(tri->isInside(points->get(j))) {
+            if(newTri->isInside(points->get(j))) {
+              // if there is a vert inside this is not a valid choice
               isEar = false;
               j = points->getSize();
             }
           }
         }
         if(isEar) {
-          triMesh->add(tri);
-          points->remove(i);
-          i = points->getSize();
+          // if it is an ear add the tri to the tri mesh
+          triMesh->add(newTri);
+          points->remove(same);
+          foundOne = true;
         } else {
-          delete tri;
+          // if it is not delete the triangle
+          delete newTri;
         }
       }
-      delete two;
-      delete one;
     }
+    // clean up the temporary edge array
+    while(tmpEdges->getSize())
+      delete tmpEdges->removeLast();
+    delete tmpEdges;
   }
+  // add the final triangle to the trimesh
   triMesh->add(new Tri(points->get(0),points->get(1),points->get(2)));
+  // clean up the points array
   points->clear();
   delete points;
 }

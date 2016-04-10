@@ -285,6 +285,12 @@ real Edge::interiorAngle(Edge* other) {
   return PI + atan2(determinant(other),dot(other));
 }
 
+int Edge::getOtherPointID(int pointID) {
+  if(pointID == firstVertID)
+    return secondVertID;
+  return firstVertID;
+}
+
 void Edge::setFirst(Point2 point) {
   first.xpos = point.xpos;
   first.ypos = point.ypos;
