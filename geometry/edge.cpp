@@ -345,6 +345,13 @@ void Edge::setSecond(Point2 point) {
   second.ypos = point.ypos;
 }
 
+bool Edge::belongsToFace(int id) {
+  for(int i=0;i<faceIDs->getSize();i++)
+    if(faceIDs->get(i).val == id)
+      return true;
+  return false;
+}
+
 Array<Integer>* Edge::getFaceIDs() { return faceIDs; }
 Point2 Edge::getFirst() { return first; }
 Point2 Edge::getSecond() { return second; }

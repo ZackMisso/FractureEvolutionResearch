@@ -147,5 +147,7 @@ Fracture* AddRandomVertMutation::mutate(Fracture* fracture) {
     }
   }
   cout << "Returning Fracture" << endl;
+  cout << "Recounting Fracture" << endl;
+  fracture->recount();
   return fracture;
 }

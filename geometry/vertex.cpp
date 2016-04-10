@@ -97,6 +97,13 @@ bool Vertex::isConnected(Vertex* other) {
   return false;
 }
 
+bool Vertex::belongsToFace(int id) {
+  for(int i=0;i<faceIDs->getSize();i++)
+    if(faceIDs->get(i).val == id)
+      return true;
+  return false;
+}
+
 Array<Edge*>* Vertex::getEdges() { return edges; }
 Array<Integer>* Vertex::getFaceIDs() { return faceIDs; }
 Point2 Vertex::getLocation() { return location; }

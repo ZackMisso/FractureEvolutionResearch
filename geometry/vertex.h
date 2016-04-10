@@ -26,6 +26,7 @@ public:
   void updateFaceIDs();
   bool isMatch(Point2 point);
   bool isConnected(Vertex* other);
+  bool belongsToFace(int id);
 	// getters
 	Array<Edge*>* getEdges();
   Array<Integer>* getFaceIDs();

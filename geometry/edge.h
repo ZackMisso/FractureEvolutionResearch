@@ -37,6 +37,7 @@ public:
   void splitOld(Array<Edge*>* cb,Point2 point);
   void split(Array<Edge*>* cb,Point2 point,int pointID,IDTracker* ids);
   bool isOn(Point2 point);
+  bool belongsToFace(int id);
   real determinant(Edge* other);
   real length();
   real dot(Edge* other);

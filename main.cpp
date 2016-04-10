@@ -468,6 +468,11 @@ void cb_findVertex(int id) {
     if(verts->get(i)->getID() == vertID) {
       //cout << "Found Selected" << endl;
       selectData->setSelectedVert(verts->get(i));
+      Vertex* vert = verts->get(i);
+      cout << "Edges for Vert: ";
+      for(int i=0;i<vert->getEdges()->getSize();i++)
+        cout << vert->getEdges()->get(i)->getID() << " ";
+      cout << endl;
     }
   //cout << "IN HERE" << endl;
   glutSetWindow(window);
@@ -514,7 +519,7 @@ void cb_addRandomVertM(int id) {
   delete mutate;
   Fracture* fracture = programData->getCurrentFracture();
   cout << "Num Faces: " << fracture->getFaces()->getSize() << endl;
-  fracture->recount();
+  //fracture->recount();
   glutSetWindow(window);
   glutPostRedisplay();
 }
@@ -554,8 +559,13 @@ void cb_vertPositionM(int id) {
 void cb_printAllVertIDs(int id) {
   Array<Vertex*>* verts = programData->getCurrentFracture()->getVerts();
   cout << "Vertex IDs :: " << endl;
-  for(int i=0;i<verts->getSize();i++)
-    cout << "ID :: " << verts->get(i)->getID() << endl;
+  for(int i=0;i<verts->getSize();i++) {
+    cout << "ID :: " << verts->get(i)->getID();
+    cout << "In Faces : ";
+    for(int j=0;j<verts->get(i)->getFaceIDs()->getSize();j++)
+      cout << verts->get(i)->getFaceIDs()->get(j).val << " ";
+    cout << endl;
+  }
   cout << endl;
   glutSetWindow(window);
   glutPostRedisplay();
@@ -564,8 +574,13 @@ void cb_printAllVertIDs(int id) {
 void cb_printAllEdgeIDs(int id) {
   Array<Edge*>* edges = programData->getCurrentFracture()->getEdges();
   cout << "Edge IDs :: " << endl;
-  for(int i=0;i<edges->getSize();i++)
-    cout << "ID :: " << edges->get(i)->getID() << endl;
+  for(int i=0;i<edges->getSize();i++) {
+    cout << "ID :: " << edges->get(i)->getID();
+    cout << "In Faces : ";
+    for(int j=0;j<edges->get(i)->getFaceIDs()->getSize();j++)
+      cout << edges->get(i)->getFaceIDs()->get(j).val << " ";
+    cout << endl;
+  }
   cout << endl;
   glutSetWindow(window);
   glutPostRedisplay();

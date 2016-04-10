@@ -36,6 +36,7 @@ public:
   Array<Point2>* sortPointsByPath();
   Array<Integer>* sortVertIDsByPath();
   Array<Point2>* reversePath(Array<Point2>* sortedPath);
+  Array<Vertex*>* getVertsInEdge(Edge* edge);
   bool isClockwise(Array<Point2>* sortedPath);
   void detectIfConvex();
   void splitIntoTrimesh();
@@ -47,6 +48,7 @@ public:
   real area();
   void addVert(Vertex* vert);
   void addEdge(Edge* edge);
+  void clear();
   // getter methods
   Array<Tri*>* getTriMesh();
   Array<Vertex*>* getVerts();
