@@ -108,7 +108,6 @@ bool Edge::intersects(Edge* other) {
 }
 
 bool Edge::intersects(Edge* other,Point2* ut) {
-  cout << "Inside Intersects" << endl;
   Point2 p = first;
   Point2 q = other->getFirst();
   Point2 r = second.minus(first);
@@ -147,30 +146,20 @@ bool Edge::intersects(Edge* other,Point2* ut) {
 Edge* Edge::intersects(Array<Edge*>* edges,Edge* ignore) {
   for(int i=0;i<edges->getSize();i++)
     if(edges->get(i)!=ignore)
-      //cout << "Calling Intersects" << endl;
       if(intersects(edges->get(i)))
         return edges->get(i);
   return 0x0;
 }
 
 Edge* Edge::intersects(Array<Edge*>* edges,Edge* ignore,Point2* ut) {
-  cout << "UGHGHGHG" << endl;
-  cout << "Edges Size: " << edges->getSize() << endl;
   for(int i=0;i<edges->getSize();i++)
-    if(edges->get(i)!=ignore) {
-      cout << "Calling Intersects" << endl;
+    if(edges->get(i)!=ignore)
       if(intersects(edges->get(i),ut))
         return edges->get(i);
-    }
   return 0x0;
 }
 
 Point2 Edge::getIntersectionPoint(Edge* other) {
-  //cout << "//////////////////////////////////" << endl;
-  //cout << "This Edge :: " << endl;
-  //Debug::printLine(this);
-  //cout << "Other Edge :: " << endl;
-  //Debug::printLine(other);
   Point2 intersection;
   intersection.xpos = -1;
   intersection.ypos = -1;
@@ -187,19 +176,8 @@ Point2 Edge::getIntersectionPoint(Edge* other) {
   real t = (-s2y * tmp1 + s2x * tmp2) / det;
   s*=-1;
   t*=-1;
-  //cout << "s1x :: " << s1x << endl;
-  //cout << "s1y :: " << s1y << endl;
-  //cout << "s2x :: " << s2x << endl;
-  //cout << "s2y :: " << s2y << endl;
-  //cout << "T :: " << t << endl;
-  //cout << "S :: " << s << endl;
-  //cout << "Xpos :: " << first.xpos << endl;
-  //cout << "Ypos :: " << first.ypos << endl;
   intersection.xpos = first.xpos - t * s1x;
   intersection.ypos = first.ypos - t * s1y;
-  //cout << "INTERSECTION :: " << endl;
-  //Debug::printPoint(intersection);
-  //cout << "///////////////!!!///////////////////" << endl;
   return intersection;
 }
 
@@ -248,22 +226,12 @@ void Edge::splitOld(Array<Edge*>* cb,Point2 point) {
 }
 
 bool Edge::isOn(Point2 point) {
-  cout << "first: ";
-  first.debug();
-  cout << "second: ";
-  second.debug();
-  cout << "point: ";
-  point.debug();
-  cout << endl;
   real dx = second.xpos - first.xpos;
   real dy = second.ypos - first.ypos;
   real pDx = point.xpos - first.xpos;
   real pDy = point.ypos - first.ypos;
-  cout << "dx: " << dx << " dy: " << dy << endl;
-  cout << "pDx: " << pDx << " pDy: " << pDy << endl;
   real slope = dy/dx;
   real pslope = pDy/pDx;
-  cout << endl;
   if(slope == pslope && pDx / dx < 1.0 && pDx / dx > 0.0)
     return true;
   return false;
@@ -303,18 +271,11 @@ real Edge::dot(Edge* other) {
   real dyOne = second.ypos - first.ypos;
   real dxTwo = other->getSecond().xpos - other->getFirst().xpos;
   real dyTwo = other->getSecond().ypos - other->getFirst().ypos;
-  //cout << "DOT" << dxOne << "*" << dxTwo << "-" << dyOne << "*" << dyTwo << endl;
   return dxOne*dxTwo + dyOne*dyTwo;
 }
 
 // Minus for anti-clockwise, plus for clockwise
 real Edge::interiorAngle(Edge* other) {
-  cout << endl;
-  real detdet = determinant(other);
-  real dotdot = dot(other);
-  //cout << "One Det Two Pre: " << detdet << endl;
-  //cout << "One Dot Two Pre: " << dotdot << endl;
-  //cout << "Norm Ret: " << PI + atan2(detdet,dotdot) << endl;
   if(other->getSecond().equals(first)) {
     Edge* tmp = new Edge(other->getSecond(),other->getFirst());
     real ans = PI + atan2(determinant(tmp),dot(tmp));
@@ -322,17 +283,6 @@ real Edge::interiorAngle(Edge* other) {
     return ans;
   }
   return PI + atan2(determinant(other),dot(other));
-  //cout << "Not same second" << endl;
-  //Edge* one = new Edge(second,first);
-  //Edge* two = new Edge(other->getSecond(),other->getFirst());
-  //real answ = PI + atan2(one->determinant(two),one->dot(two));
-  //cout << "One Det Two: " << one->determinant(two) << endl;
-  //cout << "One Dot Two: " << one->dot(two) << endl;
-  //cout << "Wrong Answer: " << answ / PI * 180 << endl;
-  //answ = ((PI + atan2(1,0)) / PI) * 180;
-  //delete one;
-  //delete two;
-  //return answ;
 }
 
 void Edge::setFirst(Point2 point) {

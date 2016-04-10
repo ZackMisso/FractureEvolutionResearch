@@ -168,9 +168,6 @@ void Fracture::draw(RenderSettings* renderSettings,InterfaceData* interfaceData)
 	if(renderSettings->getDisplayVerts()) {
 		glPointSize((real)renderSettings->getVertSize());
 		glBegin(GL_POINTS);
-		//glPointSize((float)renderSettings->getVertSize());
-		//cout << "DRAWING VERTS :: " << (float)renderSettings->getVertSize() << endl;
-		//cout << "NUMBER OF VERTS :: " << verts->getSize() << endl;
 		for(int i=0;i<verts->getSize();i++)
 			verts->get(i)->draw();
 		glEnd();
@@ -178,8 +175,6 @@ void Fracture::draw(RenderSettings* renderSettings,InterfaceData* interfaceData)
 	if(renderSettings->getDisplayEdges()) {
 		glLineWidth((real)renderSettings->getEdgeSize());
 		glBegin(GL_LINES);
-		//cout << "NUMBER OF EDGES :: " << edges->getSize() << endl;
-		//glLineWidth((float)renderSettings->getEdgeSize());
 		for(int i=0;i<edges->getSize();i++)
 			edges->get(i)->draw();
 		glEnd();

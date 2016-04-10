@@ -107,14 +107,9 @@ bool Face::contains(Edge* edge) {
 // TODO :: Make This Cleaner
 Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
   cout << "Start Separate" << endl;
-  cout << "First Vert Edges: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
   // create the list of new faces
   Array<Face*>* newFaces = new Array<Face*>();
   // get number of separations
-  //int numSeperations = RNG::RandomInt(2,edges->getSize(),4);
   int numSeparations = 1;
   // create required data structures
   Array<Edge*>* oneEdges = new Array<Edge*>();
@@ -122,22 +117,16 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
   Array<Vertex*>* oneVerts = new Array<Vertex*>();
   Array<Vertex*>* twoVerts = new Array<Vertex*>();
   // add new vert to both new adds
-  cout << "Adding New Vertex to Verts: ";
-  DebugController::writeVertState(newVert);
   oneVerts->add(newVert);
   twoVerts->add(newVert);
-  // NOT NEEDED // add face id to new vert
-  //newVert->getFaceIDs()->add(faceToMutate->getID())
   // create data structures for new edge generation
   Array<Edge*>* newEdges = new Array<Edge*>();
-  //Array<Edge*>* edgesToRemove = new Array<Edge*>();
   Vertex* newVertOne = 0x0;
   Vertex* newVertTwo = 0x0;
   Edge* edgeOne = 0x0;
   Edge* edgeTwo = 0x0;
   if(isConvex) {
     // convex case (easy)
-    cout << "Inside Convex Case In Face Split" << endl;
     // choose two random edges
     int edgeIndOne = RNG::RandomInt(edges->getSize());
     int edgeIndTwo = RNG::RandomIntWithException(edges->getSize(),edgeIndOne);
@@ -146,14 +135,9 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     // choose two random locations on those edges
     real edgeDistOne = RNG::RandomFloatMin(0.1);
     real edgeDistTwo = RNG::RandomFloatMin(0.1);
-    cout << "Chose Random Locations: " << edgeDistOne << " and " << edgeDistTwo << endl;
     // get the two points on the edges
     Point2 newPointOne = edgeOne->getPointBetween(edgeDistOne);
-    cout << "New Point One: ";
-    DebugController::writePointState(newPointOne);
     Point2 newPointTwo = edgeTwo->getPointBetween(edgeDistTwo);
-    cout << "New Point Two: ";
-    DebugController::writePointState(newPointTwo);
     // create the new verts
     newVertOne = new Vertex(newPointOne);
     newVertTwo = new Vertex(newPointTwo);
@@ -163,10 +147,6 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
       newVertOne->getFaceIDs()->add(edgeOne->getFaceIDs()->get(i));
     for(int i=0;i<edgeTwo->getFaceIDs()->getSize();i++)
       newVertTwo->getFaceIDs()->add(edgeTwo->getFaceIDs()->get(i));
-    cout << "Creating New Edge Vert One: ";
-    DebugController::writeVertState(newVertOne);
-    cout << "Creating New Edge Vert Two: ";
-    DebugController::writeVertState(newVertTwo);
   } else {
     // concave case (harder)
     cout << "Concave Separate" << endl;
@@ -178,22 +158,12 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     // choose two random locations on those edges
     real edgeDistOne = RNG::RandomFloatMinMax(0.1,0.9);
     real edgeDistTwo = RNG::RandomFloatMinMax(0.1,0.9);
-    cout << "EdgeDistOne: " << edgeDistOne << endl;
-    cout << "EdgeDistTwo: " << edgeDistTwo << endl;
     // get the two points on the edges
     Point2 newPointOne = edgeOne->getPointBetween(edgeDistOne);
     Point2 newPointTwo = edgeTwo->getPointBetween(edgeDistTwo);
-    cout << "New Point One: ";
-    newPointOne.debug();
-    cout << "New Point Two: ";
-    newPointTwo.debug();
     // create temporary edges to test intersection
     Edge* tmpEdgeOne = new Edge(newVert->getLocation().xpos,newVert->getLocation().ypos,newPointOne.xpos,newPointOne.ypos);
     Edge* tmpEdgeTwo = new Edge(newVert->getLocation().xpos,newVert->getLocation().ypos,newPointTwo.xpos,newPointTwo.ypos);
-    cout << "TmpEdgeOne: ";
-    DebugController::writeEdgeState(tmpEdgeOne);
-    cout << "TmpEdgeTwo: ";
-    DebugController::writeEdgeState(tmpEdgeTwo);
     // try to find intersectors
     Point2* utOne = new Point2();
     Point2* utTwo = new Point2();
@@ -201,43 +171,21 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     utOne->ypos = 0.0;
     utTwo->xpos = 0.0;
     utTwo->ypos = 0.0;
-    cout << "Calling intersects" << endl;
-    cout << "All Edges ::" << endl;
-    for(int i=0;i<edges->getSize();i++) {
-      DebugController::writeEdgeState(edges->get(i));
-    }
-    cout << "Tmp Edge One: ";
-    DebugController::writeEdgeState(tmpEdgeOne);
-    cout << "Tmp Edge Two: ";
-    DebugController::writeEdgeState(tmpEdgeTwo);
     Edge* intersectorOne = tmpEdgeOne->intersects(edges,edgeOne,utOne);
     Edge* intersectorTwo = tmpEdgeTwo->intersects(edges,edgeTwo,utTwo);
-    cout << "UT One: ";
-    utOne->debug();
-    cout << "UT Two: ";
-    utTwo->debug();
     // react if there are intersectors
-    cout << "Reacting to InterSectors" << endl;
     if(intersectorOne) {
       newPointOne = intersectorOne->getIntersectionPoint(tmpEdgeOne);
-      cout << "New Point One After Intersection: ";
       cout << "Intersector One" << endl;
-      newPointOne.debug();
       delete tmpEdgeOne;
       edgeOne = intersectorOne;
-      cout << "Intersector One: ";
-      DebugController::writeEdgeState(intersectorOne);
     }if(intersectorTwo) {
       newPointTwo = intersectorTwo->getIntersectionPoint(tmpEdgeTwo);
-      cout << "New Point Two After Intersection: ";
       cout << "Intersector Two" << endl;
       newPointTwo.debug();
       delete tmpEdgeTwo;
       edgeTwo = intersectorTwo;
-      cout << "Intersector Two: ";
-      DebugController::writeEdgeState(intersectorTwo);
     }
-    cout << "Finished Reacting to InterSectors" << endl;
     // create the new verts
     newVertOne = new Vertex(newPointOne);
     newVertTwo = new Vertex(newPointTwo);
@@ -248,18 +196,7 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     for(int i=0;i<edgeTwo->getFaceIDs()->getSize();i++)
       newVertTwo->getFaceIDs()->add(edgeTwo->getFaceIDs()->get(i));
   }
-  // add edges to remove
-  //edgesToRemove->add(edgeOne);
-  //edgesToRemove->add(edgeTwo);
   // split old edges
-  cout << "First Vert Edges Two: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
-  cout << "New Vert One: ";
-  newVertOne->getLocation().debug();
-  cout << "New Vert Two: ";
-  newVertTwo->getLocation().debug();
   Array<Edge*>* newEdgesTwo = new Array<Edge*>();
   Array<Edge*>* newEdgesOne = new Array<Edge*>();
   edgeOne->split(newEdgesOne,newVertOne->getLocation(),newVertOne->getID(),ids);
@@ -270,36 +207,22 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
   }
   // check to make sure the secound edge isn't the same
   if(edgeOne == edgeTwo) {
-    cout << "They are the same" << endl;
     for(int i=0;i<newEdges->getSize();i++)
       if(newEdges->get(i)->isOn(newVertTwo->getLocation())) {
-        cout << "Found Is On" << endl;
         edgeTwo = newEdges->remove(i);
         newEdgesOne->remove(i);
         i = newEdges->getSize();
       }
   }
-  //Array<Edge*>* newEdgesTwo = new Array<Edge*>();
   edgeTwo->split(newEdgesTwo,newVertTwo->getLocation(),newVertTwo->getID(),ids);
   // updated edges for Vert Two
   for(int i=0;i<newEdgesTwo->getSize();i++) {
     newVertTwo->getEdges()->add(newEdgesTwo->get(i));
     newEdges->add(newEdgesTwo->get(i));
   }
-  //newEdgesTwo->clear();
-  //delete newEdgesTwo;
-
-  cout << "First Vert Edges Two: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
-
-  cout << "Number Of New Edges: " << newEdges->getSize() << endl;
   // remove old edges
-  cout << "Removing Old Edges" << endl;
   edges->remove(edgeOne);
   edges->remove(edgeTwo);
-  cout << "Removed Old Edges: " << edgeOne->getID() << " " << edgeTwo->getID() << endl;
   // remove edges from the verts they are connected to
   Array<Vertex*>* vertsRemOne = getVertsInEdge(edgeOne);
   Array<Vertex*>* vertsRemTwo = getVertsInEdge(edgeTwo);
@@ -339,60 +262,21 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
   delete vertsRemTwo;
   delete edgeOne;
   delete edgeTwo;
-  cout << "Deleted Edges" << endl;
-  cout << "First Vert Edges Pop: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
-  cout << "First Vert Edges Pop Too: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
   // create new edges that will be separating
   Edge* separateEdgeOne = new Edge(newVertOne->getLocation(),newVert->getLocation(),newVertOne->getID(),newVert->getID());
   Edge* separateEdgeTwo = new Edge(newVert->getLocation(),newVertTwo->getLocation(),newVert->getID(),newVertTwo->getID());
-  cout << "First Vert Edges Huh: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
   newVertOne->getEdges()->add(separateEdgeOne);
   newVertTwo->getEdges()->add(separateEdgeTwo);
-  cout << "First Vert Edges What: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
   newVert->getEdges()->add(separateEdgeOne);
   newVert->getEdges()->add(separateEdgeTwo);
-  cout << "First Vert Edges Corn: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
   separateEdgeOne->setID(ids->incrementNextEdge());
   separateEdgeTwo->setID(ids->incrementNextEdge());
-  cout << "First Vert Edges Pop: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
-  cout << "Creating The First New Separating Edge" << endl;
-  DebugController::writeEdgeState(separateEdgeOne);
-  cout << "Creating The Second New Separating Edge" << endl;
-  DebugController::writeEdgeState(separateEdgeTwo);
   // add new edges to face
-  cout << "Adding New Edges" << endl;
   while(newEdges->getSize())
     edges->add(newEdges->removeLast());
   delete newEdges;
-  cout << "Finding The Separate Paths" << endl;
-  cout << "First Vert Edges Half: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
   // find two separate paths
   findSeparatePaths(oneEdges,twoEdges,newVertOne->getLocation(),newVertTwo->getLocation());
-  cout << "First Vert Edges Half: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
   oneEdges->add(separateEdgeOne);
   oneEdges->add(separateEdgeTwo);
   twoEdges->add(separateEdgeOne);
@@ -430,42 +314,15 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     oneEdges->get(i)->getFaceIDs()->add(Integer(oneFace->getID()));
   for(int i=0;i<twoEdges->getSize();i++)
     twoEdges->get(i)->getFaceIDs()->add(Integer(twoFace->getID()));
-  cout << "First Vert Edges Three: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
   // updates face references in verts
   for(int i=0;i<oneVerts->getSize();i++)
     oneVerts->get(i)->updateFaceIDs();
   for(int i=0;i<twoVerts->getSize();i++)
     twoVerts->get(i)->updateFaceIDs();
-  cout << "First Vert Edges Three: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
   // add to array of faces
   newFaces->add(oneFace);
   newFaces->add(twoFace);
-  cout << "First Face ::" << endl;
-  cout << "Number of Edges: " << oneFace->getEdges()->getSize() << endl;
-  for(int i=0;i<oneFace->getEdges()->getSize();i++)
-    DebugController::writeEdgeState(oneFace->getEdges()->get(i));
-  cout << "Number of Verts: " << oneFace->getVerts()->getSize() << endl;
-  for(int i=0;i<oneFace->getVerts()->getSize();i++)
-    DebugController::writeVertState(oneFace->getVerts()->get(i));
-  cout << "Second Face ::" << endl;
-  cout << "Number of Edges: " << twoFace->getEdges()->getSize() << endl;
-  for(int i=0;i<twoFace->getEdges()->getSize();i++)
-    DebugController::writeEdgeState(twoFace->getEdges()->get(i));
-  cout << "Number of Verts: " << twoFace->getVerts()->getSize() << endl;
-  for(int i=0;i<twoFace->getVerts()->getSize();i++)
-    DebugController::writeVertState(twoFace->getVerts()->get(i));
   // return array of faces
-  cout << "End Separate" << endl;
-  cout << "First Vert Edges: ";
-  for(int i=0;i<verts->get(0)->getEdges()->getSize();i++)
-    cout << verts->get(0)->getEdges()->get(i)->getID() << " ";
-  cout << endl;
   return newFaces;
 }
 
@@ -492,14 +349,8 @@ Array<Point2>* Face::sortPointsByPath() {
   Point2 start = edge->getFirst();
   Point2 current = edge->getFirst();
   Point2 next = edge->getSecond();
-  //cout << "Before While Loop" << endl;
   while(next.xpos != start.xpos || next.ypos != start.ypos) {
-    //cout << "IN WHILE LOOP" << endl;
     sortedPoints->add(current);
-    //cout << "Current :: ";
-    //current.debug();
-    //cout << "Next :: ";
-    //next.debug();
     bool chk = false;
     for(int i=0;i<edges->getSize();i++)
       if(edges->get(i)->eitherMatch(next) && edges->get(i) != edge) {
@@ -576,25 +427,11 @@ Array<Vertex*>* Face::getVertsInEdge(Edge* edge) {
 // Triangulation by Ear Clipping
 void Face::splitIntoTrimeshConcave() { // REWRITE
   clearTrimesh();
-  cout << "Num Verts: " << verts->getSize() << endl;
   Array<Point2>* points = sortPointsByPath();
-  cout << "Points Size: " << points->getSize() << endl;
-  for(int i=0;i<points->getSize();i++) {
-    cout << "Point Pre Reverse :: " << i << " ";
-    DebugController::writePointState(points->get(i));
-  }
   if(!isClockwise(points))
     points = reversePath(points);
-  cout << "Points Size After Reverse: " << points->getSize() << endl;
-  for(int i=0;i<points->getSize();i++) {
-    cout << "Point :: " << i << " ";
-    DebugController::writePointState(points->get(i));
-  }
-  cout << "Correct up to here" << endl;
-
   while(points->getSize()>3) {
-    //cout << "WHAT" << endl;
-    //cout << "While:: " << points->getSize() << endl;
+    cout << "While:: " << points->getSize() << endl;
     for(int i=0;i<points->getSize();i++) {
       // get next and previous point
       int prev = i==0 ? points->getSize()-1 : i-1;
@@ -602,25 +439,16 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
       // create two edges going from current point
       Edge* one = new Edge(points->get(i),points->get(next));
       Edge* two = new Edge(points->get(i),points->get(prev));
-      cout << "For Point: " << i << endl;
-      cout << "Edge One: ";
-      DebugController::writeEdgeState(one);
-      cout << "Edge Two: ";
-      DebugController::writeEdgeState(two);
       // get their interiorAngle
       real interiorAngle = one->interiorAngle(two);
-      cout << "Int Angle: " << interiorAngle / PI * 180 << endl;
       // make sure it is not a reflex angle.
       if(interiorAngle < PI) {
-        cout << "Starting Ear Test" << endl;
         // create the triangle
         Tri* tri = new Tri(points->get(prev),points->get(i),points->get(next));
         bool isEar = true;
         for(int j=0;j<points->getSize();j++) {
-          //cout << "WHAT" << endl;
           if(j != i && j != prev && j != next) {
             // test if the triangle is valid by making sure no verts are within it
-            //cout << "Testing Point: " << j << endl;
             points->get(j).debug();
             if(tri->isInside(points->get(j))) {
               isEar = false;
@@ -629,7 +457,6 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
           }
         }
         if(isEar) {
-          //cout << "Found The Ear" << endl;
           triMesh->add(tri);
           points->remove(i);
           i = points->getSize();
@@ -643,12 +470,6 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
   }
   triMesh->add(new Tri(points->get(0),points->get(1),points->get(2)));
   points->clear();
-  cout << "TRIMESH DEBUG :: " << endl;
-  for(int i=0;i<triMesh->getSize();i++) {
-    cout << "TriMesh: " << i << " ";
-    triMesh->get(i)->debug();
-  }
-  cout << " ///////////////////////// " << endl;
   delete points;
 }
 
@@ -670,11 +491,8 @@ Array<Point2>* Face::reversePath(Array<Point2>* sortedPath) {
 
 void Face::detectIfConvex() {
   Array<Point2>* hull = getConvexHull();
-  if(hull->getSize() != verts->getSize()) {
-    cout << "Size MisMatch" << endl;
-    cout << "Hull Size: " << hull->getSize() << endl;
+  if(hull->getSize() != verts->getSize())
     isConvex = false;
-  }
   else {
     // O(N^2) This can be Faster
     int counter=0;
@@ -683,7 +501,6 @@ void Face::detectIfConvex() {
         if(verts->get(i)->getLocation().xpos == hull->get(j).xpos)
           if(verts->get(i)->getLocation().ypos == hull->get(j).ypos)
             counter++;
-    cout << "Counter: " << counter << endl;
     isConvex=counter==verts->getSize();
   }
 }
@@ -696,7 +513,6 @@ real Face::cross(const Point2& o,const Point2& a,const Point2& b) {
 // code is a modified version of what was provided here ::
 // https://en.wikibooks.org/wiki/Algorithm_Implementation/Geometry/Convex_hull/Monotone_chain
 Array<Point2>* Face::getConvexHull() {
-  //Array<Point2>* contents = new Array<Point2>(verts->getSize()*2+1);
   int n = verts->getSize();
   int k = 0;
   vector<Point2> hull(2*n);
@@ -705,10 +521,8 @@ Array<Point2>* Face::getConvexHull() {
     tmpVerts[i] = verts->get(i)->getLocation();
     verts->get(i)->getLocation().debug();
   }
-  cout << "DONE" << endl;
   for(int i=0;i<tmpVerts.size();i++)
     tmpVerts[i].debug();
-  cout << "DoneToo" << endl;
   // sort points lexicographically
   sort(tmpVerts.begin(),tmpVerts.end());
   // build lower hull
