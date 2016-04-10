@@ -78,6 +78,21 @@ public:
   GLUI_Button* removeRandomEdgeMutation;
   GLUI_Button* removeRandomVertMutation;
   GLUI_Button* vertPositionMutation;
+  // demo menu
+  GLUI_Rollout* demoMenu;
+  GLUI_Button* triangulationOne;
+  GLUI_Button* triangulationTwo;
+  GLUI_Button* vertAddConvexOne;
+  GLUI_Button* vertAddConvexTwo;
+  GLUI_Button* vertAddConvexThree;
+  GLUI_Button* vertAddConcaveOne;
+  GLUI_Button* vertAddConcaveTwo;
+  GLUI_Button* vertAddConcaveThree;
+  GLUI_Button* vertAddConcaveFour;
+  GLUI_Button* vertMoveConcaveOne;
+  GLUI_Button* vertMoveConcaveTwo;
+  GLUI_Button* vertMoveConvexOne;
+  GLUI_Button* vertMoveConvexTwo;
   // test menu
   GLUI_Rollout* testMenu; // new
   GLUI_StaticText* mouseXpos; // new

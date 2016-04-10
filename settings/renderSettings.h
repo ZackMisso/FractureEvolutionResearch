@@ -15,9 +15,24 @@ private:
   bool displayEdges;
   bool displayFaces;
   bool displayFaceTrimesh;
+  // display demos
+  bool triangulationOne;
+  bool triangulationTwo;
+  bool vertAddConvexOne;
+  bool vertAddConvexTwo;
+  bool vertAddConvexThree;
+  bool vertAddConcaveOne;
+  bool vertAddConcaveTwo;
+  bool vertAddConcaveThree;
+  bool vertAddConcaveFour;
+  bool vertMoveConvexOne;
+  bool vertMoveConvexTwo;
+  bool vertMoveConcaveOne;
+  bool vertMoveConcaveTwo;
 public:
   RenderSettings();
   ~RenderSettings();
+  void resetDisplay();
   // getter methods
   //InterfaceData* getInterfaceRef();
   int getVertSize();
@@ -26,6 +41,19 @@ public:
   bool getDisplayEdges();
   bool getDisplayFaces();
   bool getDisplayFaceTrimesh();
+  bool getTriangulationOne();
+  bool getTriangulationTwo();
+  bool getVertAddConvexOne();
+  bool getVertAddConvexTwo();
+  bool getVertAddConvexThree();
+  bool getVertAddConcaveOne();
+  bool getVertAddConcaveTwo();
+  bool getVertAddConcaveThree();
+  bool getVertAddConcaveFour();
+  bool getVertMoveConvexOne();
+  bool getVertMoveConvexTwo();
+  bool getVertMoveConcaveOne();
+  bool getVertMoveConcaveTwo();
   // setter methods
   //void setInterfaceRef(InterfaceData* param);
   void setVertSize(int param);
@@ -34,6 +62,19 @@ public:
   void setDisplayEdges(bool param);
   void setDisplayFaces(bool param);
   void setDisplayFaceTrimesh(bool param);
+  void setTriangulationOne(bool param);
+  void setTriangulationTwo(bool param);
+  void setVertAddConvexOne(bool param);
+  void setVertAddConvexTwo(bool param);
+  void setVertAddConvexThree(bool param);
+  void setVertAddConcaveOne(bool param);
+  void setVertAddConcaveTwo(bool param);
+  void setVertAddConcaveThree(bool param);
+  void setVertAddConcaveFour(bool param);
+  void setVertMoveConvexOne(bool param);
+  void setVertMoveConvexTwo(bool param);
+  void setVertMoveConcaveOne(bool param);
+  void setVertMoveConcaveTwo(bool param);
 };
 
 #endif

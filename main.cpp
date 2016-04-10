@@ -71,6 +71,37 @@ void cb_printFaceVerts(int id);
 void cb_printFaceClockwisePoints(int id);
 void cb_printFaceInteriorAngles(int id);
 
+// display callbacks
+void cb_displayTriangulationOne(int id);
+void cb_displayTriangulationTwo(int id);
+void cb_displayVertAddConvexOne(int id);
+void cb_displayVertAddConvexTwo(int id);
+void cb_displayVertAddConvexThree(int id);
+void cb_displayVertAddConcaveOne(int id);
+void cb_displayVertAddConcaveTwo(int id);
+void cb_displayVertAddConcaveThree(int id);
+void cb_displayVertAddConcaveFour(int id);
+void cb_displayVertMoveConvexOne(int id);
+void cb_displayVertMoveConvexTwo(int id);
+void cb_displayVertMoveConcaveOne(int id);
+void cb_displayVertMoveConcaveTwo(int id);
+void cb_displayVertMoveConcaveThree(int id);
+// display
+void displayTriangulationOne();
+void displayTriangulationTwo();
+void displayVertAddConvexOne();
+void displayVertAddConvexTwo();
+void displayVertAddConvexThree();
+void displayVertAddConcaveOne();
+void displayVertAddConcaveTwo();
+void displayVertAddConcaveThree();
+void displayVertAddConcaveFour();
+void displayVertMoveConvexOne();
+void displayVertMoveConvexTwo();
+void displayVertMoveConcaveOne();
+void displayVertMoveConcaveTwo();
+void displayVertMoveConcaveThree();
+
 // Arguements
 GLUI* subwindow;
 Interface* interface;
@@ -205,6 +236,21 @@ void createInterface() { // TODO :: MOVE THIS TO INTEFACE CLASS
   interface->randomMutation = subwindow->add_button_to_panel(interface->evolutionMenu,"Remove Random Edge",1,cb_removeRandomEdgeM);
   interface->randomMutation = subwindow->add_button_to_panel(interface->evolutionMenu,"Remove Random Vert",1,cb_removeRandomVertM);
   interface->randomMutation = subwindow->add_button_to_panel(interface->evolutionMenu,"Vert Position",1,cb_vertPositionM);
+  // Demo Menu
+  interface->demoMenu = subwindow->add_rollout("Demo",false);
+  interface->triangulationOne = subwindow->add_button_to_panel(interface->demoMenu,"Triangulation One",1,cb_displayTriangulationOne);
+  interface->triangulationTwo = subwindow->add_button_to_panel(interface->demoMenu,"Triangulation Two",1,cb_displayTriangulationTwo);
+  interface->vertAddConvexOne = subwindow->add_button_to_panel(interface->demoMenu,"Vert Add Convex One",1,cb_displayVertAddConvexOne);
+  interface->vertAddConvexTwo = subwindow->add_button_to_panel(interface->demoMenu,"Vert Add Convex Two",1,cb_displayVertAddConvexTwo);
+  interface->vertAddConvexThree = subwindow->add_button_to_panel(interface->demoMenu,"Vert Add Convex Three",1,cb_displayVertAddConvexThree);
+  interface->vertAddConcaveOne = subwindow->add_button_to_panel(interface->demoMenu,"Vert Add Concave One",1,cb_displayVertAddConcaveOne);
+  interface->vertAddConcaveTwo = subwindow->add_button_to_panel(interface->demoMenu,"Vert Add Concave Two",1,cb_displayVertAddConcaveTwo);
+  interface->vertAddConcaveThree = subwindow->add_button_to_panel(interface->demoMenu,"Vert Add Concave Three",1,cb_displayVertAddConcaveThree);
+  interface->vertAddConcaveFour = subwindow->add_button_to_panel(interface->demoMenu,"Vert Add Concave Four",1,cb_displayVertAddConcaveFour);
+  interface->vertMoveConvexOne = subwindow->add_button_to_panel(interface->demoMenu,"Vert Move Convex One",1,cb_displayVertMoveConvexOne);
+  interface->vertMoveConvexTwo = subwindow->add_button_to_panel(interface->demoMenu,"Vert Move Convex Two",1,cb_displayVertMoveConvexTwo);
+  interface->vertMoveConcaveOne = subwindow->add_button_to_panel(interface->demoMenu,"Vert Move Concave One",1,cb_displayVertMoveConcaveOne);
+  interface->vertMoveConcaveTwo = subwindow->add_button_to_panel(interface->demoMenu,"Vert Move Concave Two",1,cb_displayVertMoveConcaveTwo);
 }
 
 void display() {
@@ -226,30 +272,56 @@ void display() {
   glEnd();
   glColor3f(0.0f,1.0f,0.0f);
 
-  programData->getCurrentFracture()->draw(renderSettings,interfaceData);
+  if(renderSettings->getTriangulationOne())
+    displayTriangulationOne();
+  else if(renderSettings->getTriangulationTwo())
+    displayTriangulationTwo();
+  else if(renderSettings->getVertAddConvexOne())
+    displayVertAddConvexOne();
+  else if(renderSettings->getVertAddConvexTwo())
+    displayVertAddConvexTwo();
+  else if(renderSettings->getVertAddConvexThree())
+    displayVertAddConvexThree();
+  else if(renderSettings->getVertAddConcaveOne())
+    displayVertAddConcaveOne();
+  else if(renderSettings->getVertAddConcaveTwo())
+    displayVertAddConcaveTwo();
+  else if(renderSettings->getVertAddConcaveThree())
+    displayVertAddConcaveThree();
+  else if(renderSettings->getVertMoveConvexOne())
+    displayVertMoveConvexOne();
+  else if(renderSettings->getVertMoveConvexTwo())
+    displayVertMoveConvexTwo();
+  else if(renderSettings->getVertMoveConcaveOne())
+    displayVertMoveConcaveOne();
+  else if(renderSettings->getVertMoveConcaveTwo())
+    displayVertMoveConcaveTwo();
+  else {
+    programData->getCurrentFracture()->draw(renderSettings,interfaceData);
 
-  glColor3f(1.0f,1.0f,1.0f);
-  if(selectData->getSelectedVert()) {
-    glBegin(GL_POINTS);
-    selectData->getSelectedVert()->draw();
-    glEnd();
-  }
-  if(selectData->getSelectedEdge()) {
-    glBegin(GL_LINES);
-    selectData->getSelectedEdge()->draw();
-    glEnd();
-  }
-  if(selectData->getSelectedFace()) {
-    glBegin(GL_POINTS);
-    Array<Vertex*>* verts = selectData->getSelectedFace()->getVerts();
-    for(int i=0;i<verts->getSize();i++)
-      verts->get(i)->draw();
-    glEnd();
-    glBegin(GL_LINES);
-    Array<Edge*>* edges = selectData->getSelectedFace()->getEdges();
-    for(int i=0;i<edges->getSize();i++)
-      edges->get(i)->draw();
-    glEnd();
+    glColor3f(1.0f,1.0f,1.0f);
+    if(selectData->getSelectedVert()) {
+      glBegin(GL_POINTS);
+      selectData->getSelectedVert()->draw();
+      glEnd();
+    }
+    if(selectData->getSelectedEdge()) {
+      glBegin(GL_LINES);
+      selectData->getSelectedEdge()->draw();
+      glEnd();
+    }
+    if(selectData->getSelectedFace()) {
+      glBegin(GL_POINTS);
+      Array<Vertex*>* verts = selectData->getSelectedFace()->getVerts();
+      for(int i=0;i<verts->getSize();i++)
+        verts->get(i)->draw();
+      glEnd();
+      glBegin(GL_LINES);
+      Array<Edge*>* edges = selectData->getSelectedFace()->getEdges();
+      for(int i=0;i<edges->getSize();i++)
+        edges->get(i)->draw();
+      glEnd();
+    }
   }
 
   glutSwapBuffers();
@@ -665,4 +737,441 @@ void cb_printFaceInteriorAngles(int id) {
   }
   else
     cout << "Please Select a Face First" << endl;
+}
+
+// display callbacks
+void cb_displayTriangulationOne(int id) {
+  renderSettings->resetDisplay();
+  renderSettings->setTriangulationOne(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_displayTriangulationTwo(int id) {
+  renderSettings->resetDisplay();
+  renderSettings->setTriangulationTwo(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_displayVertAddConvexOne(int id) {
+  renderSettings->resetDisplay();
+  renderSettings->setVertAddConvexOne(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_displayVertAddConvexTwo(int id) {
+  renderSettings->resetDisplay();
+  renderSettings->setVertAddConvexTwo(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_displayVertAddConvexThree(int id) {
+  renderSettings->resetDisplay();
+  renderSettings->setVertAddConvexThree(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_displayVertAddConcaveOne(int id) {
+  renderSettings->resetDisplay();
+  renderSettings->setVertAddConcaveOne(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_displayVertAddConcaveTwo(int id) {
+  renderSettings->resetDisplay();
+  renderSettings->setVertAddConcaveTwo(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_displayVertAddConcaveThree(int id) {
+  renderSettings->resetDisplay();
+  renderSettings->setVertAddConcaveThree(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_displayVertAddConcaveFour(int id) {
+  renderSettings->setVertAddConcaveFour(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_displayVertMoveConvexOne(int id) {
+  renderSettings->resetDisplay();
+  renderSettings->setVertMoveConvexOne(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_displayVertMoveConvexTwo(int id) {
+  renderSettings->resetDisplay();
+  renderSettings->setVertMoveConvexTwo(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_displayVertMoveConcaveOne(int id) {
+  renderSettings->resetDisplay();
+  renderSettings->setVertMoveConcaveOne(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+void cb_displayVertMoveConcaveTwo(int id) {
+  renderSettings->resetDisplay();
+  renderSettings->setVertMoveConcaveTwo(true);
+  glutSetWindow(window);
+  glutPostRedisplay();
+}
+
+//void cb_displayVertMoveConcaveThree(int id) {
+//  renderSettings->setVertMoveConcaveThree(true);
+//  glutSetWindow(window);
+//  glutPostRedisplay();
+//}
+
+// display
+void displayTriangulationOne() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,1.0f,0.0f);
+  glBegin(GL_POINTS);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(0,0);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.2,0.3);
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  glBegin(GL_LINES);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(0,0);
+  glVertex2f(0,0);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.2,0.3);
+  glVertex2f(0.2,0.3);
+  glVertex2f(-0.4,0.15);
+  glEnd();
+}
+
+void displayTriangulationTwo() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,1.0f,0.0f);
+  glBegin(GL_POINTS);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(0,0);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.2,0.3);
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  //glBegin(GL_LINES);
+  //glVertex2f(-0.4,0.15);
+  //glVertex2f(-0.3,-0.3);
+  //glVertex2f(-0.3,-0.3);
+  //glVertex2f(0,0);
+  //glVertex2f(0,0);
+  //glVertex2f(0.3,-0.25);
+  //glVertex2f(0.3,-0.25);
+  //glVertex2f(0.4,0.2);
+  //glVertex2f(0.4,0.2);
+  //glVertex2f(0.2,0.3);
+  //glVertex2f(0.2,0.3);
+  //glVertex2f(-0.4,0.15);
+  //glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*0.5);
+  glColor3f(1.0,0.0,0.0);
+  glBegin(GL_LINES);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(0,0);
+  glVertex2f(0,0);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.2,0.3);
+  glVertex2f(0.2,0.3);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(0,0);
+  glVertex2f(0.2,0.3);
+  glVertex2f(0,0);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0,0);
+  glEnd();
+}
+
+void displayVertAddConvexOne() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,1.0f,0.0f);
+  glBegin(GL_POINTS);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(0,-.35);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.2,0.3);
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  glBegin(GL_LINES);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(0,-.35);
+  glVertex2f(0,-.35);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.2,0.3);
+  glVertex2f(0.2,0.3);
+  glVertex2f(-0.4,0.15);
+  glEnd();
+}
+
+void displayVertAddConvexTwo() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,1.0f,0.0f);
+  glBegin(GL_POINTS);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(0,-.35);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.2,0.3);
+  glVertex2f(0.03,-0.03);
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  glBegin(GL_LINES);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(0,-.35);
+  glVertex2f(0,-.35);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.2,0.3);
+  glVertex2f(0.2,0.3);
+  glVertex2f(-0.4,0.15);
+  glEnd();
+  glColor3f(1.0,1.0,1.0);
+  glBegin(GL_LINES);
+  glVertex2f(0.2,0.3);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(0,-.35);
+  glVertex2f(0.3,-0.25);
+  glEnd();
+}
+
+void displayVertAddConvexThree() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,1.0f,0.0f);
+  glBegin(GL_POINTS);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(0,-.35);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.2,0.3);
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  glBegin(GL_LINES);
+  glVertex2f(-0.4,0.15);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(-0.3,-0.3);
+  glVertex2f(0,-.35);
+  glVertex2f(0,-.35);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.3,-0.25);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.4,0.2);
+  glVertex2f(0.2,0.3);
+  glVertex2f(0.2,0.3);
+  glVertex2f(-0.4,0.15);
+  glEnd();
+  glColor3f(0.0,1.0,0.0);
+  glBegin(GL_POINTS);
+  glVertex2f(0.03,-0.03);
+  glVertex2f(-0.1,0.225);
+  glVertex2f(0.15,-0.3);
+  glEnd();
+  glBegin(GL_LINES);
+  glVertex2f(0.03,-0.03);
+  glVertex2f(-0.1,0.225);
+  glVertex2f(0.03,-0.03);
+  glVertex2f(0.15,-0.3);
+  glEnd();
+}
+
+void displayVertAddConcaveOne() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,1.0f,0.0f);
+  glBegin(GL_POINTS);
+  glVertex2f(0.0,0.4);
+  glVertex2f(0.3,-0.2);
+  glVertex2f(-0.3,-0.2);
+  glVertex2f(0.0,0.05);
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  glBegin(GL_LINES);
+  glVertex2f(0.0,0.4);
+  glVertex2f(0.3,-0.2);
+  glVertex2f(0.0,0.4);
+  glVertex2f(-0.3,-0.2);
+  glVertex2f(-0.3,-0.2);
+  glVertex2f(0.0,0.05);
+  glVertex2f(0.0,0.05);
+  glVertex2f(0.3,-0.2);
+  glEnd();
+}
+
+void displayVertAddConcaveTwo() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,1.0f,0.0f);
+  glBegin(GL_POINTS);
+  glVertex2f(0.0,0.4);
+  glVertex2f(0.3,-0.2);
+  glVertex2f(-0.3,-0.2);
+  glVertex2f(0.0,0.05);
+  glEnd();
+  glColor3f(1.0f,0.0f,0.0f);
+  glLineWidth((real)renderSettings->getEdgeSize()*1.0);
+  glBegin(GL_LINES);
+  glVertex2f(0.0,0.4);
+  glVertex2f(0.3,-0.2);
+  glVertex2f(0.0,0.4);
+  glVertex2f(-0.3,-0.2);
+  glVertex2f(-0.3,-0.2);
+  glVertex2f(0.0,0.05);
+  glVertex2f(0.0,0.05);
+  glVertex2f(0.3,-0.2);
+  glVertex2f(0.0,0.05);
+  glVertex2f(0.0,0.4);
+  glEnd();
+  glColor3f(1.0f,1.0f,1.0f);
+  glLineWidth((real)renderSettings->getEdgeSize()*0.3);
+  glBegin(GL_LINES);
+  glVertex2f(0.0,0.4);
+  glVertex2f(-0.3,-0.2);
+  glVertex2f(-0.3,-0.2);
+  glVertex2f(0.0,0.05);
+  glVertex2f(0.0,0.05);
+  glVertex2f(0.0,0.4);
+  glEnd();
+}
+
+void displayVertAddConcaveThree() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,1.0f,0.0f);
+  glBegin(GL_POINTS);
+  glVertex2f(0.0,0.4);
+  glVertex2f(0.3,-0.2);
+  glVertex2f(-0.3,-0.2);
+  glVertex2f(0.0,0.05);
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  glBegin(GL_LINES);
+  glVertex2f(0.0,0.4);
+  glVertex2f(0.3,-0.2);
+  glVertex2f(0.0,0.4);
+  glVertex2f(-0.3,-0.2);
+  glVertex2f(-0.3,-0.2);
+  glVertex2f(0.0,0.05);
+  glVertex2f(0.0,0.05);
+  glVertex2f(0.3,-0.2);
+  glEnd();
+  glBegin(GL_POINTS);
+  glVertex2f(-0.1,0.05);
+  glEnd();
+  glBegin(GL_LINES);
+  // continue implementation
+  glEnd();
+}
+
+void displayVertAddConcaveFour() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,0.0f,1.0f);
+  glBegin(GL_POINTS);
+  // to be implemented
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  glBegin(GL_LINES);
+  // to be implemented
+  glEnd();
+}
+
+void displayVertMoveConvexOne() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,0.0f,1.0f);
+  glBegin(GL_POINTS);
+  // to be implemented
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  glBegin(GL_LINES);
+  // to be implemented
+  glEnd();
+}
+
+void displayVertMoveConvexTwo() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,0.0f,1.0f);
+  glBegin(GL_POINTS);
+  // to be implemented
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  glBegin(GL_LINES);
+  // to be implemented
+  glEnd();
+}
+
+void displayVertMoveConcaveOne() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,0.0f,1.0f);
+  glBegin(GL_POINTS);
+  // to be implemented
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  glBegin(GL_LINES);
+  // to be implemented
+  glEnd();
+}
+
+void displayVertMoveConcaveTwo() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,0.0f,1.0f);
+  glBegin(GL_POINTS);
+  // to be implemented
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  glBegin(GL_LINES);
+  // to be implemented
+  glEnd();
+}
+
+void displayVertMoveConcaveThree() {
+  glPointSize((real)renderSettings->getVertSize());
+  glColor3f(0.0f,0.0f,1.0f);
+  glBegin(GL_POINTS);
+  // to be implemented
+  glEnd();
+  glLineWidth((real)renderSettings->getEdgeSize()*1.2);
+  glBegin(GL_LINES);
+  // to be implemented
+  glEnd();
 }
