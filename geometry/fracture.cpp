@@ -95,16 +95,16 @@ void Fracture::recount() {
 	}
 
 	// New Idea Below
-	//for(int i=0;i<faces->getSize();i++)
-	//	faces->get(i)->clear();
-	//for(int i=0;i<verts->getSize();i++)
-	//	for(int j=0;j<faces->getSize();j++)
-	//		if(verts->get(i)->belongsToFace(faces->get(j)->getID()))
-	//			faces->get(j)->getVerts()->add(verts->get(i));
-	//for(int i=0;i<edges->getSize();i++)
-	//	for(int j=0;j<faces->getSize();j++)
-	//		if(edges->get(i)->belongsToFace(faces->get(j)->getID()))
-	//			faces->get(j)->getEdges()->add(edges->get(i));
+	for(int i=0;i<faces->getSize();i++)
+		faces->get(i)->clear();
+	for(int i=0;i<verts->getSize();i++)
+		for(int j=0;j<faces->getSize();j++)
+			if(verts->get(i)->belongsToFace(faces->get(j)->getID()))
+				faces->get(j)->getVerts()->add(verts->get(i));
+	for(int i=0;i<edges->getSize();i++)
+		for(int j=0;j<faces->getSize();j++)
+			if(edges->get(i)->belongsToFace(faces->get(j)->getID()))
+				faces->get(j)->getEdges()->add(edges->get(i));
 }
 
 void Fracture::createTriMesh() { // TODO :: TEST

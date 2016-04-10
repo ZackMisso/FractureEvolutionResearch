@@ -268,7 +268,7 @@ Array<Face*>* Face::separate(Vertex* newVert,IDTracker* ids) {
     newEdges->add(newEdgesOne->get(i));
     newVertOne->getEdges()->add(newEdges->get(i));
   }
-  // check to make sure the edge wasn't the same
+  // check to make sure the secound edge isn't the same
   if(edgeOne == edgeTwo) {
     cout << "They are the same" << endl;
     for(int i=0;i<newEdges->getSize();i++)
