@@ -430,18 +430,24 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
   Array<Point2>* points = sortPointsByPath();
   if(isClockwise(points))
     points = reversePath(points);
+  cout << "Writing Points" << endl;
+  for(int i=0;i<points->getSize();i++)
+    DebugController::writePointState(points->get(i));
+  cout << "Finished Writing Points" << endl;
   while(points->getSize()>3) {
-    cout << "While:: " << points->getSize() << endl;
-    cout << "Face ID: " << id << endl;
+    //cout << "While:: " << points->getSize() << endl;
+    //cout << "Face ID: " << id << endl;
     for(int i=0;i<points->getSize();i++) {
       // get next and previous point
       int prev = i==0 ? points->getSize()-1 : i-1;
       int next = i==points->getSize()-1 ? 0 : i+1;
+      //cout << "Cur: " << i << " Nex: " << next << " Prev: " << prev << endl;
       // create two edges going from current point
       Edge* one = new Edge(points->get(i),points->get(next));
       Edge* two = new Edge(points->get(i),points->get(prev));
       // get their interiorAngle
       real interiorAngle = one->interiorAngle(two);
+      //cout << "Int Angle: " << interiorAngle << endl;
       // make sure it is not a reflex angle.
       if(interiorAngle < PI) {
         // create the triangle
@@ -474,12 +480,14 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
   delete points;
 }
 
-// actually returns if it is counter clockwise
+// NOT WORKING
 bool Face::isClockwise(Array<Point2>* sortedPath) {
   float sum = 0.0f;
   for(int i=1;i<sortedPath->getSize();i++)
     sum += (sortedPath->get(i).xpos-sortedPath->get(i-1).xpos) *
       (sortedPath->get(i).ypos + sortedPath->get(i-1).ypos);
+  sum += (sortedPath->get(0).xpos-sortedPath->get(sortedPath->getSize()-1).xpos) *
+    (sortedPath->get(0).ypos + sortedPath->get(sortedPath->getSize()-1).ypos);
   return sum > 0.0f;
 }
 

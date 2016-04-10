@@ -28,6 +28,7 @@ public:
   GLUI_Button* printFaceEdges;
   GLUI_Button* printFaceVerts;
   GLUI_Button* printClockwisePoints;
+  GLUI_Button* printFaceAngles;
   GLUI_StaticText* faceID;
   GLUI_Rollout* vertSelectedMenu;
   GLUI_StaticText* vertID;

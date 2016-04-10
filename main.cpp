@@ -69,6 +69,7 @@ void cb_printAllFaceIDs(int id);
 void cb_printFaceEdges(int id);
 void cb_printFaceVerts(int id);
 void cb_printFaceClockwisePoints(int id);
+void cb_printFaceInteriorAngles(int id);
 
 // Arguements
 GLUI* subwindow;
@@ -158,6 +159,7 @@ void createInterface() { // TODO :: MOVE THIS TO INTEFACE CLASS
   interface->printFaceEdges = subwindow->add_button_to_panel(interface->faceSelectedMenu,"Face Edges",1,cb_printFaceEdges);
   interface->printFaceVerts = subwindow->add_button_to_panel(interface->faceSelectedMenu,"Face Verts",1,cb_printFaceVerts);
   interface->printClockwisePoints = subwindow->add_button_to_panel(interface->faceSelectedMenu,"Clockwise Points",1,cb_printFaceClockwisePoints);
+  interface->printFaceAngles = subwindow->add_button_to_panel(interface->faceSelectedMenu,"Print Interior Angles",1,cb_printFaceInteriorAngles);
   interface->edgeSelectedMenu = subwindow->add_rollout_to_panel(interface->selectedMenu,"Selected Edge",false);
   //interface->edgeID = subwindow->add_statictext_to_panel(interface->faceSelectedMenu,"not selected");
   interface->vertSelectedMenu = subwindow->add_rollout_to_panel(interface->selectedMenu,"Selected Vertex",false);
@@ -630,6 +632,36 @@ void cb_printFaceClockwisePoints(int id) {
       points = face->reversePath(points);
     for(int i=0;i<points->getSize();i++)
       DebugController::writePointState(points->get(i));
+    points->clear();
+    delete points;
+  }
+  else
+    cout << "Please Select a Face First" << endl;
+}
+
+void cb_printFaceInteriorAngles(int id) {
+  if(selectData->getSelectedFace()) {
+    Face* face = selectData->getSelectedFace();
+    Array<Point2>* points = face->sortPointsByPath();
+    if(face->isClockwise(points))
+      points = face->reversePath(points);
+    Array<Edge*>* tmpEdges = new Array<Edge*>();
+    for(int i=1;i<points->getSize();i++)
+      tmpEdges->add(new Edge(points->get(i),points->get(i-1)));
+    tmpEdges->add(new Edge(points->get(0),points->get(points->getSize()-1)));
+    // write the edges to make sure they are in the right order
+    cout << "Temporary Edges: " << endl;
+    for(int i=0;i<tmpEdges->getSize();i++)
+      DebugController::writeEdgeState(tmpEdges->get(i));
+    cout << "Interior Angles: " << endl;
+    for(int i=1;i<tmpEdges->getSize();i++)
+      cout << "Edge: " << i << " and: " << i-1 << " Angle: " << tmpEdges->get(i)->interiorAngle(tmpEdges->get(i-1)) / PI * 180 << endl;
+    cout << "Last and first Edge: " << tmpEdges->get(tmpEdges->getSize()-1)->interiorAngle(tmpEdges->get(0)) / PI * 180 << endl;
+    while(tmpEdges->getSize())
+      delete tmpEdges->removeLast();
+    delete tmpEdges;
+    points->clear();
+    delete points;
   }
   else
     cout << "Please Select a Face First" << endl;
