@@ -25,6 +25,9 @@ public:
   // current selection
   GLUI_Rollout* selectedMenu;
   GLUI_Rollout* faceSelectedMenu;
+  GLUI_Button* printFaceEdges;
+  GLUI_Button* printFaceVerts;
+  GLUI_Button* printClockwisePoints;
   GLUI_StaticText* faceID;
   GLUI_Rollout* vertSelectedMenu;
   GLUI_StaticText* vertID;

@@ -428,10 +428,11 @@ Array<Vertex*>* Face::getVertsInEdge(Edge* edge) {
 void Face::splitIntoTrimeshConcave() { // REWRITE
   clearTrimesh();
   Array<Point2>* points = sortPointsByPath();
-  if(!isClockwise(points))
+  if(isClockwise(points))
     points = reversePath(points);
   while(points->getSize()>3) {
     cout << "While:: " << points->getSize() << endl;
+    cout << "Face ID: " << id << endl;
     for(int i=0;i<points->getSize();i++) {
       // get next and previous point
       int prev = i==0 ? points->getSize()-1 : i-1;
@@ -473,6 +474,7 @@ void Face::splitIntoTrimeshConcave() { // REWRITE
   delete points;
 }
 
+// actually returns if it is counter clockwise
 bool Face::isClockwise(Array<Point2>* sortedPath) {
   float sum = 0.0f;
   for(int i=1;i<sortedPath->getSize();i++)

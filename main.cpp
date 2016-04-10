@@ -66,6 +66,9 @@ void cb_vertPositionM(int id);
 void cb_printAllVertIDs(int id);
 void cb_printAllEdgeIDs(int id);
 void cb_printAllFaceIDs(int id);
+void cb_printFaceEdges(int id);
+void cb_printFaceVerts(int id);
+void cb_printFaceClockwisePoints(int id);
 
 // Arguements
 GLUI* subwindow;
@@ -151,11 +154,14 @@ void createInterface() { // TODO :: MOVE THIS TO INTEFACE CLASS
   // Current Selection Menu
   interface->selectedMenu = subwindow->add_rollout("Current Selection",false);
   interface->faceSelectedMenu = subwindow->add_rollout_to_panel(interface->selectedMenu,"Selected Face",false);
-  interface->faceID = subwindow->add_statictext_to_panel(interface->faceSelectedMenu,"not selected");
+  //interface->faceID = subwindow->add_statictext_to_panel(interface->faceSelectedMenu,"not selected");
+  interface->printFaceEdges = subwindow->add_button_to_panel(interface->faceSelectedMenu,"Face Edges",1,cb_printFaceEdges);
+  interface->printFaceVerts = subwindow->add_button_to_panel(interface->faceSelectedMenu,"Face Verts",1,cb_printFaceVerts);
+  interface->printClockwisePoints = subwindow->add_button_to_panel(interface->faceSelectedMenu,"Clockwise Points",1,cb_printFaceClockwisePoints);
   interface->edgeSelectedMenu = subwindow->add_rollout_to_panel(interface->selectedMenu,"Selected Edge",false);
-  interface->edgeID = subwindow->add_statictext_to_panel(interface->faceSelectedMenu,"not selected");
+  //interface->edgeID = subwindow->add_statictext_to_panel(interface->faceSelectedMenu,"not selected");
   interface->vertSelectedMenu = subwindow->add_rollout_to_panel(interface->selectedMenu,"Selected Vertex",false);
-  interface->vertID = subwindow->add_statictext_to_panel(interface->faceSelectedMenu,"not selected");
+  //interface->vertID = subwindow->add_statictext_to_panel(interface->faceSelectedMenu,"not selected");
   // Find Menu
   interface->findMenu = subwindow->add_rollout("Find Object",false);
   interface->printAllVertIDs = subwindow->add_button_to_panel(interface->findMenu,"Print Vertex IDs",1,cb_printAllVertIDs);
@@ -594,4 +600,37 @@ void cb_printAllFaceIDs(int id) {
   cout << endl;
   glutSetWindow(window);
   glutPostRedisplay();
+}
+
+void cb_printFaceEdges(int id) {
+  if(selectData->getSelectedFace()) {
+    Face* face = selectData->getSelectedFace();
+    for(int i=0;i<face->getEdges()->getSize();i++)
+      DebugController::writeEdgeState(face->getEdges()->get(i));
+  }
+  else
+    cout << "Please Select a Face First" << endl;
+}
+
+void cb_printFaceVerts(int id) {
+  if(selectData->getSelectedFace()) {
+    Face* face = selectData->getSelectedFace();
+    for(int i=0;i<face->getVerts()->getSize();i++)
+      DebugController::writeVertState(face->getVerts()->get(i));
+  }
+  else
+    cout << "Please Select a Face First" << endl;
+}
+
+void cb_printFaceClockwisePoints(int id) {
+  if(selectData->getSelectedFace()) {
+    Face* face = selectData->getSelectedFace();
+    Array<Point2>* points = face->sortPointsByPath();
+    if(face->isClockwise(points))
+      points = face->reversePath(points);
+    for(int i=0;i<points->getSize();i++)
+      DebugController::writePointState(points->get(i));
+  }
+  else
+    cout << "Please Select a Face First" << endl;
 }
