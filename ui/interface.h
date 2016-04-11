@@ -92,8 +92,13 @@ public:
   GLUI_Button* vertAddConcaveFive;
   GLUI_Button* vertMoveConcaveOne;
   GLUI_Button* vertMoveConcaveTwo;
+  GLUI_Button* vertMoveConcaveThree;
+  GLUI_Button* vertMoveConcaveFour;
+  GLUI_Button* vertMoveConcaveFive;
   GLUI_Button* vertMoveConvexOne;
   GLUI_Button* vertMoveConvexTwo;
+  GLUI_Button* vertMoveConvexThree;
+  GLUI_Button* vertMoveConvexFour;
   // test menu
   GLUI_Rollout* testMenu; // new
   GLUI_StaticText* mouseXpos; // new

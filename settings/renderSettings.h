@@ -28,8 +28,13 @@ private:
   bool vertAddConcaveFive;
   bool vertMoveConvexOne;
   bool vertMoveConvexTwo;
+  bool vertMoveConvexThree;
+  bool vertMoveConvexFour;
   bool vertMoveConcaveOne;
   bool vertMoveConcaveTwo;
+  bool vertMoveConcaveThree;
+  bool vertMoveConcaveFour;
+  bool vertMoveConcaveFive;
 public:
   RenderSettings();
   ~RenderSettings();
@@ -54,8 +59,13 @@ public:
   bool getVertAddConcaveFive();
   bool getVertMoveConvexOne();
   bool getVertMoveConvexTwo();
+  bool getVertMoveConvexThree();
+  bool getVertMoveConvexFour();
   bool getVertMoveConcaveOne();
   bool getVertMoveConcaveTwo();
+  bool getVertMoveConcaveThree();
+  bool getVertMoveConcaveFour();
+  bool getVertMoveConcaveFive();
   // setter methods
   //void setInterfaceRef(InterfaceData* param);
   void setVertSize(int param);
@@ -76,8 +86,13 @@ public:
   void setVertAddConcaveFive(bool param);
   void setVertMoveConvexOne(bool param);
   void setVertMoveConvexTwo(bool param);
+  void setVertMoveConvexThree(bool param);
+  void setVertMoveConvexFour(bool param);
   void setVertMoveConcaveOne(bool param);
   void setVertMoveConcaveTwo(bool param);
+  void setVertMoveConcaveThree(bool param);
+  void setVertMoveConcaveFour(bool param);
+  void setVertMoveConcaveFive(bool param);
 };
 
 #endif

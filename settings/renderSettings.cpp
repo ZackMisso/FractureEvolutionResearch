@@ -7,20 +7,7 @@ RenderSettings::RenderSettings() {
   displayFaceTrimesh = false;
   vertSize = 10;
   edgeSize = 3;
-  triangulationOne = false;
-  triangulationTwo = false;
-  vertAddConvexOne = false;
-  vertAddConvexTwo = false;
-  vertAddConvexThree = false;
-  vertAddConcaveOne = false;
-  vertAddConcaveTwo = false;
-  vertAddConcaveThree = false;
-  vertAddConcaveFour = false;
-  vertAddConcaveFive = false;
-  vertMoveConvexOne = false;
-  vertMoveConvexTwo = false;
-  vertMoveConcaveOne = false;
-  vertAddConcaveTwo = false;
+  resetDisplay();
 }
 
 RenderSettings::~RenderSettings() { }
@@ -38,8 +25,13 @@ void RenderSettings::resetDisplay() {
   vertAddConcaveFive = false;
   vertMoveConvexOne = false;
   vertMoveConvexTwo = false;
+  vertMoveConvexThree = false;
+  vertMoveConvexFour = false;
   vertMoveConcaveOne = false;
-  vertAddConcaveTwo = false;
+  vertMoveConcaveTwo = false;
+  vertMoveConcaveThree = false;
+  vertMoveConcaveFour = false;
+  vertMoveConcaveFive = false;
 }
 
 //InterfaceData* RenderSettings::getInterfaceRef() { return interfaceRef; }
@@ -61,8 +53,13 @@ bool RenderSettings::getVertAddConcaveFour() { return vertAddConcaveFour; }
 bool RenderSettings::getVertAddConcaveFive() { return vertAddConcaveFive; }
 bool RenderSettings::getVertMoveConvexOne() { return vertMoveConvexOne; }
 bool RenderSettings::getVertMoveConvexTwo() { return vertMoveConvexTwo; }
+bool RenderSettings::getVertMoveConvexThree() { return vertMoveConvexThree; }
+bool RenderSettings::getVertMoveConvexFour() { return vertMoveConvexFour; }
 bool RenderSettings::getVertMoveConcaveOne() { return vertMoveConcaveOne; }
 bool RenderSettings::getVertMoveConcaveTwo() { return vertMoveConcaveTwo; }
+bool RenderSettings::getVertMoveConcaveThree() { return vertMoveConcaveThree; }
+bool RenderSettings::getVertMoveConcaveFour() { return vertMoveConcaveFour; }
+bool RenderSettings::getVertMoveConcaveFive() { return vertMoveConcaveFive; }
 
 //void RenderSettings::setInterfaceRef(InterfaceData* param) { interfaceRef = param; }
 void RenderSettings::setVertSize(int param) { vertSize = param; }
@@ -83,5 +80,10 @@ void RenderSettings::setVertAddConcaveFour(bool param) { vertAddConcaveFour = pa
 void RenderSettings::setVertAddConcaveFive(bool param) { vertAddConcaveFive = param; }
 void RenderSettings::setVertMoveConvexOne(bool param) { vertMoveConvexOne = param; }
 void RenderSettings::setVertMoveConvexTwo(bool param) { vertMoveConvexTwo = param; }
+void RenderSettings::setVertMoveConvexThree(bool param) { vertMoveConvexThree = param; }
+void RenderSettings::setVertMoveConvexFour(bool param) { vertMoveConvexFour = param; }
 void RenderSettings::setVertMoveConcaveOne(bool param) { vertMoveConcaveOne = param; }
 void RenderSettings::setVertMoveConcaveTwo(bool param) { vertMoveConcaveTwo = param; }
+void RenderSettings::setVertMoveConcaveThree(bool param) { vertMoveConcaveThree = param; }
+void RenderSettings::setVertMoveConcaveFour(bool param) { vertMoveConcaveFour = param; }
+void RenderSettings::setVertMoveConcaveFive(bool param) { vertMoveConcaveFive = param; }
