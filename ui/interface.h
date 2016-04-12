@@ -89,6 +89,7 @@ public:
   GLUI_Button* vertAddConcaveTwo;
   GLUI_Button* vertAddConcaveThree;
   GLUI_Button* vertAddConcaveFour;
+  GLUI_Button* vertAddConcaveFive;
   GLUI_Button* vertMoveConcaveOne;
   GLUI_Button* vertMoveConcaveTwo;
   GLUI_Button* vertMoveConvexOne;

@@ -16,6 +16,7 @@ RenderSettings::RenderSettings() {
   vertAddConcaveTwo = false;
   vertAddConcaveThree = false;
   vertAddConcaveFour = false;
+  vertAddConcaveFive = false;
   vertMoveConvexOne = false;
   vertMoveConvexTwo = false;
   vertMoveConcaveOne = false;
@@ -34,6 +35,7 @@ void RenderSettings::resetDisplay() {
   vertAddConcaveTwo = false;
   vertAddConcaveThree = false;
   vertAddConcaveFour = false;
+  vertAddConcaveFive = false;
   vertMoveConvexOne = false;
   vertMoveConvexTwo = false;
   vertMoveConcaveOne = false;
@@ -56,6 +58,7 @@ bool RenderSettings::getVertAddConcaveOne() { return vertAddConcaveOne; }
 bool RenderSettings::getVertAddConcaveTwo() { return vertAddConcaveTwo; }
 bool RenderSettings::getVertAddConcaveThree() { return vertAddConcaveThree; }
 bool RenderSettings::getVertAddConcaveFour() { return vertAddConcaveFour; }
+bool RenderSettings::getVertAddConcaveFive() { return vertAddConcaveFive; }
 bool RenderSettings::getVertMoveConvexOne() { return vertMoveConvexOne; }
 bool RenderSettings::getVertMoveConvexTwo() { return vertMoveConvexTwo; }
 bool RenderSettings::getVertMoveConcaveOne() { return vertMoveConcaveOne; }
@@ -77,6 +80,7 @@ void RenderSettings::setVertAddConcaveOne(bool param) { vertAddConcaveOne = para
 void RenderSettings::setVertAddConcaveTwo(bool param) { vertAddConcaveTwo = param; }
 void RenderSettings::setVertAddConcaveThree(bool param) { vertAddConcaveThree = param; }
 void RenderSettings::setVertAddConcaveFour(bool param) { vertAddConcaveFour = param; }
+void RenderSettings::setVertAddConcaveFive(bool param) { vertAddConcaveFive = param; }
 void RenderSettings::setVertMoveConvexOne(bool param) { vertMoveConvexOne = param; }
 void RenderSettings::setVertMoveConvexTwo(bool param) { vertMoveConvexTwo = param; }
 void RenderSettings::setVertMoveConcaveOne(bool param) { vertMoveConcaveOne = param; }

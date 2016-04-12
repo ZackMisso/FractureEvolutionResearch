@@ -25,6 +25,7 @@ private:
   bool vertAddConcaveTwo;
   bool vertAddConcaveThree;
   bool vertAddConcaveFour;
+  bool vertAddConcaveFive;
   bool vertMoveConvexOne;
   bool vertMoveConvexTwo;
   bool vertMoveConcaveOne;
@@ -50,6 +51,7 @@ public:
   bool getVertAddConcaveTwo();
   bool getVertAddConcaveThree();
   bool getVertAddConcaveFour();
+  bool getVertAddConcaveFive();
   bool getVertMoveConvexOne();
   bool getVertMoveConvexTwo();
   bool getVertMoveConcaveOne();
@@ -71,6 +73,7 @@ public:
   void setVertAddConcaveTwo(bool param);
   void setVertAddConcaveThree(bool param);
   void setVertAddConcaveFour(bool param);
+  void setVertAddConcaveFive(bool param);
   void setVertMoveConvexOne(bool param);
   void setVertMoveConvexTwo(bool param);
   void setVertMoveConcaveOne(bool param);
